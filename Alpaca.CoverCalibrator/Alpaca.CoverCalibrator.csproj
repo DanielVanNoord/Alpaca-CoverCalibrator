@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ASCOM.Exceptions" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoverCalibratorSimulator\CoverCalibratorSimulator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ASCOM.Standard.Types">
+      <HintPath>..\ASCOM.Standard.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="ASCOM.Standard.Helpers">
+      <HintPath>..\ASCOM.Standard.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="ASCOM.Compatibility.Interfaces">
+      <HintPath>..\ASCOM.Compatibility.Interfaces.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
