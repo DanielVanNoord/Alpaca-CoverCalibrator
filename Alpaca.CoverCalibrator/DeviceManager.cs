@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,9 +35,38 @@ namespace Alpaca.CoverCalibrator
             return coverCalibratorV1s;
         }
 
-        private class DictionarySettings : CoverCalibratorSimulator.IProfile
+        private class DictionarySettings : ASCOM.Compatibility.Interfaces.IProfileFull
         {
             private Dictionary<string, string> Settings = new Dictionary<string, string>();
+
+            public string DeviceType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public ArrayList RegisteredDeviceTypes => throw new NotImplementedException();
+
+            public void CreateSubKey(string DriverID, string SubKey)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void DeleteSubKey(string DriverID, string SubKey)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void DeleteValue(string DriverID, string Name, string SubKey)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void DeleteValue(string DriverID, string Name)
+            {
+                throw new NotImplementedException();
+            }
+
+            public string GetProfileXML(string deviceId)
+            {
+                throw new NotImplementedException();
+            }
 
             public string GetValue(string DriverID, string Name)
             {
@@ -63,6 +93,56 @@ namespace Alpaca.CoverCalibrator
                 }
             }
 
+            public bool IsRegistered(string DriverID)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void MigrateProfile(string CurrentPlatformVersion)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Register(string DriverID, string DescriptiveName)
+            {
+                throw new NotImplementedException();
+            }
+
+            public ArrayList RegisteredDevices(string DeviceType)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SetProfileXML(string deviceId, string xml)
+            {
+                throw new NotImplementedException();
+            }
+
+            public ArrayList SubKeys(string DriverID, string SubKey)
+            {
+                throw new NotImplementedException();
+            }
+
+            public ArrayList SubKeys(string DriverID)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Unregister(string DriverID)
+            {
+                throw new NotImplementedException();
+            }
+
+            public ArrayList Values(string DriverID, string SubKey)
+            {
+                throw new NotImplementedException();
+            }
+
+            public ArrayList Values(string DriverID)
+            {
+                throw new NotImplementedException();
+            }
+
             public void WriteValue(string DriverID, string Name, string Value)
             {
                 Settings.Add(DriverID + Name, Value);
@@ -74,12 +154,47 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
-        private class ConsoleLogger : CoverCalibratorSimulator.ITraceLogger
+        private class ConsoleLogger : ASCOM.Compatibility.Interfaces.ITraceLoggerFull
         {
             public bool Enabled { get; set; }
 
+            public string LogFileName => throw new NotImplementedException();
+
+            public string LogFilePath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public int IdentifierWidth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public void BlankLine()
+            {
+                throw new NotImplementedException();
+            }
+
             public void Dispose()
             {
+            }
+
+            public void LogContinue(string Message)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void LogContinue(string Message, bool HexDump)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void LogFinish(string Message)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void LogFinish(string Message, bool HexDump)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void LogIssue(string Identifier, string Message)
+            {
+                throw new NotImplementedException();
             }
 
             public void LogMessage(string Identifier, string Message)
@@ -95,6 +210,16 @@ namespace Alpaca.CoverCalibrator
             public void LogMessageCrLf(string Identifier, string Message)
             {
                 LogMessage(Identifier, Message);
+            }
+
+            public void LogStart(string Identifier, string Message)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SetLogFile(string LogFileName, string LogFileType)
+            {
+                throw new NotImplementedException();
             }
         }
     }

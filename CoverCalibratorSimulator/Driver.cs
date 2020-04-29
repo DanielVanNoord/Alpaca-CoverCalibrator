@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Diagnostics;
 using ASCOM.Alpaca.Interfaces;
 using ASCOM;
+using ASCOM.Compatibility.Interfaces;
 using System.Collections.Generic;
 
 namespace CoverCalibratorSimulator
@@ -46,8 +47,8 @@ namespace CoverCalibratorSimulator
         public double CalibratorStablisationTimeValue;
 
         // Simulator components 
-        internal ITraceLogger TL; // ASCOM Trace Logger component
-        internal IProfile Profile; //Access to device settings
+        internal ITraceLoggerFull TL; // ASCOM Trace Logger component
+        internal IProfileFull Profile; //Access to device settings
 
         private System.Timers.Timer coverTimer;
         private System.Timers.Timer calibratorTimer;
@@ -57,7 +58,7 @@ namespace CoverCalibratorSimulator
         /// Initializes a new instance of the <see cref="Simulator"/> class.
         /// Must be public for COM registration.
         /// </summary>
-        public CoverCalibrator(ITraceLogger logger, IProfile profile)
+        public CoverCalibrator(ITraceLoggerFull logger, IProfileFull profile)
         {
             try
             {
@@ -162,10 +163,7 @@ namespace CoverCalibratorSimulator
 
         public void Dispose()
         {
-            // Clean up the trace logger and util objects
-            TL.Enabled = false;
-            TL.Dispose();
-            TL = null;
+            //Do not cleanup the tracelogger or profile. This is handled at a higher level.
         }
 
         public bool Connected
