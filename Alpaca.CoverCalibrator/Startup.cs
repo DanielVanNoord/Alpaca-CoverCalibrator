@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Alpaca.CoverCalibrator.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alpaca.CoverCalibrator
@@ -28,7 +27,6 @@ namespace Alpaca.CoverCalibrator
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             //services.AddSingleton<MenuRefreshService>();
             services.AddMvc();
             //services.AddBlazoredToast();
