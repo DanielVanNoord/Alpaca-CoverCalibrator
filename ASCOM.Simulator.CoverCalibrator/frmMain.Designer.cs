@@ -1,6 +1,6 @@
 using System;
 
-namespace ASCOM.Simulator.CoverCalibrator
+namespace ASCOM.Simulator
 {
     partial class frmMain
     {

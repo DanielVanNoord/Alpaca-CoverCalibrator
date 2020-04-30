@@ -20,9 +20,9 @@ namespace CoverCalibratorSimulator
     public class CoverCalibrator : ICoverCalibratorV1
     {
         // Private simulator constants
-        private const string DRIVER_PROGID = "ASCOM.Simulator.CoverCalibrator"; // ASCOM DeviceID (COM ProgID) for this driver.
+        private const string DRIVER_PROGID = "ASCOM.SimulatorLS.CoverCalibrator"; // ASCOM DeviceID (COM ProgID) for this driver.
         private const string DRIVER_DESCRIPTION = "ASCOM CoverCalibrator Simulator"; // Driver description that displays in the ASCOM Chooser.
-        internal const double SYNCHRONOUS_BEHAVIOUR_LIMIT = 0.5; // Threshold (seconds) above which state changes will be handled asynchronously
+        public const double SYNCHRONOUS_BEHAVIOUR_LIMIT = 0.5; // Threshold (seconds) above which state changes will be handled asynchronously
 
         // Persistence constants
         private const string TRACE_STATE_PROFILE_NAME = "Trace State"; private const bool TRACE_STATE_DEFAULT = false;
@@ -470,9 +470,9 @@ namespace CoverCalibratorSimulator
         /// </summary>
         internal void ReadProfile()
         {
-            //Profile.DeviceType = "CoverCalibrator";
-
-            TL.Enabled = Convert.ToBoolean(Profile.GetValue(DRIVER_PROGID, TRACE_STATE_PROFILE_NAME, string.Empty, TRACE_STATE_DEFAULT.ToString()));
+            Profile.DeviceType = "CoverCalibrator";
+            var temp = Profile.GetValue(DRIVER_PROGID, TRACE_STATE_PROFILE_NAME, string.Empty, TRACE_STATE_DEFAULT.ToString());
+            TL.Enabled = Convert.ToBoolean(temp);
             MaxBrightnessValue = Convert.ToInt32(Profile.GetValue(DRIVER_PROGID, MAX_BRIGHTNESS_PROFILE_NAME, string.Empty, MAX_BRIGHTNESS_DEFAULT));
             CalibratorStablisationTimeValue = Convert.ToDouble(Profile.GetValue(DRIVER_PROGID, CALIBRATOR_STABILISATION_TIME_PROFILE_NAME, string.Empty, CALIBRATOR_STABLISATION_TIME_DEFAULT.ToString()));
             if (!Enum.TryParse<CalibratorStatus>(Profile.GetValue(DRIVER_PROGID, CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME, string.Empty, CALIBRATOR_INITIALISATION_STATE_DEFAULT.ToString()), out CalibratorStateInitialisationValue))
@@ -489,9 +489,9 @@ namespace CoverCalibratorSimulator
         /// <summary>
         /// Write the device configuration to the  ASCOM  Profile store
         /// </summary>
-        internal void WriteProfile()
+        public void WriteProfile()
         {
-            //driverProfile.DeviceType = "CoverCalibrator";
+            Profile.DeviceType = "CoverCalibrator";
             Profile.WriteValue(DRIVER_PROGID, TRACE_STATE_PROFILE_NAME, TL.Enabled.ToString());
             Profile.WriteValue(DRIVER_PROGID, MAX_BRIGHTNESS_PROFILE_NAME, MaxBrightnessValue.ToString());
             Profile.WriteValue(DRIVER_PROGID, CALIBRATOR_STABILISATION_TIME_PROFILE_NAME, CalibratorStablisationTimeValue.ToString());

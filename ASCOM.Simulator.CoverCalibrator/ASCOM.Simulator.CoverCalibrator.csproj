@@ -8,8 +8,8 @@
     <ProjectGuid>{C708E487-E3A9-4073-A545-294B88674225}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ASCOM.Simulator.CoverCalibrator</RootNamespace>
-    <AssemblyName>ASCOM.Simulator.CoverCalibrator.Server</AssemblyName>
+    <RootNamespace>ASCOM.Simulator</RootNamespace>
+    <AssemblyName>ASCOM.Simulator.CoverCalibrator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -85,6 +85,11 @@
       <SubType>Designer</SubType>
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="ReferenceCountedObject.cs" />
     <Compile Include="Setup Dialog\SetupDialogForm.cs">
       <SubType>Form</SubType>
@@ -93,6 +98,11 @@
       <DependentUpon>SetupDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SharedResources.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Setup Dialog\SetupDialogForm.resx">
       <DependentUpon>SetupDialogForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -123,7 +133,24 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ASCOM.Compatibility.Utilities\ASCOM.Compatibility.Utilities.csproj">
+      <Project>{ab690357-091b-4d8f-b424-1720247140fc}</Project>
+      <Name>ASCOM.Compatibility.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CoverCalibratorSimulator\CoverCalibratorSimulator.csproj">
+      <Project>{00feeed5-1c4e-4904-b566-61230550781c}</Project>
+      <Name>CoverCalibratorSimulator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ASCOM.Compatibility.Interfaces">
+      <HintPath>..\ASCOM.Compatibility.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ASCOM.Standard.Types">
+      <HintPath>..\ASCOM.Standard.Types.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

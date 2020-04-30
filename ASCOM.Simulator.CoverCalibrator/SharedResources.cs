@@ -17,8 +17,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ASCOM;
+using ASCOM.Compatibility.Interfaces;
 
-namespace ASCOM.Simulator.CoverCalibrator
+namespace ASCOM.Simulator
 {
     /// <summary>
     /// The resources shared by all drivers and devices, in this example it's a serial port with a shared SendMessage method
@@ -34,90 +35,15 @@ namespace ASCOM.Simulator.CoverCalibrator
         private static readonly object lockObject = new object();
 
         // Shared serial port. This will allow multiple drivers to use one single serial port.
-        private static ASCOM.Utilities.Serial s_sharedSerial = new ASCOM.Utilities.Serial();        // Shared serial port
         private static int s_z = 0;     // counter for the number of connections to the serial port
 
         //
         // Public access to shared resources
         //
 
-        #region single serial port connector
-        //
-        // this region shows a way that a single serial port could be connected to by multiple 
-        // drivers.
-        //
-        // Connected is used to handle the connections to the port.
-        //
-        // SendMessage is a way that messages could be sent to the hardware without
-        // conflicts between different drivers.
-        //
-        // All this is for a single connection, multiple connections would need multiple ports
-        // and a way to handle connecting and disconnection from them - see the
-        // multi driver handling section for ideas.
-        //
-
-        /// <summary>
-        /// Shared serial port
-        /// </summary>
-        public static ASCOM.Utilities.Serial SharedSerial { get { return s_sharedSerial; } }
-
-        /// <summary>
-        /// number of connections to the shared serial port
-        /// </summary>
-        public static int connections { get { return s_z; } set { s_z = value; } }
-
-        /// <summary>
-        /// Example of a shared SendMessage method, the lock
-        /// prevents different drivers tripping over one another.
-        /// It needs error handling and assumes that the message will be sent unchanged
-        /// and that the reply will always be terminated by a "#" character.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public static string SendMessage(string message)
-        {
-            lock (lockObject)
-            {
-                SharedSerial.Transmit(message);
-                // TODO replace this with your requirements
-                return SharedSerial.ReceiveTerminated("#");
-            }
-        }
-
-        /// <summary>
-        /// Example of handling connecting to and disconnection from the
-        /// shared serial port.
-        /// Needs error handling
-        /// the port name etc. needs to be set up first, this could be done by the driver
-        /// checking Connected and if it's false setting up the port before setting connected to true.
-        /// It could also be put here.
-        /// </summary>
-        public static bool Connected
-        {
-            set
-            {
-                lock (lockObject)
-                {
-                    if (value)
-                    {
-                        if (s_z == 0)
-                            SharedSerial.Connected = true;
-                        s_z++;
-                    }
-                    else
-                    {
-                        s_z--;
-                        if (s_z <= 0)
-                        {
-                            SharedSerial.Connected = false;
-                        }
-                    }
-                }
-            }
-            get { return SharedSerial.Connected; }
-        }
-
-        #endregion
+        // Simulator components 
+        internal static ITraceLoggerFull Logger = new ASCOM.Compatibility.Utilities.TraceLoggerCompat("", "CoverCalibratorSimulatorLS"); // ASCOM Trace Logger component
+        internal static IProfileFull Profile = new ASCOM.Compatibility.Utilities.ProfileCompat(); //Access to device settings
 
         #region Multi Driver handling
         // this section illustrates how multiple drivers could be handled,
@@ -189,30 +115,4 @@ namespace ASCOM.Simulator.CoverCalibrator
             count = 0;
         }
     }
-
-    //#region ServedClassName attribute
-    ///// <summary>
-    ///// This is only needed if the driver is targeted at  platform 5.5, it is included with Platform 6
-    ///// </summary>
-    //[global::System.AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    //public sealed class ServedClassNameAttribute : Attribute
-    //{
-    //    // See the attribute guidelines at 
-    //    //  http://go.microsoft.com/fwlink/?LinkId=85236
-
-    //    /// <summary>
-    //    /// Gets or sets the 'friendly name' of the served class, as registered with the ASCOM Chooser.
-    //    /// </summary>
-    //    /// <value>The 'friendly name' of the served class.</value>
-    //    public string DisplayName { get; private set; }
-    //    /// <summary>
-    //    /// Initializes a new instance of the <see cref="ServedClassNameAttribute"/> class.
-    //    /// </summary>
-    //    /// <param name="servedClassName">The 'friendly name' of the served class.</param>
-    //    public ServedClassNameAttribute(string servedClassName)
-    //    {
-    //        DisplayName = servedClassName;
-    //    }
-    //}
-    //#endregion
 }
