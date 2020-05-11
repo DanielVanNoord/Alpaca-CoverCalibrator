@@ -14,7 +14,7 @@ namespace Alpaca.CoverCalibrator
 
         static DeviceManager()
         {
-            coverCalibrator = new CoverCalibratorSimulator.CoverCalibrator(new ConsoleLogger(), new DictionarySettings());
+            coverCalibrator = new CoverCalibratorSimulator.CoverCalibrator(new ASCOM.Standard.Utilities.TraceLogger(string.Empty, "AlpacaCoverCalibratorSimulator"), new DictionarySettings());
             coverCalibratorV1s.Add(coverCalibrator);
         }
 

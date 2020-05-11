@@ -19,6 +19,9 @@
     <Reference Include="ASCOM.Standard.Helpers">
       <HintPath>..\ASCOM.Standard.Helpers.dll</HintPath>
     </Reference>
+    <Reference Include="ASCOM.Standard.Utilities">
+      <HintPath>..\ASCOM.Standard.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="ASCOM.Compatibility.Interfaces">
       <HintPath>..\ASCOM.Compatibility.Interfaces.dll</HintPath>
     </Reference>
