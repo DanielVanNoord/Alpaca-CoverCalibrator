@@ -32,6 +32,12 @@
                     }
                 </select>
             </div>
+
+            <div class="grid-item-right">
+            </div>
+            <div class="grid-item-left">
+                <button class="btn" @onclick="SaveDeviceSettings" >Save</button>
+            </div>
         </div>
     </fieldset>
 
@@ -124,5 +130,10 @@
         {
             DeviceManager.coverCalibrator.CoverStateInitialisationValue = value;
         }
+    }
+
+    public void SaveDeviceSettings()
+    {
+        DeviceManager.coverCalibrator.WriteProfile();
     }
 }

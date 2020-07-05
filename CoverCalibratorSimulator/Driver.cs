@@ -47,8 +47,8 @@ namespace CoverCalibratorSimulator
         public double CalibratorStablisationTimeValue;
 
         // Simulator components 
-        internal ITraceLoggerFull TL; // ASCOM Trace Logger component
-        internal IProfileFull Profile; //Access to device settings
+        internal ITraceLogger TL; // ASCOM Trace Logger component
+        internal IProfile Profile; //Access to device settings
 
         private System.Timers.Timer coverTimer;
         private System.Timers.Timer calibratorTimer;
@@ -58,7 +58,7 @@ namespace CoverCalibratorSimulator
         /// Initializes a new instance of the <see cref="Simulator"/> class.
         /// Must be public for COM registration.
         /// </summary>
-        public CoverCalibrator(ITraceLoggerFull logger, IProfileFull profile)
+        public CoverCalibrator(ITraceLogger logger, IProfile profile)
         {
             try
             {
@@ -470,17 +470,16 @@ namespace CoverCalibratorSimulator
         /// </summary>
         internal void ReadProfile()
         {
-            Profile.DeviceType = "CoverCalibrator";
-            var temp = Profile.GetValue(DRIVER_PROGID, TRACE_STATE_PROFILE_NAME, string.Empty, TRACE_STATE_DEFAULT.ToString());
+            var temp = Profile.GetValue(TRACE_STATE_PROFILE_NAME, TRACE_STATE_DEFAULT.ToString());
             TL.Enabled = Convert.ToBoolean(temp);
-            MaxBrightnessValue = Convert.ToInt32(Profile.GetValue(DRIVER_PROGID, MAX_BRIGHTNESS_PROFILE_NAME, string.Empty, MAX_BRIGHTNESS_DEFAULT));
-            CalibratorStablisationTimeValue = Convert.ToDouble(Profile.GetValue(DRIVER_PROGID, CALIBRATOR_STABILISATION_TIME_PROFILE_NAME, string.Empty, CALIBRATOR_STABLISATION_TIME_DEFAULT.ToString()));
-            if (!Enum.TryParse<CalibratorStatus>(Profile.GetValue(DRIVER_PROGID, CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME, string.Empty, CALIBRATOR_INITIALISATION_STATE_DEFAULT.ToString()), out CalibratorStateInitialisationValue))
+            MaxBrightnessValue = Convert.ToInt32(Profile.GetValue(MAX_BRIGHTNESS_PROFILE_NAME, MAX_BRIGHTNESS_DEFAULT));
+            CalibratorStablisationTimeValue = Convert.ToDouble(Profile.GetValue(CALIBRATOR_STABILISATION_TIME_PROFILE_NAME, CALIBRATOR_STABLISATION_TIME_DEFAULT.ToString()));
+            if (!Enum.TryParse<CalibratorStatus>(Profile.GetValue(CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME, CALIBRATOR_INITIALISATION_STATE_DEFAULT.ToString()), out CalibratorStateInitialisationValue))
             {
                 CalibratorStateInitialisationValue = CALIBRATOR_INITIALISATION_STATE_DEFAULT;
             }
-            CoverOpeningTimeValue = Convert.ToDouble(Profile.GetValue(DRIVER_PROGID, COVER_OPENING_TIME_PROFILE_NAME, string.Empty, COVER_OPENING_TIME_DEFAULT.ToString()));
-            if (!Enum.TryParse<CoverStatus>(Profile.GetValue(DRIVER_PROGID, COVER_INITIALISATION_STATE_PROFILE_NAME, string.Empty, COVER_INITIALISATION_STATE_DEFAULT.ToString()), out CoverStateInitialisationValue))
+            CoverOpeningTimeValue = Convert.ToDouble(Profile.GetValue(COVER_OPENING_TIME_PROFILE_NAME, COVER_OPENING_TIME_DEFAULT.ToString()));
+            if (!Enum.TryParse<CoverStatus>(Profile.GetValue(COVER_INITIALISATION_STATE_PROFILE_NAME, COVER_INITIALISATION_STATE_DEFAULT.ToString()), out CoverStateInitialisationValue))
             {
                 CoverStateInitialisationValue = COVER_INITIALISATION_STATE_DEFAULT;
             }
@@ -491,13 +490,12 @@ namespace CoverCalibratorSimulator
         /// </summary>
         public void WriteProfile()
         {
-            Profile.DeviceType = "CoverCalibrator";
-            Profile.WriteValue(DRIVER_PROGID, TRACE_STATE_PROFILE_NAME, TL.Enabled.ToString());
-            Profile.WriteValue(DRIVER_PROGID, MAX_BRIGHTNESS_PROFILE_NAME, MaxBrightnessValue.ToString());
-            Profile.WriteValue(DRIVER_PROGID, CALIBRATOR_STABILISATION_TIME_PROFILE_NAME, CalibratorStablisationTimeValue.ToString());
-            Profile.WriteValue(DRIVER_PROGID, CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME, CalibratorStateInitialisationValue.ToString());
-            Profile.WriteValue(DRIVER_PROGID, COVER_OPENING_TIME_PROFILE_NAME, CoverOpeningTimeValue.ToString());
-            Profile.WriteValue(DRIVER_PROGID, COVER_INITIALISATION_STATE_PROFILE_NAME, CoverStateInitialisationValue.ToString());
+            Profile.WriteValue(TRACE_STATE_PROFILE_NAME, TL.Enabled.ToString());
+            Profile.WriteValue(MAX_BRIGHTNESS_PROFILE_NAME, MaxBrightnessValue.ToString());
+            Profile.WriteValue(CALIBRATOR_STABILISATION_TIME_PROFILE_NAME, CalibratorStablisationTimeValue.ToString());
+            Profile.WriteValue(CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME, CalibratorStateInitialisationValue.ToString());
+            Profile.WriteValue(COVER_OPENING_TIME_PROFILE_NAME, CoverOpeningTimeValue.ToString());
+            Profile.WriteValue(COVER_INITIALISATION_STATE_PROFILE_NAME, CoverStateInitialisationValue.ToString());
         }
 
         /// <summary>

@@ -13,6 +13,8 @@ namespace ASCOM.Simulator
     [ClassInterface(ClassInterfaceType.None)]
     public class CoverCalibrator : CoverCalibratorSimulator.CoverCalibrator, ASCOM.DeviceInterface.ICoverCalibratorV1
     {
+
+        internal static string ProgID = "ASCOM.SimulatorLS.CoverCalibrator";
         public CoverCalibrator() : base(SharedResources.Logger, SharedResources.Profile)
         {
             // We increment the global count of objects.

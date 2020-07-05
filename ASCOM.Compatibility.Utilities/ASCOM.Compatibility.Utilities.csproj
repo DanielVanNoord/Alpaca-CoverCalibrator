@@ -37,6 +37,9 @@
     <AssemblyOriginatorKeyFile>temp.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ASCOM.Compatibility.Interfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2bc574275a5f8be6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ASCOM.Compatibility.Interfaces.1.0.0-alpha2\lib\netstandard2.0\ASCOM.Compatibility.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,9 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ASCOM.Compatibility.Interfaces">
-      <HintPath>..\ASCOM.Compatibility.Interfaces.dll</HintPath>
-    </Reference>
     <Reference Include="ASCOM.Utilities, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +58,7 @@
     <Compile Include="TraceLoggerCompat.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="temp.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

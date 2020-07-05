@@ -42,8 +42,8 @@ namespace ASCOM.Simulator
         //
 
         // Simulator components 
-        internal static ITraceLoggerFull Logger = new ASCOM.Compatibility.Utilities.TraceLoggerCompat("", "CoverCalibratorSimulatorLS"); // ASCOM Trace Logger component
-        internal static IProfileFull Profile = new ASCOM.Compatibility.Utilities.ProfileCompat(); //Access to device settings
+        internal static ITraceLogger Logger = new ASCOM.Compatibility.Utilities.TraceLoggerCompat("", "CoverCalibratorSimulatorLS"); // ASCOM Trace Logger component
+        internal static IProfile Profile = new ASCOM.Compatibility.Utilities.ProfileCompat(CoverCalibrator.ProgID, "CoverCalibrator"); //Access to device settings
 
         #region Multi Driver handling
         // this section illustrates how multiple drivers could be handled,

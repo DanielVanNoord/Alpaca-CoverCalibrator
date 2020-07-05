@@ -14,7 +14,8 @@ namespace Alpaca.CoverCalibrator
 
         static DeviceManager()
         {
-            coverCalibrator = new CoverCalibratorSimulator.CoverCalibrator(new ASCOM.Standard.Utilities.TraceLogger(string.Empty, "AlpacaCoverCalibratorSimulator"), new DictionarySettings());
+            coverCalibrator = new CoverCalibratorSimulator.CoverCalibrator(new ASCOM.Standard.Utilities.TraceLogger(string.Empty, "AlpacaCoverCalibratorSimulator"), 
+                new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator", "CoverCalibrator", 0));
             coverCalibratorV1s.Add(coverCalibrator);
         }
 
@@ -35,126 +36,7 @@ namespace Alpaca.CoverCalibrator
             return coverCalibratorV1s;
         }
 
-        private class DictionarySettings : ASCOM.Compatibility.Interfaces.IProfileFull
-        {
-            private Dictionary<string, string> Settings = new Dictionary<string, string>();
-
-            public string DeviceType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-            public ArrayList RegisteredDeviceTypes => throw new NotImplementedException();
-
-            public void CreateSubKey(string DriverID, string SubKey)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void DeleteSubKey(string DriverID, string SubKey)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void DeleteValue(string DriverID, string Name, string SubKey)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void DeleteValue(string DriverID, string Name)
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetProfileXML(string deviceId)
-            {
-                throw new NotImplementedException();
-            }
-
-            public string GetValue(string DriverID, string Name)
-            {
-                Settings.TryGetValue(DriverID + Name, out string value);
-                return value;
-            }
-
-            public string GetValue(string DriverID, string Name, string SubKey)
-            {
-                Settings.TryGetValue(DriverID + Name + SubKey, out string value);
-                return value;
-            }
-
-            public string GetValue(string DriverID, string Name, string SubKey, string DefaultValue)
-            {
-                if(Settings.ContainsKey(DriverID + Name + SubKey))
-                {
-                    Settings.TryGetValue(DriverID + Name + SubKey, out string value);
-                    return value;
-                }
-                else
-                {
-                    return DefaultValue;
-                }
-            }
-
-            public bool IsRegistered(string DriverID)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void MigrateProfile(string CurrentPlatformVersion)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Register(string DriverID, string DescriptiveName)
-            {
-                throw new NotImplementedException();
-            }
-
-            public ArrayList RegisteredDevices(string DeviceType)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void SetProfileXML(string deviceId, string xml)
-            {
-                throw new NotImplementedException();
-            }
-
-            public ArrayList SubKeys(string DriverID, string SubKey)
-            {
-                throw new NotImplementedException();
-            }
-
-            public ArrayList SubKeys(string DriverID)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Unregister(string DriverID)
-            {
-                throw new NotImplementedException();
-            }
-
-            public ArrayList Values(string DriverID, string SubKey)
-            {
-                throw new NotImplementedException();
-            }
-
-            public ArrayList Values(string DriverID)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void WriteValue(string DriverID, string Name, string Value)
-            {
-                Settings.Add(DriverID + Name, Value);
-            }
-
-            public void WriteValue(string DriverID, string Name, string Value, string SubKey)
-            {
-                Settings.Add(DriverID + Name + SubKey, Value);
-            }
-        }
-
-        private class ConsoleLogger : ASCOM.Compatibility.Interfaces.ITraceLoggerFull
+        private class ConsoleLogger : ASCOM.Compatibility.Interfaces.ITraceLogger
         {
             public bool Enabled { get; set; }
 

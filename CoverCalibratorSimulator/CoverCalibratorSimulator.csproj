@@ -7,16 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ASCOM.Compatibility.Interfaces" Version="1.0.0-alpha2" />
     <PackageReference Include="ASCOM.Exceptions" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="ASCOM.Standard.Types">
-      <HintPath>..\ASCOM.Standard.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="ASCOM.Compatibility.Interfaces">
-      <HintPath>..\ASCOM.Compatibility.Interfaces.dll</HintPath>
-    </Reference>
+    <PackageReference Include="ASCOM.Standard.Types" Version="1.0.0-alpha2" />
   </ItemGroup>
 
 </Project>

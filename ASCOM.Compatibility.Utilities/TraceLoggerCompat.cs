@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ASCOM.Compatibility.Utilities
 {
-    public class TraceLoggerCompat : ASCOM.Utilities.TraceLogger, ASCOM.Compatibility.Interfaces.ITraceLoggerFull
+    public class TraceLoggerCompat : ASCOM.Utilities.TraceLogger, ASCOM.Compatibility.Interfaces.ITraceLogger
     {
         public TraceLoggerCompat() : base()
         {

@@ -16,11 +16,11 @@ namespace ASCOM.Simulator
     [ComVisible(false)]					// Form not registered for COM!
     public partial class SetupDialogForm : Form
     {
-        ITraceLoggerFull TL;
+        ITraceLogger TL;
 
         readonly CoverCalibratorSimulator.CoverCalibrator CovCal;
 
-        public SetupDialogForm(CoverCalibratorSimulator.CoverCalibrator cal, ITraceLoggerFull traceLogger)
+        public SetupDialogForm(CoverCalibratorSimulator.CoverCalibrator cal, ITraceLogger traceLogger)
         {
             InitializeComponent();
             TL = traceLogger;

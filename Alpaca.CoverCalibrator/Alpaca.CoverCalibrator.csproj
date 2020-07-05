@@ -5,26 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ASCOM.Compatibility.Interfaces" Version="1.0.0-alpha2" />
     <PackageReference Include="ASCOM.Exceptions" Version="1.0.0" />
+    <PackageReference Include="ASCOM.Standard.Helpers" Version="1.0.0-alpha2" />
+    <PackageReference Include="ASCOM.Standard.Types" Version="1.0.0-alpha2" />
+    <PackageReference Include="ASCOM.Standard.Utilities" Version="1.0.0-alpha2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CoverCalibratorSimulator\CoverCalibratorSimulator.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="ASCOM.Standard.Types">
-      <HintPath>..\ASCOM.Standard.Types.dll</HintPath>
-    </Reference>
-    <Reference Include="ASCOM.Standard.Helpers">
-      <HintPath>..\ASCOM.Standard.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="ASCOM.Standard.Utilities">
-      <HintPath>..\ASCOM.Standard.Utilities.dll</HintPath>
-    </Reference>
-    <Reference Include="ASCOM.Compatibility.Interfaces">
-      <HintPath>..\ASCOM.Compatibility.Interfaces.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
