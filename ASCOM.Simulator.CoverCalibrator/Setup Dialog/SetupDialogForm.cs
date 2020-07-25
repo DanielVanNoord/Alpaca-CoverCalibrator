@@ -9,7 +9,7 @@ using ASCOM.Utilities;
 using ASCOM.Simulator;
 using ASCOM.DeviceInterface;
 using System.Diagnostics;
-using ASCOM.Compatibility.Interfaces;
+using ASCOM.Standard.Interfaces;
 
 namespace ASCOM.Simulator
 {
@@ -38,8 +38,8 @@ namespace ASCOM.Simulator
             CovCal.MaxBrightnessValue = Decimal.ToInt32(NumMaxBrightness.Value);
             CovCal.CalibratorStablisationTimeValue = Decimal.ToDouble(NumCalibratorStablisationTime.Value);
             CovCal.CoverOpeningTimeValue = Decimal.ToDouble(NumCoverOpeningTime.Value);
-            Enum.TryParse<ASCOM.Alpaca.Interfaces.CalibratorStatus>(CmbCalibratorInitialisationState.SelectedItem.ToString(), out CovCal.CalibratorStateInitialisationValue);
-            Enum.TryParse<ASCOM.Alpaca.Interfaces.CoverStatus>(CmbCoverInitialisationState.SelectedItem.ToString(), out CovCal.CoverStateInitialisationValue);
+            Enum.TryParse<ASCOM.Standard.Interfaces.CalibratorStatus>(CmbCalibratorInitialisationState.SelectedItem.ToString(), out CovCal.CalibratorStateInitialisationValue);
+            Enum.TryParse<ASCOM.Standard.Interfaces.CoverStatus>(CmbCoverInitialisationState.SelectedItem.ToString(), out CovCal.CoverStateInitialisationValue);
         }
 
         private void CmdCancel_Click(object sender, EventArgs e) // Cancel button event handler

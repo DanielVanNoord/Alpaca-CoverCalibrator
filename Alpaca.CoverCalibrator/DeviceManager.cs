@@ -8,7 +8,7 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class DeviceManager
     {
-        private static List<ASCOM.Alpaca.Interfaces.ICoverCalibratorV1> coverCalibratorV1s = new List<ASCOM.Alpaca.Interfaces.ICoverCalibratorV1>();
+        private static List<ASCOM.Standard.Interfaces.ICoverCalibratorV1> coverCalibratorV1s = new List<ASCOM.Standard.Interfaces.ICoverCalibratorV1>();
 
         internal static CoverCalibratorSimulator.CoverCalibrator coverCalibrator;
 
@@ -19,7 +19,7 @@ namespace Alpaca.CoverCalibrator
             coverCalibratorV1s.Add(coverCalibrator);
         }
 
-        internal static ASCOM.Alpaca.Interfaces.ICoverCalibratorV1 GetCoverCalibrator(int DeviceID)
+        internal static ASCOM.Standard.Interfaces.ICoverCalibratorV1 GetCoverCalibrator(int DeviceID)
         {
             if(DeviceID == 0)
             {
@@ -31,12 +31,12 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
-        internal static List<ASCOM.Alpaca.Interfaces.ICoverCalibratorV1> GetCoverCalibrators()
+        internal static List<ASCOM.Standard.Interfaces.ICoverCalibratorV1> GetCoverCalibrators()
         {
             return coverCalibratorV1s;
         }
 
-        private class ConsoleLogger : ASCOM.Compatibility.Interfaces.ITraceLogger
+        private class ConsoleLogger : ASCOM.Standard.Interfaces.ITraceLogger
         {
             public bool Enabled { get; set; }
 

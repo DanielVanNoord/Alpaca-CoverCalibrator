@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ASCOM;
-using ASCOM.Compatibility.Interfaces;
+using ASCOM.Standard.Interfaces;
 
 namespace ASCOM.Simulator
 {

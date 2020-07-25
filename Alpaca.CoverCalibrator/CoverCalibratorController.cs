@@ -1,5 +1,4 @@
-﻿using ASCOM.Alpaca.Interfaces;
-using ASCOM.Alpaca.Responses;
+﻿using ASCOM.Alpaca.Responses;
 using ASCOM.Standard.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;

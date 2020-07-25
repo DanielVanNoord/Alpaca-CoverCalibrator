@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using System.Reflection;
 using System.Diagnostics;
-using ASCOM.Alpaca.Interfaces;
+using ASCOM.Standard.Interfaces;
 using ASCOM;
-using ASCOM.Compatibility.Interfaces;
+
 using System.Collections.Generic;
 
 namespace CoverCalibratorSimulator

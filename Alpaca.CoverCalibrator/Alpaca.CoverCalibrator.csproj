@@ -5,11 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ASCOM.Compatibility.Interfaces" Version="1.0.0-alpha2" />
-    <PackageReference Include="ASCOM.Exceptions" Version="1.0.0" />
-    <PackageReference Include="ASCOM.Standard.Helpers" Version="1.0.0-alpha2" />
-    <PackageReference Include="ASCOM.Standard.Types" Version="1.0.0-alpha2" />
-    <PackageReference Include="ASCOM.Standard.Utilities" Version="1.0.0-alpha2" />
+    <PackageReference Include="ASCOM.Exceptions" Version="6.5.0" />
+    <PackageReference Include="ASCOM.Standard.Helpers" Version="1.0.0-alpha3" />
+    <PackageReference Include="ASCOM.Standard.Types" Version="1.0.0-alpha3" />
+    <PackageReference Include="ASCOM.Standard.Utilities" Version="1.0.0-alpha3" />
   </ItemGroup>
 
   <ItemGroup>

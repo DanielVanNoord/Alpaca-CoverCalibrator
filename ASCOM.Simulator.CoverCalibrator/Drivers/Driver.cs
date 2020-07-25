@@ -1,5 +1,4 @@
-﻿using ASCOM.Compatibility.Interfaces;
-using ASCOM.DeviceInterface;
+﻿using ASCOM.DeviceInterface;
 using System.Collections;
 using System.Linq;
 using System.Runtime.InteropServices;

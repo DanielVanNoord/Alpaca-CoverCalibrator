@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ASCOM.Compatibility.Utilities
 {
-    public class ProfileCompat :  ASCOM.Compatibility.Interfaces.IProfile
+    public class ProfileCompat :  ASCOM.Standard.Interfaces.IProfile
     {
         public string DriverID
         {
@@ -71,6 +71,38 @@ namespace ASCOM.Compatibility.Utilities
             {
                 profile.DeviceType = DeviceType;
                 profile.WriteValue(DriverID, Name, Value);
+            }
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ContainsValue(string key)
+        {
+            using (ASCOM.Utilities.Profile profile = new ASCOM.Utilities.Profile())
+            {
+                profile.DeviceType = DeviceType;
+                return profile.SubKeys(DriverID).Contains(key);
+            }
+        }
+
+        public string GetProfile()
+        {
+            using (ASCOM.Utilities.Profile profile = new ASCOM.Utilities.Profile())
+            {
+                profile.DeviceType = DeviceType;
+                return profile.GetProfileXML(DriverID);
+            }
+        }
+
+        public void SetProfile(string rawProfile)
+        {
+            using (ASCOM.Utilities.Profile profile = new ASCOM.Utilities.Profile())
+            {
+                profile.DeviceType = DeviceType;
+                profile.SetProfileXML(DriverID, rawProfile);
             }
         }
     }
