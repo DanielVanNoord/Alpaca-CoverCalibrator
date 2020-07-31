@@ -64,12 +64,13 @@
     <Reference Include="ASCOM.Exceptions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
       <HintPath>..\packages\ASCOM.Exceptions.6.5.0\lib\net35\ASCOM.Exceptions.dll</HintPath>
     </Reference>
-    <Reference Include="ASCOM.Standard.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2bc574275a5f8be6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Standard.Helpers.1.0.0-alpha3\lib\netstandard2.0\ASCOM.Standard.Helpers.dll</HintPath>
-    </Reference>
     <Reference Include="ASCOM.Standard.Types, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2bc574275a5f8be6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Standard.Types.1.0.0-alpha3\lib\netstandard2.0\ASCOM.Standard.Types.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Standard.Types.1.0.0-alpha5\lib\netstandard2.0\ASCOM.Standard.Types.dll</HintPath>
     </Reference>
+    <Reference Include="ASCOM.Standard.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ASCOM.Standard.Utilities.1.0.0-alpha5\lib\netstandard2.0\ASCOM.Standard.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,7 +80,7 @@ namespace ASCOM.Compatibility.Utilities
             throw new NotImplementedException();
         }
 
-        public bool ContainsValue(string key)
+        public bool ContainsKey(string key)
         {
             using (ASCOM.Utilities.Profile profile = new ASCOM.Utilities.Profile())
             {
@@ -103,6 +104,30 @@ namespace ASCOM.Compatibility.Utilities
             {
                 profile.DeviceType = DeviceType;
                 profile.SetProfileXML(DriverID, rawProfile);
+            }
+        }
+
+        public List<string> Keys()
+        {
+            using (ASCOM.Utilities.Profile profile = new ASCOM.Utilities.Profile())
+            {
+                profile.DeviceType = DeviceType;
+                List<string> retValues = new List<string>();
+                var values = profile.SubKeys(DriverID);
+
+                foreach (var value in values)
+                {
+                    retValues.Add(value.ToString());
+
+                    var subvalues = profile.SubKeys(DriverID, value.ToString());
+
+                    foreach (var subvalue in subvalues)
+                    {
+                        retValues.Add(subvalue.ToString());
+                    }
+                }
+
+                return retValues;
             }
         }
     }
