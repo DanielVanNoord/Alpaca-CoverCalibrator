@@ -1,9 +1,0 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/.vs/ASCOM.Simulator.CoverCalibrator/v16
-/bin/Debug
-/obj/Debug
-/Setup/Build
-*.exe
