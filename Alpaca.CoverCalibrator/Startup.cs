@@ -29,7 +29,6 @@ namespace Alpaca.CoverCalibrator
             services.AddServerSideBlazor();
             //services.AddSingleton<MenuRefreshService>();
             services.AddMvc();
-            //services.AddBlazoredToast();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
