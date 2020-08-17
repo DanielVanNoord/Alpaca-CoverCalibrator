@@ -8,7 +8,6 @@
 <body>
     <fieldset>
         <legend>Cover Calibrator</legend>
-        d
         <div class="grid-container-two">
 
             <div class="grid-item-left">
@@ -47,6 +46,12 @@
             <div class="grid-item-center">
                 <p>Cover Status: @CoverStatus</p>
             </div>
+
+            <div class="grid-item-center">
+                <button @onclick="OpenClose" disabled="@CoverDisabled">@OpenCloseText</button>
+                <button @onclick="Halt" disabled="@CoverDisabled">Halt</button>
+            </div>
+
         </div>
     </fieldset>
 
@@ -163,14 +168,6 @@
         }
     }
 
-    public double OpeningTime
-    {
-        get
-        {
-            return DeviceManager.coverCalibrator.CoverOpeningTimeValue;
-        }
-    }
-
     public ASCOM.Standard.Interfaces.CoverStatus CoverStatus
     {
         get
@@ -188,6 +185,22 @@
                 return true;
             }
             if (CalStatus == ASCOM.Standard.Interfaces.CalibratorStatus.NotPresent)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public bool CoverDisabled
+    {
+        get
+        {
+            if (!Connected)
+            {
+                return true;
+            }
+            if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.NotPresent)
             {
                 return true;
             }
@@ -241,6 +254,73 @@
         catch(Exception ex)
         {
             DisplayError(ex.Message);
+        }
+    }
+
+    public void OpenClose()
+    {
+        try
+        {
+            if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Open)
+            {
+                DeviceManager.coverCalibrator.CloseCover();
+            }
+            else if(CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Closed)
+            {
+                DeviceManager.coverCalibrator.OpenCover();
+            }
+            else if(CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Unknown)
+            {
+                DeviceManager.coverCalibrator.CloseCover();
+            }
+            else if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Error)
+            {
+                DeviceManager.coverCalibrator.CloseCover();
+            }
+
+        }
+        catch(Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    public void Halt()
+    {
+        try
+        {
+            if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Moving)
+            {
+                DeviceManager.coverCalibrator.HaltCover();
+            }
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    public string OpenCloseText
+    {
+        get
+        {
+            if (!Connected)
+            {
+                return "Open";
+            }
+            if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Closed)
+            {
+                return "Open";
+            }
+            if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Open)
+            {
+                return "Close";
+            }
+            if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Moving)
+            {
+                return "Moving";
+            }
+            return "Open";
         }
     }
 
