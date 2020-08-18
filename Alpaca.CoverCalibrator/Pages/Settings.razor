@@ -1,7 +1,192 @@
 ﻿@page "/setup"
 
-<h3>Settings</h3>
+<fieldset>
+    <legend>Server Settings</legend>
+    <p>Version @ServerVersion</p>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Allow Remote Access:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="RemoteAccess">
+        </div>
+
+        <div class="grid-item-right">
+            <span>Server (Alpaca) Port:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="number" @bind="ServerPort" min="1" max="65535" style="width:20ch;">
+        </div>
+
+        <div class="grid-item-right">
+            <span>Open Browser on Start:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="StartBrowser">
+        </div>
+
+        <div class="grid-item-right">
+        </div>
+        <div class="grid-item-right">
+            <button @onclick="SaveServerSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>Alpaca Discovery Settings</legend>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Allow Discovery:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="Discovery">
+        </div>
+
+        <div class="grid-item-right">
+            <span>Discovery Port:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="number" @bind="DiscoveryPort" min="1" max="65535" style="width:20ch;">
+        </div>
+
+        <div class="grid-item-right">
+        </div>
+        <div class="grid-item-right">
+            <button @onclick="SaveDiscovery" style="min-width:12ch; vertical-align:middle;">Save</button>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>Shutdown Alpaca Server</legend>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Shutdown:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox"
+                   @bind="EnableShutdown">
+            <button @onclick="Shutdown" style="min-width:12ch; vertical-align:middle;" disabled="@AllowShutdown">Shutdown</button>
+        </div>
+    </div>
+</fieldset>
 
 @code {
 
+    bool Discovery
+    {
+        get;
+        set;
+    } = true;
+
+    UInt16 DiscoveryPort
+    {
+        get;
+        set;
+    } = 32227;
+
+    bool RemoteAccess
+    {
+        get;
+        set;
+    } = true;
+
+    UInt16 ServerPort
+    {
+        get;
+        set;
+    } = 5000;
+
+
+    bool StartBrowser
+    {
+        get;
+        set;
+    } = true;
+
+    bool EnableShutdown
+    {
+        get;
+        set;
+    } = false;
+
+    bool AllowShutdown
+    {
+        get
+        {
+            return !EnableShutdown;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        //ToDo load settings from Server settings
+    }
+
+    void SaveDiscovery()
+    {
+        try
+        {
+            //ToDo
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    void SaveServerSettings()
+    {
+        try
+        {
+            bool SettingsChanged = false;
+
+            //ToDo
+
+            if (SettingsChanged) //If any core settings change call a restart.
+            {
+                Program.Main(null);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    void SaveSecuritySettings()
+    {
+
+    }
+    
+    //ToDo add options for prevent disconnects, dispose.
+
+    void Shutdown()
+    {
+        try
+        {
+            Startup.Lifetime.StopApplication();
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+    public void DisplayError(string message)
+    {
+    }
+
+    public void DisplaySuccess(string message)
+    {
+    }
+    string ServerVersion
+    {
+        get
+        {
+            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
+        }
+    }
 }

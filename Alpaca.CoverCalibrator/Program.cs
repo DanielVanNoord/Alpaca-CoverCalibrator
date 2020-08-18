@@ -48,7 +48,18 @@ namespace Alpaca.CoverCalibrator
                 args = temparray;
             }
 
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch(OperationCanceledException)
+            {
+                //Server was shutdown
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
