@@ -10,11 +10,11 @@ namespace Alpaca.CoverCalibrator
     {
         private static List<ASCOM.Standard.Interfaces.ICoverCalibratorV1> coverCalibratorV1s = new List<ASCOM.Standard.Interfaces.ICoverCalibratorV1>();
 
-        internal static CoverCalibratorSimulator.CoverCalibrator coverCalibrator;
+        internal static CoverCalibratorSimulator.CoverCalibratorSimulator coverCalibrator;
 
         static DeviceManager()
         {
-            coverCalibrator = new CoverCalibratorSimulator.CoverCalibrator(new ASCOM.Standard.Utilities.TraceLogger(string.Empty, "AlpacaCoverCalibratorSimulator"), 
+            coverCalibrator = new CoverCalibratorSimulator.CoverCalibratorSimulator(new ASCOM.Standard.Utilities.TraceLogger(string.Empty, "AlpacaCoverCalibratorSimulator"), 
                 new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator", "CoverCalibrator", 0));
             coverCalibratorV1s.Add(coverCalibrator);
         }

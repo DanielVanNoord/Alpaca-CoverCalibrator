@@ -11,7 +11,7 @@ namespace CoverCalibratorSimulator
     /// ASCOM CoverCalibrator Driver for Simulator.
     /// </summary>
 
-    public class CoverCalibrator : ICoverCalibratorV1
+    public class CoverCalibratorSimulator : ICoverCalibratorV1
     {
         // Private simulator constants
         private const string DRIVER_DESCRIPTION = "ASCOM CoverCalibrator Simulator"; // Driver description that displays in the ASCOM Chooser.
@@ -55,7 +55,7 @@ namespace CoverCalibratorSimulator
         /// Initializes a new instance of the <see cref="Simulator"/> class.
         /// Must be public for COM registration.
         /// </summary>
-        public CoverCalibrator(ITraceLogger logger, IProfile profile)
+        public CoverCalibratorSimulator(ITraceLogger logger, IProfile profile)
         {
             try
             {

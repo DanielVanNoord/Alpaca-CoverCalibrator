@@ -10,7 +10,7 @@ namespace ASCOM.Simulator
     [ProgId("ASCOM.SimulatorLS.CoverCalibrator")]
     [ServedClassName("CoverCalibrator LS Simulator")]
     [ClassInterface(ClassInterfaceType.None)]
-    public class CoverCalibrator : CoverCalibratorSimulator.CoverCalibrator, ASCOM.DeviceInterface.ICoverCalibratorV1
+    public class CoverCalibrator : CoverCalibratorSimulator.CoverCalibratorSimulator, ASCOM.DeviceInterface.ICoverCalibratorV1
     {
 
         internal static string ProgID = "ASCOM.SimulatorLS.CoverCalibrator";

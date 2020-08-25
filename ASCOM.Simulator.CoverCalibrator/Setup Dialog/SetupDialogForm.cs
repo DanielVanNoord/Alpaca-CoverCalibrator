@@ -18,9 +18,9 @@ namespace ASCOM.Simulator
     {
         ITraceLogger TL;
 
-        readonly CoverCalibratorSimulator.CoverCalibrator CovCal;
+        readonly CoverCalibratorSimulator.CoverCalibratorSimulator CovCal;
 
-        public SetupDialogForm(CoverCalibratorSimulator.CoverCalibrator cal, ITraceLogger traceLogger)
+        public SetupDialogForm(CoverCalibratorSimulator.CoverCalibratorSimulator cal, ITraceLogger traceLogger)
         {
             InitializeComponent();
             TL = traceLogger;
