@@ -30,11 +30,9 @@ namespace Alpaca.CoverCalibrator
         [Route("management/v1/description")]
         public AlpacaDescriptionResponse Description(int DeviceNumber, int ClientID = -1, uint ClientTransactionID = 0)
         {
-            List<AlpacaConfiguredDevice> configuredDevices = new List<AlpacaConfiguredDevice>() { };
-
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.ProductVersion;
+            string version = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
+
             return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription("Alpaca server for Cover Calibrator simulator", "ASCOM Initiative", version, "Unknown"));
         }
 
@@ -49,7 +47,7 @@ namespace Alpaca.CoverCalibrator
             }
             catch(Exception ex)
             {
-
+                //ToDo log this out
             }
             return new AlpacaConfiguredDevicesResponse(ClientTransactionID, TransactionID, devices);
         }
