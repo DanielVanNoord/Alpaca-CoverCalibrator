@@ -1,31 +1,26 @@
-using System;
-using System.Runtime.InteropServices;
-using System.Collections;
-using System.Reflection;
-using System.Diagnostics;
-using ASCOM.Standard.Interfaces;
 using ASCOM;
-
+using ASCOM.Standard.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace CoverCalibratorSimulator
 {
-
     /// <summary>
     /// ASCOM CoverCalibrator Driver for Simulator.
     /// </summary>
-    [Guid("096bb159-95fd-4963-809f-1f8fb6e7f833")]
-    [ClassInterface(ClassInterfaceType.None)]
 
     public class CoverCalibrator : ICoverCalibratorV1
     {
         // Private simulator constants
-        private const string DRIVER_PROGID = "ASCOM.SimulatorLS.CoverCalibrator"; // ASCOM DeviceID (COM ProgID) for this driver.
         private const string DRIVER_DESCRIPTION = "ASCOM CoverCalibrator Simulator"; // Driver description that displays in the ASCOM Chooser.
+
         public const double SYNCHRONOUS_BEHAVIOUR_LIMIT = 0.5; // Threshold (seconds) above which state changes will be handled asynchronously
 
         // Persistence constants
         private const string TRACE_STATE_PROFILE_NAME = "Trace State"; private const bool TRACE_STATE_DEFAULT = false;
+
         private const string MAX_BRIGHTNESS_PROFILE_NAME = "Maximum Brightness"; private const string MAX_BRIGHTNESS_DEFAULT = "100"; // Number of different brightness states
         private const string CALIBRATOR_STABILISATION_TIME_PROFILE_NAME = "Calibrator Stabilisation Time"; private const double CALIBRATOR_STABLISATION_TIME_DEFAULT = 2.0; // Seconds
         private const string CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME = "Calibrator Initialisation State"; private const CalibratorStatus CALIBRATOR_INITIALISATION_STATE_DEFAULT = CalibratorStatus.Off;
@@ -34,6 +29,7 @@ namespace CoverCalibratorSimulator
 
         // Simulator state variables
         private CoverStatus coverState; // The current cover status
+
         private CalibratorStatus calibratorState; // The current calibrator status
         private int brightnessValue; // The current brightness of the calibrator
         private CoverStatus targetCoverState; // The final cover status at the end of the current asynchronous command
@@ -41,18 +37,19 @@ namespace CoverCalibratorSimulator
 
         // User configuration variables
         public CalibratorStatus CalibratorStateInitialisationValue;
+
         public CoverStatus CoverStateInitialisationValue;
         public int MaxBrightnessValue;
         public double CoverOpeningTimeValue;
         public double CalibratorStablisationTimeValue;
 
-        // Simulator components 
+        // Simulator components
         internal ITraceLogger TL; // ASCOM Trace Logger component
+
         internal IProfile Profile; //Access to device settings
 
         private System.Timers.Timer coverTimer;
         private System.Timers.Timer calibratorTimer;
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulator"/> class.
@@ -132,7 +129,7 @@ namespace CoverCalibratorSimulator
         {
             get
             {
-                TL.LogMessage("SupportedActions Get", "Returning empty arraylist");
+                TL.LogMessage("SupportedActions Get", "Returning empty list");
                 return new List<string>();
             }
         }
@@ -242,7 +239,7 @@ namespace CoverCalibratorSimulator
             }
         }
 
-        #endregion
+        #endregion Common properties and methods.
 
         #region ICoverCalibrator Implementation
 
@@ -397,7 +394,7 @@ namespace CoverCalibratorSimulator
 
             if ((Brightness < 0) | (Brightness > MaxBrightnessValue)) throw new InvalidValueException("CalibratorOn", Brightness.ToString(), $"0 to {MaxBrightnessValue}");
 
-            brightnessValue = Brightness; // Set the assigned brightness 
+            brightnessValue = Brightness; // Set the assigned brightness
 
             if (CalibratorStablisationTimeValue <= SYNCHRONOUS_BEHAVIOUR_LIMIT) // Synchronous behaviour
             {
@@ -442,9 +439,10 @@ namespace CoverCalibratorSimulator
             }
         }
 
-        #endregion
+        #endregion ICoverCalibrator Implementation
 
         #region Private properties and methods
+
         // here are some useful properties and methods that can be used as required
         // to help with driver development
 
@@ -524,7 +522,6 @@ namespace CoverCalibratorSimulator
             } while (DateTime.Now < endTime);
         }
 
-        #endregion
-
+        #endregion Private properties and methods
     }
 }
