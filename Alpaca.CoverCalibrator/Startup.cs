@@ -64,9 +64,9 @@ namespace Alpaca.CoverCalibrator
             lifetime.ApplicationStarted.Register(() =>
             {
                 //Log server starting
-                /*try
+                try
                 {
-                    if () //AutoStart Browser
+                    if (ServerSettings.AutoStartBrowser) //AutoStart Browser
                     {
                         
                     }
@@ -74,7 +74,7 @@ namespace Alpaca.CoverCalibrator
                 catch (Exception ex)
                 {
                     //Log Error
-                }*/
+                }
             });
 
             lifetime.ApplicationStopping.Register(() =>

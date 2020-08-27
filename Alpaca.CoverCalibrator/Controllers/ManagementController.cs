@@ -33,7 +33,7 @@ namespace Alpaca.CoverCalibrator
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             string version = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
 
-            return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription("Alpaca server for Cover Calibrator simulator", "ASCOM Initiative", version, "Unknown"));
+            return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription("Alpaca server for Cover Calibrator simulator", "ASCOM Initiative", version, ServerSettings.Location));
         }
 
         [HttpGet]

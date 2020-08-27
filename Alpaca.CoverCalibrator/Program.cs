@@ -30,16 +30,16 @@ namespace Alpaca.CoverCalibrator
 
                 string startupURLArg = "--urls=http://";
 
-                //if (ServerSettings.Default.AllowRemoteAccess)
-                //{
+                if (ServerSettings.AllowRemoteAccess)
+                {
                     startupURLArg += "*";
-                /*}
+                }
                 else
                 {
                     startupURLArg += "localhost";
-                }*/
+                }
 
-                startupURLArg += ":" + 5000;
+                startupURLArg += ":" + ServerSettings.ServerPort;
 
                 Console.WriteLine("Startup URL args: " + startupURLArg);
 
@@ -52,11 +52,11 @@ namespace Alpaca.CoverCalibrator
             {
                 CreateHostBuilder(args).Build().Run();
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
                 //Server was shutdown
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }

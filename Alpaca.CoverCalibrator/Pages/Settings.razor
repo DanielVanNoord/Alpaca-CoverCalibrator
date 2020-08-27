@@ -121,14 +121,24 @@
 
     protected override void OnInitialized()
     {
-        //ToDo load settings from Server settings
+        Discovery = ServerSettings.AllowDiscovery;
+
+        DiscoveryPort = ServerSettings.DiscoveryPort;
+
+        RemoteAccess = ServerSettings.AllowRemoteAccess;
+
+        ServerPort = ServerSettings.ServerPort;
+
+        StartBrowser = ServerSettings.AutoStartBrowser;
     }
 
     void SaveDiscovery()
     {
         try
         {
-            //ToDo
+            ServerSettings.AllowDiscovery = Discovery;
+
+            ServerSettings.DiscoveryPort = DiscoveryPort;
         }
         catch (Exception ex)
         {
@@ -142,7 +152,19 @@
         {
             bool SettingsChanged = false;
 
-            //ToDo
+            if(ServerSettings.AllowRemoteAccess != RemoteAccess)
+            {
+                ServerSettings.AllowRemoteAccess = RemoteAccess;
+                SettingsChanged = true;
+            }
+
+            if(ServerSettings.ServerPort != ServerPort)
+            {
+                ServerSettings.ServerPort = ServerPort;
+                SettingsChanged = true;
+            }
+
+            ServerSettings.AutoStartBrowser = StartBrowser;
 
             if (SettingsChanged) //If any core settings change call a restart.
             {
@@ -158,9 +180,9 @@
 
     void SaveSecuritySettings()
     {
-
+        //ToDo write and add the library
     }
-    
+
     //ToDo add options for prevent disconnects, dispose.
 
     void Shutdown()
@@ -182,6 +204,7 @@
     public void DisplaySuccess(string message)
     {
     }
+
     string ServerVersion
     {
         get
