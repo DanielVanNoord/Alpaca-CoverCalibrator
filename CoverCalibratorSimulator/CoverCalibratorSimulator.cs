@@ -1,4 +1,5 @@
 using ASCOM;
+using ASCOM.Alpaca.Responses;
 using ASCOM.Standard.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,11 +8,19 @@ using System.Reflection;
 
 namespace CoverCalibratorSimulator
 {
+
+    public interface IAlpacaDevice
+    {
+        AlpacaConfiguredDevice Configuration
+        {
+            get;
+        }
+    }
     /// <summary>
     /// ASCOM CoverCalibrator Driver for Simulator.
     /// </summary>
 
-    public class CoverCalibratorSimulator : ICoverCalibratorV1
+    public class CoverCalibratorSimulator : ICoverCalibratorV1, IAlpacaDevice
     {
         // Private simulator constants
         private const string DRIVER_DESCRIPTION = "ASCOM CoverCalibrator Simulator"; // Driver description that displays in the ASCOM Chooser.
@@ -26,6 +35,7 @@ namespace CoverCalibratorSimulator
         private const string CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME = "Calibrator Initialisation State"; private const CalibratorStatus CALIBRATOR_INITIALISATION_STATE_DEFAULT = CalibratorStatus.Off;
         private const string COVER_OPENING_TIME_PROFILE_NAME = "Cover Opening Time"; private const double COVER_OPENING_TIME_DEFAULT = 5.0; // Seconds
         private const string COVER_INITIALISATION_STATE_PROFILE_NAME = "Cover Initialisation State"; private const CoverStatus COVER_INITIALISATION_STATE_DEFAULT = CoverStatus.Closed;
+        private const string UNIQUE_ID_PROFILE_NAME = "UniqueID";
 
         // Simulator state variables
         private CoverStatus coverState; // The current cover status
@@ -51,11 +61,13 @@ namespace CoverCalibratorSimulator
         private System.Timers.Timer coverTimer;
         private System.Timers.Timer calibratorTimer;
 
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulator"/> class.
         /// Must be public for COM registration.
         /// </summary>
-        public CoverCalibratorSimulator(ITraceLogger logger, IProfile profile)
+        public CoverCalibratorSimulator(int deviceNumber, ITraceLogger logger, IProfile profile)
         {
             try
             {
@@ -66,6 +78,25 @@ namespace CoverCalibratorSimulator
                 // Read device configuration from the ASCOM Profile store, this also sets the trace logger enabled state
                 ReadProfile();
                 TL.LogMessage("CoverCalibrator", "Starting initialisation");
+
+                //This should be replaced by the next bit of code but is semi-unique as a default.
+                string UniqueID = Name + deviceNumber.ToString();
+                //Create a Unique ID if it does not exist
+                try
+                {
+                    if (!profile.ContainsKey(UNIQUE_ID_PROFILE_NAME))
+                    {
+                        var uniqueid = Guid.NewGuid().ToString();
+                        profile.WriteValue(UNIQUE_ID_PROFILE_NAME, uniqueid);
+                    }
+                    UniqueID = profile.GetValue(UNIQUE_ID_PROFILE_NAME);
+                }
+                catch(Exception ex)
+                {
+                    TL.LogMessage("CoverCalibrator", ex.Message);
+                }
+
+                Configuration = new AlpacaConfiguredDevice(Name, "CoverCalibrator", deviceNumber, UniqueID);
 
                 // Initialise remaining components
                 calibratorTimer = new System.Timers.Timer();
@@ -440,6 +471,14 @@ namespace CoverCalibratorSimulator
         }
 
         #endregion ICoverCalibrator Implementation
+
+        #region Alpaca Information
+        public AlpacaConfiguredDevice Configuration
+        {
+            get;
+            private set;
+        }
+        #endregion
 
         #region Private properties and methods
 

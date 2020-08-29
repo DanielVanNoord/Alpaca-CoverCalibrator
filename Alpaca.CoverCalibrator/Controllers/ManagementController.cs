@@ -43,7 +43,7 @@ namespace Alpaca.CoverCalibrator
             List<AlpacaConfiguredDevice> devices = new List<AlpacaConfiguredDevice>();
             try
             {
-                    devices.Add(new AlpacaConfiguredDevice(DeviceManager.GetCoverCalibrator(0).Name, "CoverCalibrator", 0, "Temp-Fix-This"));
+                    devices.Add((DeviceManager.GetCoverCalibrator(0) as CoverCalibratorSimulator.IAlpacaDevice).Configuration);
             }
             catch(Exception ex)
             {

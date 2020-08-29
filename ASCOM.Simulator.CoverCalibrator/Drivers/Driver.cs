@@ -14,7 +14,7 @@ namespace ASCOM.Simulator
     {
 
         internal static string ProgID = "ASCOM.SimulatorLS.CoverCalibrator";
-        public CoverCalibrator() : base(SharedResources.Logger, SharedResources.Profile)
+        public CoverCalibrator() : base(0, SharedResources.Logger, SharedResources.Profile)
         {
             // We increment the global count of objects.
             Server.CountObject();
