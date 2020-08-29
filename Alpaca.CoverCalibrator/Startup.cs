@@ -63,7 +63,8 @@ namespace Alpaca.CoverCalibrator
 
             lifetime.ApplicationStarted.Register(() =>
             {
-                //Log server starting
+                Logging.LogMessage("Server Starting");
+
                 try
                 {
                     if (ServerSettings.AutoStartBrowser) //AutoStart Browser
@@ -73,18 +74,18 @@ namespace Alpaca.CoverCalibrator
                 }
                 catch (Exception ex)
                 {
-                    //Log Error
+                    Logging.LogMessage(ex);
                 }
             });
 
             lifetime.ApplicationStopping.Register(() =>
             {
-                //Log server stopping
+                Logging.LogMessage("Server Stopping");
             });
 
             lifetime.ApplicationStopped.Register(() =>
             {
-                //Log server stopped
+                Logging.LogMessage("Server Stopped");
             });
 
             Lifetime = lifetime;
