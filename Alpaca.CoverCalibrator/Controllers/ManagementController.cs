@@ -47,7 +47,7 @@ namespace Alpaca.CoverCalibrator
             }
             catch(Exception ex)
             {
-                //ToDo log this out
+                Logging.LogMessage(ex);
             }
             return new AlpacaConfiguredDevicesResponse(ClientTransactionID, TransactionID, devices);
         }
