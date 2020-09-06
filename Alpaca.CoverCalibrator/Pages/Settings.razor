@@ -51,6 +51,13 @@
         </div>
 
         <div class="grid-item-right">
+            <span>Respond to localhost on loopback only:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="LocalHostOnlyOnHost">
+        </div>
+
+        <div class="grid-item-right">
         </div>
         <div class="grid-item-right">
             <button @onclick="SaveDiscovery" style="min-width:12ch; vertical-align:middle;">Save</button>
@@ -85,6 +92,12 @@
         get;
         set;
     } = 32227;
+
+    bool LocalHostOnlyOnHost
+    {
+        get;
+        set;
+    } = true;
 
     bool RemoteAccess
     {
@@ -125,6 +138,8 @@
 
         DiscoveryPort = ServerSettings.DiscoveryPort;
 
+        LocalHostOnlyOnHost = ServerSettings.LocalRespondOnlyToLocalHost;
+
         RemoteAccess = ServerSettings.AllowRemoteAccess;
 
         ServerPort = ServerSettings.ServerPort;
@@ -139,6 +154,8 @@
             ServerSettings.AllowDiscovery = Discovery;
 
             ServerSettings.DiscoveryPort = DiscoveryPort;
+
+            ServerSettings.LocalRespondOnlyToLocalHost = LocalHostOnlyOnHost;
         }
         catch (Exception ex)
         {

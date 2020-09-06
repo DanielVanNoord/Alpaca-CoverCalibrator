@@ -51,6 +51,15 @@ namespace Alpaca.CoverCalibrator
 
             try
             {
+                Discovery.DiscoveryManager.Start();
+            }
+            catch(Exception ex)
+            {
+                Logging.LogMessage(ex);
+            }
+
+            try
+            {
                 CreateHostBuilder(args).Build().Run();
             }
             catch (OperationCanceledException)
