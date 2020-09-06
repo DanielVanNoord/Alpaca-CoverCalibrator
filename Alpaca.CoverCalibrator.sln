@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alpaca.CoverCalibrator", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoverCalibratorSimulator", "CoverCalibratorSimulator\CoverCalibratorSimulator.csproj", "{00FEEED5-1C4E-4904-B566-61230550781C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.Compatibility.Utilities", "ASCOM.Compatibility.Utilities\ASCOM.Compatibility.Utilities.csproj", "{AB690357-091B-4D8F-B424-1720247140FC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCOM.Simulator.CoverCalibrator", "ASCOM.Simulator.CoverCalibrator\ASCOM.Simulator.CoverCalibrator.csproj", "{C708E487-E3A9-4073-A545-294B88674225}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{00FEEED5-1C4E-4904-B566-61230550781C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00FEEED5-1C4E-4904-B566-61230550781C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00FEEED5-1C4E-4904-B566-61230550781C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB690357-091B-4D8F-B424-1720247140FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB690357-091B-4D8F-B424-1720247140FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB690357-091B-4D8F-B424-1720247140FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB690357-091B-4D8F-B424-1720247140FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C708E487-E3A9-4073-A545-294B88674225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C708E487-E3A9-4073-A545-294B88674225}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C708E487-E3A9-4073-A545-294B88674225}.Release|Any CPU.ActiveCfg = Release|Any CPU

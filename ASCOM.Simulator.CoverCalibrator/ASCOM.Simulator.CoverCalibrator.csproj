@@ -62,6 +62,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ASCOM.Attributes, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL" />
+    <Reference Include="ASCOM.Compatibility.Utilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2bc574275a5f8be6, processorArchitecture=MSIL">
+      <HintPath>..\packages\ASCOM.Compatibility.Utilities.1.0.0-alpha5\lib\net472\ASCOM.Compatibility.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="ASCOM.DeviceInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files (x86)\ASCOM\Platform 6 Developer Components\Components\Platform6\ASCOM.DeviceInterfaces.dll</HintPath>
@@ -141,10 +144,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ASCOM.Compatibility.Utilities\ASCOM.Compatibility.Utilities.csproj">
-      <Project>{ab690357-091b-4d8f-b424-1720247140fc}</Project>
-      <Name>ASCOM.Compatibility.Utilities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CoverCalibratorSimulator\CoverCalibratorSimulator.csproj">
       <Project>{00feeed5-1c4e-4904-b566-61230550781c}</Project>
       <Name>CoverCalibratorSimulator</Name>
