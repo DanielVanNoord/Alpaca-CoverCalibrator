@@ -76,5 +76,11 @@ namespace ASCOM.Simulator
             LblSynchBehaviourTime.Text = $"* Methods will be synchronous from 0.0 and {CoverCalibrator.SYNCHRONOUS_BEHAVIOUR_LIMIT.ToString("0.0")} seconds and asynchronous above this.";
         }
 
+        private void SetupDialogForm_Load(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+        }
     }
 }

@@ -300,6 +300,7 @@ namespace ASCOM.Simulator
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ASCOM CoverCalibrator Simulator Setup";
+            this.Load += new System.EventHandler(this.SetupDialogForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picASCOM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumCoverOpeningTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NumCalibratorStablisationTime)).EndInit();
