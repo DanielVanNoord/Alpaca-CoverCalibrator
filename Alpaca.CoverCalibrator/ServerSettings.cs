@@ -11,21 +11,44 @@ namespace Alpaca.CoverCalibrator
 
         internal static string Location
         {
-            get;
-            set;
-        } = "Unknown";
+            get
+            {
+                return Profile.GetValue("Location", "Unknown");
+            }
+            set
+            {            
+                Profile.WriteValue("Location", value.ToString());
+            }
+        }
 
         internal static bool AutoStartBrowser
         {
-            get;
-            set;
-        } = true;
+            get
+            {
+                return Profile.GetValue("AutoStartBrowser", true.ToString()) == true.ToString();
+            }
+            set
+            {
+                Profile.WriteValue("AutoStartBrowser", value.ToString());
+            }
+        }
 
-        internal static UInt16 ServerPort
+        internal static ushort ServerPort
         {
-            get;
-            set;
-        } = 5000;
+            get
+            {
+                var value = Profile.GetValue("ServerPort", 5000.ToString());
+                if (ushort.TryParse(value, out ushort result))
+                {
+                    return result;
+                }
+                return 5000;
+            }
+            set
+            {
+                Profile.WriteValue("ServerPort", value.ToString());
+            }
+        }
 
         internal static bool AllowRemoteAccess
         {
@@ -53,11 +76,22 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
-        internal static UInt16 DiscoveryPort
+        internal static ushort DiscoveryPort
         {
-            get;
-            set;
-        } = 32227;
+            get
+            {
+                var value = Profile.GetValue("DiscoveryPort", 32227.ToString());
+                if (ushort.TryParse(value, out ushort result))
+                {
+                    return result;
+                }
+                return 32227;
+            }
+            set
+            {
+                Profile.WriteValue("DiscoveryPort", value.ToString());
+            }
+        }
 
         internal static bool LocalRespondOnlyToLocalHost
         {
