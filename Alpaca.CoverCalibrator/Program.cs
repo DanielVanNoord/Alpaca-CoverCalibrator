@@ -15,6 +15,19 @@ namespace Alpaca.CoverCalibrator
     {
         public static void Main(string[] args)
         {
+            //Reset all stored settings if requested
+            if(args?.Any(str => str.Contains("--reset")) ?? false)
+            {
+                Console.WriteLine("Reseting stored settings");
+                Console.WriteLine("Reseting Server settings");
+                ServerSettings.Reset();
+                Console.WriteLine("Reseting Device settings");
+                DeviceManager.Reset();
+                Console.WriteLine("Settings reset, shutting down");
+                return;
+            }
+
+            //Add the --urls argument for IHostBuilder
             if (!args?.Any(str => str.Contains("--urls")) ?? true)
             {
                 if (args == null)

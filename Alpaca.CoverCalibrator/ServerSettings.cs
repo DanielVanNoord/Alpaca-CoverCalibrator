@@ -21,6 +21,18 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
+        internal static void Reset()
+        {
+            try
+            {
+                Profile.Clear();
+            }
+            catch(Exception ex)
+            {
+                Logging.LogMessage(ex);
+            }
+        }
+
         internal static bool AutoStartBrowser
         {
             get

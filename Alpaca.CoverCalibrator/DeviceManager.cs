@@ -19,6 +19,11 @@ namespace Alpaca.CoverCalibrator
             coverCalibratorV1s.Add(coverCalibrator);
         }
 
+        internal static void Reset()
+        {
+            coverCalibrator.ResetSettings();
+        }
+
         internal static ASCOM.Standard.Interfaces.ICoverCalibratorV1 GetCoverCalibrator(int DeviceID)
         {
             if(DeviceID == 0)

@@ -27,6 +27,14 @@ namespace CoverCalibratorSimulator
 
         public const double SYNCHRONOUS_BEHAVIOUR_LIMIT = 0.5; // Threshold (seconds) above which state changes will be handled asynchronously
 
+        /// <summary>
+        /// Resets all stored device settings
+        /// </summary>
+        public void ResetSettings()
+        {
+            Profile?.Clear();
+        }
+
         // Persistence constants
         private const string TRACE_STATE_PROFILE_NAME = "Trace State"; private const bool TRACE_STATE_DEFAULT = false;
 
