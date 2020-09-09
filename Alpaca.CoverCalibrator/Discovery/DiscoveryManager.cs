@@ -1,7 +1,8 @@
-using Alpaca.CoverCalibrator.Pages;
+﻿using Alpaca.CoverCalibrator.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Alpaca.CoverCalibrator.Discovery
@@ -24,9 +25,14 @@ namespace Alpaca.CoverCalibrator.Discovery
             };
         }
 
-        internal static void Start(int port, bool localHostOnly)
+        internal static void Start(int port, bool localHostOnly, bool ipv6)
         {
-            DiscoveryServer = new Server(port, true, false)
+            if(!Dns.GetHostAddresses(Dns.GetHostName()).Any(o=>o.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6))
+            {
+                ipv6 = false;
+            }
+
+            DiscoveryServer = new Server(port, true, ipv6)
             {
                 AllowDiscovery = ServerSettings.AllowDiscovery,
                 AllowRemoteAccess = !localHostOnly,

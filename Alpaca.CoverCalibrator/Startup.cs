@@ -60,6 +60,7 @@ namespace Alpaca.CoverCalibrator
                 {
                     var serverAddress = serverAddressesFeature.Addresses.First();
                     bool localHostOnly = false;
+                    bool ipv6 = false;
                     int port = ServerSettings.ServerPort;
 
                     if(Uri.TryCreate(serverAddress, UriKind.RelativeOrAbsolute, out Uri serverUri))
@@ -70,6 +71,15 @@ namespace Alpaca.CoverCalibrator
                             if (serverUri.Host.ToLowerInvariant().Contains("localhost") || IPAddress.IsLoopback(IPAddress.Parse(serverUri.Host)))
                             {
                                 localHostOnly = true;
+
+                                if(IPAddress.TryParse(serverUri.Host, out IPAddress address))
+                                {
+                                    if(address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                                    {
+                                        localHostOnly = false;
+                                        ipv6 = true;
+                                    }
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -86,10 +96,12 @@ namespace Alpaca.CoverCalibrator
                                 port = result;
                             }
                         }
+
+                        ipv6 = serverAddress.Contains("*") || serverAddress.Contains("+");
                     }
 
                     Console.WriteLine($"Starting Discovery on port: {port}");
-                    Discovery.DiscoveryManager.Start(port, localHostOnly);
+                    Discovery.DiscoveryManager.Start(port, localHostOnly, ipv6);
 
                 }
                 else

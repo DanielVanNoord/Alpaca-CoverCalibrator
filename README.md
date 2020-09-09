@@ -8,5 +8,4 @@ ToDo
 * Add options for preventing remote disconnects, dispose.
 * Switch to new logging interface
 * Improve / increase logging in Alpaca Server
-* Add IPv6?
 * Many more things
