@@ -5,6 +5,12 @@
     <p>Version @ServerVersion</p>
     <div class="grid-container-two">
         <div class="grid-item-right">
+            <span>Server Location:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="text" @bind="Location" style="width:21ch;">
+        </div>
+        <div class="grid-item-right">
             <span>Allow Remote Access:</span>
         </div>
         <div class="grid-item-left">
@@ -29,6 +35,29 @@
         </div>
         <div class="grid-item-right">
             <button @onclick="SaveServerSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <legend>Driver Settings</legend>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Prevent Disconnects:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="PreventRemoteDisconnects">
+        </div>
+        <div class="grid-item-right">
+            <span>Prevent Disposes:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="PreventRemoteDisposes">
+        </div>
+        <div class="grid-item-right">
+        </div>
+        <div class="grid-item-right">
+            <button @onclick="SaveDriverSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
         </div>
     </div>
 </fieldset>
@@ -124,12 +153,30 @@
         set;
     } = false;
 
+    string Location
+    {
+        get;
+        set;
+    }
+
     bool AllowShutdown
     {
         get
         {
             return !EnableShutdown;
         }
+    }
+
+    bool PreventRemoteDisconnects
+    {
+        get;
+        set;
+    }
+
+    bool PreventRemoteDisposes
+    {
+        get;
+        set;
     }
 
     protected override void OnInitialized()
@@ -145,6 +192,12 @@
         ServerPort = ServerSettings.ServerPort;
 
         StartBrowser = ServerSettings.AutoStartBrowser;
+
+        Location = ServerSettings.Location;
+
+        PreventRemoteDisconnects = ServerSettings.PreventRemoteDisconnects;
+
+        PreventRemoteDisposes = ServerSettings.PreventRemoteDisposes;
     }
 
     void SaveDiscovery()
@@ -181,6 +234,8 @@
                 SettingsChanged = true;
             }
 
+            ServerSettings.Location = Location;
+
             ServerSettings.AutoStartBrowser = StartBrowser;
 
             if (SettingsChanged) //If any core settings change call a restart.
@@ -195,12 +250,24 @@
         }
     }
 
-    void SaveSecuritySettings()
+    void SaveDriverSettings()
     {
-        //ToDo write and add the library
+        try
+        {
+            ServerSettings.PreventRemoteDisconnects = PreventRemoteDisconnects;
+            ServerSettings.PreventRemoteDisposes = PreventRemoteDisposes;
+
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
     }
 
-    //ToDo add options for prevent disconnects, dispose.
+    void SaveSecuritySettings()
+    {
+        //write and add the library
+    }
 
     void Shutdown()
     {

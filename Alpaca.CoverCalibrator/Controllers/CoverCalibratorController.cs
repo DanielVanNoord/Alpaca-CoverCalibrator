@@ -92,8 +92,11 @@ namespace Alpaca.CoverCalibrator
         {
             try
             {
-                
-                DeviceManager.GetCoverCalibrator(DeviceNumber).Connected = Connected;
+
+                if (Connected || !ServerSettings.PreventRemoteDisconnects)
+                {
+                    DeviceManager.GetCoverCalibrator(DeviceNumber).Connected = Connected;
+                }
 
                 return new Response() { ClientTransactionID = ClientTransactionID, ServerTransactionID = ServerManager.ServerTransactionID };
             }
@@ -195,8 +198,10 @@ namespace Alpaca.CoverCalibrator
         {
             try
             {
-                //ToDo Do not allow remote Dispose
-                DeviceManager.GetCoverCalibrator(DeviceNumber).Dispose();
+                if (!ServerSettings.PreventRemoteDisposes)
+                {
+                    DeviceManager.GetCoverCalibrator(DeviceNumber).Dispose();
+                }
 
                 return new Response() { ClientTransactionID = ClientTransactionID, ServerTransactionID = ServerManager.ServerTransactionID };
             }

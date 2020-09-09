@@ -117,5 +117,31 @@ namespace Alpaca.CoverCalibrator
                 Profile.WriteValue("LocalRespondOnlyToLocalHost", value.ToString());
             }
         }
+
+        internal static bool PreventRemoteDisconnects
+        {
+            get
+            {
+                return Profile.GetValue("PreventRemoteDisconnects", true.ToString()) == true.ToString();
+            }
+            set
+            {
+                Discovery.DiscoveryManager.DiscoveryServer.LocalRespondOnlyToLocalHost = value;
+                Profile.WriteValue("PreventRemoteDisconnects", value.ToString());
+            }
+        }
+
+        internal static bool PreventRemoteDisposes
+        {
+            get
+            {
+                return Profile.GetValue("PreventRemoteDisposes", true.ToString()) == true.ToString();
+            }
+            set
+            {
+                Discovery.DiscoveryManager.DiscoveryServer.LocalRespondOnlyToLocalHost = value;
+                Profile.WriteValue("PreventRemoteDisposes", value.ToString());
+            }
+        }
     }
 }

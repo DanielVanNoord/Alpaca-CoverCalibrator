@@ -5,7 +5,6 @@ ToDo
 * Add packaging / deployment
 * Close internal ToDos
 * Add basic http auth library
-* Add options for preventing remote disconnects, dispose.
 * Switch to new logging interface
 * Improve / increase logging in Alpaca Server
 * Many more things
