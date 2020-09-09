@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using System.Net;
 
 namespace Alpaca.CoverCalibrator
 {
@@ -48,6 +50,58 @@ namespace Alpaca.CoverCalibrator
             else
             {
                 app.UseExceptionHandler("/Error");
+            }
+
+            try
+            {
+                var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
+
+                if (serverAddressesFeature.Addresses.Count > 0)
+                {
+                    var serverAddress = serverAddressesFeature.Addresses.First();
+                    bool localHostOnly = false;
+                    int port = ServerSettings.ServerPort;
+
+                    if(Uri.TryCreate(serverAddress, UriKind.RelativeOrAbsolute, out Uri serverUri))
+                    {
+                        try
+                        {
+                            port = serverUri.Port;
+                            if (serverUri.Host.ToLowerInvariant().Contains("localhost") || IPAddress.IsLoopback(IPAddress.Parse(serverUri.Host)))
+                            {
+                                localHostOnly = true;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logging.LogMessage(ex);
+                        }
+                    }
+                    else //Invalid Uri, simply parse out port
+                    {
+                        if (serverAddress.Contains(":"))
+                        {
+                            if(int.TryParse(serverAddress.Split(':').Last(), out int result))
+                            {
+                                port = result;
+                            }
+                        }
+                    }
+
+                    Console.WriteLine($"Starting Discovery on port: {port}");
+                    Discovery.DiscoveryManager.Start(port, localHostOnly);
+
+                }
+                else
+                {
+                    Console.WriteLine("Starting discovery server from defaults");
+                    Discovery.DiscoveryManager.Start();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logging.LogMessage(ex);
             }
 
             app.UseStaticFiles();

@@ -1,4 +1,4 @@
-﻿using Alpaca.CoverCalibrator.Pages;
+using Alpaca.CoverCalibrator.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +20,16 @@ namespace Alpaca.CoverCalibrator.Discovery
             {
                 AllowDiscovery = ServerSettings.AllowDiscovery,
                 AllowRemoteAccess = ServerSettings.AllowRemoteAccess,
+                LocalRespondOnlyToLocalHost = ServerSettings.LocalRespondOnlyToLocalHost
+            };
+        }
+
+        internal static void Start(int port, bool localHostOnly)
+        {
+            DiscoveryServer = new Server(port, true, false)
+            {
+                AllowDiscovery = ServerSettings.AllowDiscovery,
+                AllowRemoteAccess = !localHostOnly,
                 LocalRespondOnlyToLocalHost = ServerSettings.LocalRespondOnlyToLocalHost
             };
         }
