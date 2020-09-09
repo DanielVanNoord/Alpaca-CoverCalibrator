@@ -76,7 +76,10 @@ namespace Alpaca.CoverCalibrator
                                 {
                                     if(address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
                                     {
-                                        localHostOnly = false;
+                                        if (address.IsIPv6LinkLocal)
+                                        {
+                                            localHostOnly = false;
+                                        }
                                         ipv6 = true;
                                     }
                                 }
