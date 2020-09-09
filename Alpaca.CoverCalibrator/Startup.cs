@@ -52,6 +52,8 @@ namespace Alpaca.CoverCalibrator
                 app.UseExceptionHandler("/Error");
             }
 
+            int port = ServerSettings.ServerPort;
+
             try
             {
                 var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
@@ -61,7 +63,7 @@ namespace Alpaca.CoverCalibrator
                     var serverAddress = serverAddressesFeature.Addresses.First();
                     bool localHostOnly = false;
                     bool ipv6 = false;
-                    int port = ServerSettings.ServerPort;
+
 
                     if(Uri.TryCreate(serverAddress, UriKind.RelativeOrAbsolute, out Uri serverUri))
                     {
@@ -138,7 +140,12 @@ namespace Alpaca.CoverCalibrator
                 {
                     if (ServerSettings.AutoStartBrowser) //AutoStart Browser
                     {
-                        
+                        ProcessStartInfo psi = new ProcessStartInfo
+                        {
+                            FileName = string.Format("http://localhost:{0}", port),
+                            UseShellExecute = true
+                        };
+                        Process.Start(psi);
                     }
                 }
                 catch (Exception ex)
