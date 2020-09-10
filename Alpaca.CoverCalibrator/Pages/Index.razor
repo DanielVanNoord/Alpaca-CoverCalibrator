@@ -3,3 +3,14 @@
 <h1>Alpaca ICoverCalibrator Simulator</h1>
 
 Status monitor will go here
+
+<fieldset>
+    <legend>Bound Addresses</legend>
+
+    <p>Addresses bound at startup. * or + means all available interfaces.</p>
+
+    @foreach (var address in Startup.Addresses)
+    {
+        <p>@address</p>
+    }
+</fieldset>

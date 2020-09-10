@@ -30,6 +30,12 @@ namespace Alpaca.CoverCalibrator
             private set;
         }
 
+        internal static string[] Addresses
+        {
+            get;
+            private set;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -57,6 +63,8 @@ namespace Alpaca.CoverCalibrator
             try
             {
                 var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
+
+                Addresses = serverAddressesFeature.Addresses.ToArray();
 
                 if (serverAddressesFeature.Addresses.Count > 0)
                 {
