@@ -1,0 +1,1 @@
+NetStandard 2.0 library for device control 
