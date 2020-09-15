@@ -4,6 +4,7 @@ ToDo
 * Add toast support
 * Add library and project licenses.
 * Add readmes and comments
+* Add favicon.
 * Cleanup
 * Switch to Discovery Library
 * Add packaging / deployment
