@@ -10,25 +10,27 @@ namespace Alpaca.CoverCalibrator
     {
         private static List<ASCOM.Standard.Interfaces.ICoverCalibratorV1> coverCalibratorV1s = new List<ASCOM.Standard.Interfaces.ICoverCalibratorV1>();
 
-        internal static CoverCalibratorSimulator.CoverCalibratorSimulator coverCalibrator;
 
         static DeviceManager()
         {
-            coverCalibrator = new CoverCalibratorSimulator.CoverCalibratorSimulator(0, Logging.Log, 
-                new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator-CovCal", "CoverCalibrator", 0));
-            coverCalibratorV1s.Add(coverCalibrator);
+            //Only one instance
+            coverCalibratorV1s.Add(new CoverCalibratorSimulator.CoverCalibratorSimulator(0, Logging.Log,
+                new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator-CovCal", "CoverCalibrator", 0)));
         }
 
         internal static void Reset()
         {
-            coverCalibrator.ResetSettings();
+            foreach (var covcal in coverCalibratorV1s)
+            {
+                (covcal as CoverCalibratorSimulator.CoverCalibratorSimulator)?.ResetSettings();
+            }
         }
 
         internal static ASCOM.Standard.Interfaces.ICoverCalibratorV1 GetCoverCalibrator(int DeviceID)
         {
             if(DeviceID == 0)
             {
-                return coverCalibrator;
+                return coverCalibratorV1s.First();
             }
             else
             {

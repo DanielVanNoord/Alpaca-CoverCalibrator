@@ -61,6 +61,14 @@
     [Parameter]
     public int InstanceID { get; set; } = 0;
 
+    private ASCOM.Standard.Interfaces.ICoverCalibratorV1 Device
+    {
+        get
+        {
+            return DeviceManager.GetCoverCalibrator(InstanceID);
+        }
+    }
+
     Timer timer = new Timer(100);
 
     public void Dispose()
@@ -107,7 +115,7 @@
         {
             if (!CalibratorDisabled)
             {
-                return DeviceManager.coverCalibrator.MaxBrightness;
+                return Device.MaxBrightness;
             }
             return 0;
         }
@@ -128,7 +136,7 @@
         {
             if (!CalibratorDisabled)
             {
-                return (Brightness * 255) / DeviceManager.coverCalibrator.MaxBrightness;
+                return (Brightness * 255) / Device.MaxBrightness;
             }
             return 0;
         }
@@ -140,7 +148,7 @@
         {
             if (!CalibratorDisabled)
             {
-                return DeviceManager.coverCalibrator.Brightness;
+                return Device.Brightness;
             }
             return 0;
         }
@@ -150,7 +158,7 @@
             {
                 try
                 {
-                    DeviceManager.coverCalibrator.CalibratorOn(value);
+                    Device.CalibratorOn(value);
                 }
                 catch(Exception ex)
                 {
@@ -164,7 +172,7 @@
     {
         get
         {
-            return DeviceManager.coverCalibrator.CalibratorState;
+            return Device.CalibratorState;
         }
     }
 
@@ -172,7 +180,7 @@
     {
         get
         {
-            return DeviceManager.coverCalibrator.CoverState;
+            return Device.CoverState;
         }
     }
 
@@ -212,7 +220,7 @@
     {
         get
         {
-            return DeviceManager.coverCalibrator.Connected;
+            return Device.Connected;
         }
     }
 
@@ -232,7 +240,7 @@
     {
         get
         {
-            if (DeviceManager.coverCalibrator.Connected)
+            if (Device.Connected)
             {
                 return "Disconnect";
             }
@@ -242,14 +250,14 @@
 
     public void Connect()
     {
-        DeviceManager.coverCalibrator.Connected = !DeviceManager.coverCalibrator.Connected;
+        Device.Connected = !Device.Connected;
     }
 
     public void CalOff()
     {
         try
         {
-            DeviceManager.coverCalibrator.CalibratorOff();
+            Device.CalibratorOff();
         }
         catch(Exception ex)
         {
@@ -263,19 +271,19 @@
         {
             if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Open)
             {
-                DeviceManager.coverCalibrator.CloseCover();
+                Device.CloseCover();
             }
             else if(CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Closed)
             {
-                DeviceManager.coverCalibrator.OpenCover();
+                Device.OpenCover();
             }
             else if(CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Unknown)
             {
-                DeviceManager.coverCalibrator.CloseCover();
+                Device.CloseCover();
             }
             else if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Error)
             {
-                DeviceManager.coverCalibrator.CloseCover();
+                Device.CloseCover();
             }
 
         }
@@ -291,7 +299,7 @@
         {
             if (CoverStatus == ASCOM.Standard.Interfaces.CoverStatus.Moving)
             {
-                DeviceManager.coverCalibrator.HaltCover();
+                Device.HaltCover();
             }
         }
         catch (Exception ex)

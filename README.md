@@ -12,4 +12,3 @@ ToDo
 * Add basic http auth library
 * Switch to new logging interface
 * Improve / increase logging in Alpaca Server
-* Many more things

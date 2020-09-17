@@ -79,15 +79,27 @@
     [Parameter]
     public int InstanceID { get; set; }
 
+
+    /// <summary>
+    /// This access the device type not the interface to allow the device specific settigns to be accessed.
+    /// </summary>
+    private CoverCalibratorSimulator.CoverCalibratorSimulator Device
+    {
+        get
+        {
+            return DeviceManager.GetCoverCalibrator(InstanceID) as CoverCalibratorSimulator.CoverCalibratorSimulator;
+        }
+    }
+
     public int MaxBrightness
     {
         get
         {
-            return DeviceManager.coverCalibrator.MaxBrightnessValue;
+            return Device.MaxBrightnessValue;
         }
         set
         {
-            DeviceManager.coverCalibrator.MaxBrightnessValue = value;
+            Device.MaxBrightnessValue = value;
         }
     }
 
@@ -95,11 +107,11 @@
     {
         get
         {
-            return DeviceManager.coverCalibrator.CalibratorStablisationTimeValue;
+            return Device.CalibratorStablisationTimeValue;
         }
         set
         {
-            DeviceManager.coverCalibrator.CalibratorStablisationTimeValue = value;
+            Device.CalibratorStablisationTimeValue = value;
         }
     }
 
@@ -107,11 +119,11 @@
     {
         get
         {
-            return DeviceManager.coverCalibrator.CalibratorStateInitialisationValue;
+            return Device.CalibratorStateInitialisationValue;
         }
         set
         {
-            DeviceManager.coverCalibrator.CalibratorStateInitialisationValue = value;
+            Device.CalibratorStateInitialisationValue = value;
         }
     }
 
@@ -119,11 +131,11 @@
     {
         get
         {
-            return DeviceManager.coverCalibrator.CoverOpeningTimeValue;
+            return Device.CoverOpeningTimeValue;
         }
         set
         {
-            DeviceManager.coverCalibrator.CoverOpeningTimeValue = value;
+            Device.CoverOpeningTimeValue = value;
         }
     }
 
@@ -131,21 +143,21 @@
     {
         get
         {
-            return DeviceManager.coverCalibrator.CoverStateInitialisationValue;
+            return Device.CoverStateInitialisationValue;
         }
         set
         {
-            DeviceManager.coverCalibrator.CoverStateInitialisationValue = value;
+            Device.CoverStateInitialisationValue = value;
         }
     }
 
     public void SaveDeviceSettings()
     {
-        DeviceManager.coverCalibrator.WriteProfile();
+        Device.WriteProfile();
     }
 
     public void Reset()
     {
-        DeviceManager.coverCalibrator.ResetSettings();
+        Device.ResetSettings();
     }
 }
