@@ -14,7 +14,7 @@ namespace Alpaca.CoverCalibrator
         static DeviceManager()
         {
             //Only one instance
-            coverCalibratorV1s.Add(new CoverCalibratorSimulator.CoverCalibratorSimulator(0, Logging.Log,
+            coverCalibratorV1s.Add(new ASCOMSimulators.CoverCalibratorSimulator(0, Logging.Log,
                 new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator-CovCal", "CoverCalibrator", 0)));
         }
 
@@ -22,7 +22,7 @@ namespace Alpaca.CoverCalibrator
         {
             foreach (var covcal in coverCalibratorV1s)
             {
-                (covcal as CoverCalibratorSimulator.CoverCalibratorSimulator)?.ResetSettings();
+                (covcal as ASCOMSimulators.CoverCalibratorSimulator)?.ResetSettings();
             }
         }
 

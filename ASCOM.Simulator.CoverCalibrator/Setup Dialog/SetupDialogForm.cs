@@ -18,13 +18,10 @@ namespace ASCOM.Simulator
     {
         ITraceLogger TL;
 
-        readonly CoverCalibratorSimulator.CoverCalibratorSimulator CovCal;
-
-        public SetupDialogForm(CoverCalibratorSimulator.CoverCalibratorSimulator cal, ITraceLogger traceLogger)
+        public SetupDialogForm(ITraceLogger traceLogger)
         {
             InitializeComponent();
             TL = traceLogger;
-            CovCal = cal;
 
             // Initialise current values of user settings from the ASCOM Profile
             InitUI();
@@ -35,11 +32,11 @@ namespace ASCOM.Simulator
         {
             // Update the state variables with results from the dialogue
             TL.Enabled = chkTrace.Checked;
-            CovCal.MaxBrightnessValue = Decimal.ToInt32(NumMaxBrightness.Value);
-            CovCal.CalibratorStablisationTimeValue = Decimal.ToDouble(NumCalibratorStablisationTime.Value);
-            CovCal.CoverOpeningTimeValue = Decimal.ToDouble(NumCoverOpeningTime.Value);
-            Enum.TryParse<ASCOM.Standard.Interfaces.CalibratorStatus>(CmbCalibratorInitialisationState.SelectedItem.ToString(), out CovCal.CalibratorStateInitialisationValue);
-            Enum.TryParse<ASCOM.Standard.Interfaces.CoverStatus>(CmbCoverInitialisationState.SelectedItem.ToString(), out CovCal.CoverStateInitialisationValue);
+            SharedResources.DeviceInstance.MaxBrightnessValue = Decimal.ToInt32(NumMaxBrightness.Value);
+            SharedResources.DeviceInstance.CalibratorStablisationTimeValue = Decimal.ToDouble(NumCalibratorStablisationTime.Value);
+            SharedResources.DeviceInstance.CoverOpeningTimeValue = Decimal.ToDouble(NumCoverOpeningTime.Value);
+            Enum.TryParse<ASCOM.Standard.Interfaces.CalibratorStatus>(CmbCalibratorInitialisationState.SelectedItem.ToString(), out SharedResources.DeviceInstance.CalibratorStateInitialisationValue);
+            Enum.TryParse<ASCOM.Standard.Interfaces.CoverStatus>(CmbCoverInitialisationState.SelectedItem.ToString(), out SharedResources.DeviceInstance.CoverStateInitialisationValue);
         }
 
         private void CmdCancel_Click(object sender, EventArgs e) // Cancel button event handler
@@ -67,13 +64,13 @@ namespace ASCOM.Simulator
         private void InitUI()
         {
             chkTrace.Checked = TL.Enabled;
-            NumMaxBrightness.Value = (decimal)CovCal.MaxBrightnessValue;
-            NumCalibratorStablisationTime.Value = (decimal)CovCal.CalibratorStablisationTimeValue;
-            NumCoverOpeningTime.Value = (decimal)CovCal.CoverOpeningTimeValue;
-            CmbCalibratorInitialisationState.SelectedItem = CovCal.CalibratorStateInitialisationValue.ToString();
-            CmbCoverInitialisationState.SelectedItem = CovCal.CoverStateInitialisationValue.ToString();
+            NumMaxBrightness.Value = (decimal)SharedResources.DeviceInstance.MaxBrightnessValue;
+            NumCalibratorStablisationTime.Value = (decimal)SharedResources.DeviceInstance.CalibratorStablisationTimeValue;
+            NumCoverOpeningTime.Value = (decimal)SharedResources.DeviceInstance.CoverOpeningTimeValue;
+            CmbCalibratorInitialisationState.SelectedItem = SharedResources.DeviceInstance.CalibratorStateInitialisationValue.ToString();
+            CmbCoverInitialisationState.SelectedItem = SharedResources.DeviceInstance.CoverStateInitialisationValue.ToString();
 
-            LblSynchBehaviourTime.Text = $"* Methods will be synchronous from 0.0 and {CoverCalibrator.SYNCHRONOUS_BEHAVIOUR_LIMIT.ToString("0.0")} seconds and asynchronous above this.";
+            LblSynchBehaviourTime.Text = $"* Methods will be synchronous from 0.0 and {ASCOMSimulators.CoverCalibratorSimulator.SYNCHRONOUS_BEHAVIOUR_LIMIT.ToString("0.0")} seconds and asynchronous above this.";
         }
 
         private void SetupDialogForm_Load(object sender, EventArgs e)

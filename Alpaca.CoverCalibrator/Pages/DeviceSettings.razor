@@ -83,11 +83,11 @@
     /// <summary>
     /// This access the device type not the interface to allow the device specific settigns to be accessed.
     /// </summary>
-    private CoverCalibratorSimulator.CoverCalibratorSimulator Device
+    private ASCOMSimulators.CoverCalibratorSimulator Device
     {
         get
         {
-            return DeviceManager.GetCoverCalibrator(InstanceID) as CoverCalibratorSimulator.CoverCalibratorSimulator;
+            return DeviceManager.GetCoverCalibrator(InstanceID) as ASCOMSimulators.CoverCalibratorSimulator;
         }
     }
 

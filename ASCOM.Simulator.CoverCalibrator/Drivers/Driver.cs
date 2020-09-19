@@ -10,30 +10,105 @@ namespace ASCOM.Simulator
     [ProgId("ASCOM.SimulatorLS.CoverCalibrator")]
     [ServedClassName("CoverCalibrator LS Simulator")]
     [ClassInterface(ClassInterfaceType.None)]
-    public class CoverCalibrator : CoverCalibratorSimulator.CoverCalibratorSimulator, ASCOM.DeviceInterface.ICoverCalibratorV1
+    public class CoverCalibrator : ReferenceCountedObjectBase, ICoverCalibratorV1
     {
 
         internal static string ProgID = "ASCOM.SimulatorLS.CoverCalibrator";
-        public CoverCalibrator() : base(0, SharedResources.Logger, SharedResources.Profile)
+
+        // A unique id for this instance of the driver
+        internal readonly string DriverID = SharedResources.DeviceInstance.GetUniqueDriverId();
+
+
+        public CoverCalibrator() : base()
         {
-            // We increment the global count of objects.
-            Server.CountObject();
         }
 
-        ~CoverCalibrator()
+        public bool Connected
         {
-            // We decrement the global count of objects.
-            Server.UncountObject();
-            // We then immediately test to see if we the conditions
-            // are right to attempt to terminate this server application.
-            Server.ExitIf();
+            get => SharedResources.DeviceInstance.IsClientConnected(DriverID); 
+            set
+            {
+                if (value)
+                {
+                    SharedResources.DeviceInstance.ConnectClient(DriverID);
+                }
+                else
+                {
+                    SharedResources.DeviceInstance.DisconnectClient(DriverID);
+                }
+            }
         }
 
-        ArrayList ICoverCalibratorV1.SupportedActions => new ArrayList(base.SupportedActions.ToList());
+        public string Description => SharedResources.DeviceInstance.Description;
 
-        CoverStatus ICoverCalibratorV1.CoverState => (CoverStatus) base.CoverState;
+        public string DriverInfo => SharedResources.DeviceInstance.DriverInfo;
 
-        CalibratorStatus ICoverCalibratorV1.CalibratorState => (CalibratorStatus) base.CalibratorState;
+        public string DriverVersion => SharedResources.DeviceInstance.DriverVersion;
+
+        public short InterfaceVersion => SharedResources.DeviceInstance.InterfaceVersion;
+
+        public string Name => SharedResources.DeviceInstance.Name;
+
+        public int Brightness => SharedResources.DeviceInstance.Brightness;
+
+        public int MaxBrightness => SharedResources.DeviceInstance.MaxBrightness;
+
+        ArrayList ICoverCalibratorV1.SupportedActions => new ArrayList(SharedResources.DeviceInstance.SupportedActions.ToList());
+
+        CoverStatus ICoverCalibratorV1.CoverState => (CoverStatus)SharedResources.DeviceInstance.CoverState;
+
+        CalibratorStatus ICoverCalibratorV1.CalibratorState => (CalibratorStatus)SharedResources.DeviceInstance.CalibratorState;
+
+        public string Action(string ActionName, string ActionParameters)
+        {
+            return SharedResources.DeviceInstance.Action(ActionName, ActionParameters);
+        }
+
+        public void CalibratorOff()
+        {
+            SharedResources.DeviceInstance.CalibratorOff();
+        }
+
+        public void CalibratorOn(int Brightness)
+        {
+            SharedResources.DeviceInstance.CalibratorOn(Brightness);
+        }
+
+        public void CloseCover()
+        {
+            SharedResources.DeviceInstance.CloseCover();
+        }
+
+        public void CommandBlind(string Command, bool Raw = false)
+        {
+            SharedResources.DeviceInstance.CommandBlind(Command, Raw);
+        }
+
+        public bool CommandBool(string Command, bool Raw = false)
+        {
+            return SharedResources.DeviceInstance.CommandBool(Command, Raw);
+        }
+
+        public string CommandString(string Command, bool Raw = false)
+        {
+            return SharedResources.DeviceInstance.CommandString(Command, Raw);
+        }
+
+        public void Dispose()
+        {
+            SharedResources.DeviceInstance.DisconnectClient(DriverID);
+            SharedResources.DeviceInstance.Dispose();
+        }
+
+        public void HaltCover()
+        {
+            SharedResources.DeviceInstance.HaltCover();
+        }
+
+        public void OpenCover()
+        {
+            SharedResources.DeviceInstance.OpenCover();
+        }
 
         public void SetupDialog()
         {
@@ -41,12 +116,12 @@ namespace ASCOM.Simulator
             // or call a different dialogue if connected
             if (Connected) MessageBox.Show("Already connected, just press OK");
 
-            using (SetupDialogForm F = new SetupDialogForm(this, SharedResources.Logger))
+            using (SetupDialogForm F = new SetupDialogForm(SharedResources.Logger))
             {
                 var result = F.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    base.WriteProfile(); // Persist device configuration values to the ASCOM Profile store
+                    SharedResources.DeviceInstance.WriteProfile(); // Persist device configuration values to the ASCOM Profile store
                 }
             }
         }

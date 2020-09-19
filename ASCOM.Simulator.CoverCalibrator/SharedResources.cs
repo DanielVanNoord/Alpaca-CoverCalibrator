@@ -4,7 +4,7 @@
 // ================
 //
 // This class is a container for all shared resources that may be needed
-// by the drivers served by the Local Server. 
+// by the drivers served by the Local Server.
 //
 // NOTES:
 //
@@ -13,11 +13,10 @@
 // Written by:	Bob Denny	29-May-2007
 // Modified by Chris Rowland and Peter Simpson to hamdle multiple hardware devices March 2011
 //
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ASCOM;
+using ASCOM.Compatibility.Utilities;
 using ASCOM.Standard.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ASCOM.Simulator
 {
@@ -31,88 +30,96 @@ namespace ASCOM.Simulator
     /// </summary>
     public static class SharedResources
     {
-        // object used for locking to prevent multiple drivers accessing common code at the same time
-        private static readonly object lockObject = new object();
-
-        // Shared serial port. This will allow multiple drivers to use one single serial port.
-        private static int s_z = 0;     // counter for the number of connections to the serial port
-
         //
         // Public access to shared resources
         //
 
-        // Simulator components 
-        internal static ITraceLogger Logger = new ASCOM.Compatibility.Utilities.TraceLoggerCompat("", "CoverCalibratorSimulatorLS"); // ASCOM Trace Logger component
-        internal static IProfile Profile = new ASCOM.Compatibility.Utilities.ProfileCompat(CoverCalibrator.ProgID, "CoverCalibrator"); //Access to device settings
+        // ASCOM Trace Logger component
+        internal static ITraceLogger Logger = new TraceLoggerCompat("", "CoverCalibratorSimulatorLS");
+
+        internal static DeviceHardware DeviceInstance = new DeviceHardware(0, CoverCalibrator.ProgID);
 
         #region Multi Driver handling
-        // this section illustrates how multiple drivers could be handled,
-        // it's for drivers where multiple connections to the hardware can be made and ensures that the
-        // hardware is only disconnected from when all the connected devices have disconnected.
-
-        // It is NOT a complete solution!  This is to give ideas of what can - or should be done.
-        //
-        // An alternative would be to move the hardware control here, handle connecting and disconnecting,
-        // and provide the device with a suitable connection to the hardware.
-        //
-        /// <summary>
-        /// dictionary carrying device connections.
-        /// The Key is the connection number that identifies the device, it could be the COM port name,
-        /// USB ID or IP Address, the Value is the DeviceHardware class
-        /// </summary>
-        private static Dictionary<string, DeviceHardware> connectedDevices = new Dictionary<string, DeviceHardware>();
 
         /// <summary>
         /// This is called in the driver Connect(true) property,
         /// it add the device id to the list of devices if it's not there and increments the device count.
         /// </summary>
         /// <param name="deviceId"></param>
-        public static void Connect(string deviceId)
-        {
-            lock (lockObject)
-            {
-                if (!connectedDevices.ContainsKey(deviceId))
-                    connectedDevices.Add(deviceId, new DeviceHardware());
-                connectedDevices[deviceId].count++;       // increment the value
-            }
-        }
 
-        public static void Disconnect(string deviceId)
-        {
-            lock (lockObject)
-            {
-                if (connectedDevices.ContainsKey(deviceId))
-                {
-                    connectedDevices[deviceId].count--;
-                    if (connectedDevices[deviceId].count <= 0)
-                        connectedDevices.Remove(deviceId);
-                }
-            }
-        }
-
-        public static bool IsConnected(string deviceId)
-        {
-            if (connectedDevices.ContainsKey(deviceId))
-                return (connectedDevices[deviceId].count > 0);
-            else
-                return false;
-        }
-
-        #endregion
-
+        #endregion Multi Driver handling
     }
 
     /// <summary>
     /// Skeleton of a hardware class, all this does is hold a count of the connections,
     /// in reality extra code will be needed to handle the hardware in some way
     /// </summary>
-    public class DeviceHardware
+    public class DeviceHardware : ASCOMSimulators.CoverCalibratorSimulator
     {
-        internal int count { set; get; }
+        private object lockObj = new object();
+        private readonly string ProgID = string.Empty;
 
-        internal DeviceHardware()
+        internal DeviceHardware(int deviceNumber, string progID) : base(deviceNumber, SharedResources.Logger, new ProfileCompat(progID, "CoverCalibrator"))
         {
-            count = 0;
+            ProgID = progID;
         }
+
+        //ToDo move this to server shutdown;
+        public new void Dispose()
+        {
+            if (!AnyClientConnected)
+            {
+                base.Dispose();
+            }
+        }
+
+        public string GetUniqueDriverId()
+        {
+            int i = 0;
+            string driverId = ProgID;
+            while (driverConnections.ContainsKey(driverId))
+            {
+                driverId = ProgID + i.ToString();
+                i++;
+            }
+            driverConnections.Add(driverId, false);
+            return driverId;
+        }
+
+        private readonly Dictionary<string, bool> driverConnections = new Dictionary<string, bool>();
+
+        public void ConnectClient(string uniqueID)
+        {
+            lock (lockObj)
+            {
+                if (!Connected)
+                    Connected = true;
+                if (!driverConnections.ContainsKey(uniqueID))
+                    driverConnections.Add(uniqueID, true);
+                else
+                    driverConnections[uniqueID] = true;
+            }
+        }
+
+        public void DisconnectClient(string uniqueID)
+        {
+            lock (lockObj)
+            {
+                if (driverConnections.ContainsKey(uniqueID))
+                    driverConnections[uniqueID] = false;
+                if (!AnyClientConnected)
+                {
+                    Connected = false;
+                }
+            }
+        }
+
+        public bool IsClientConnected(string uniqueID)
+        {
+            if (!driverConnections.ContainsKey(uniqueID)) return false;
+            else return driverConnections[uniqueID];
+        }
+
+        private bool AnyClientConnected => driverConnections.Any(c => c.Value);
     }
 }
