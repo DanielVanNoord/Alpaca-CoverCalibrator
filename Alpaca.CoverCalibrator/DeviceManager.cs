@@ -8,13 +8,13 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class DeviceManager
     {
-        private static List<ASCOM.Standard.Interfaces.ICoverCalibratorV1> coverCalibratorV1s = new List<ASCOM.Standard.Interfaces.ICoverCalibratorV1>();
+        private static Dictionary<int,ASCOM.Standard.Interfaces.ICoverCalibratorV1> coverCalibratorV1s = new Dictionary<int,ASCOM.Standard.Interfaces.ICoverCalibratorV1>();
 
 
         static DeviceManager()
         {
             //Only one instance
-            coverCalibratorV1s.Add(new ASCOMSimulators.CoverCalibratorSimulator(0, Logging.Log,
+            coverCalibratorV1s.Add(0,new ASCOMSimulators.CoverCalibratorSimulator(0, Logging.Log,
                 new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator-CovCal", "CoverCalibrator", 0)));
         }
 
@@ -22,15 +22,15 @@ namespace Alpaca.CoverCalibrator
         {
             foreach (var covcal in coverCalibratorV1s)
             {
-                (covcal as ASCOMSimulators.CoverCalibratorSimulator)?.ResetSettings();
+                (covcal.Value as ASCOMSimulators.CoverCalibratorSimulator)?.ResetSettings();
             }
         }
 
         internal static ASCOM.Standard.Interfaces.ICoverCalibratorV1 GetCoverCalibrator(int DeviceID)
         {
-            if(DeviceID == 0)
+            if(coverCalibratorV1s.ContainsKey(DeviceID))
             {
-                return coverCalibratorV1s.First();
+                return coverCalibratorV1s[DeviceID];
             }
             else
             {
@@ -40,7 +40,7 @@ namespace Alpaca.CoverCalibrator
 
         internal static List<ASCOM.Standard.Interfaces.ICoverCalibratorV1> GetCoverCalibrators()
         {
-            return coverCalibratorV1s;
+            return coverCalibratorV1s.Values.ToList();
         }
     }
 }
