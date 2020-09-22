@@ -4,7 +4,6 @@ ToDo
 * Add toast support
 * Add library and project licenses.
 * Add readmes and comments
-* Add favicon.
 * Cleanup
 * Change Alpaca Port
 * Switch to Discovery Library
@@ -13,3 +12,4 @@ ToDo
 * Add basic http auth library
 * Switch to new logging interface
 * Improve / increase logging in Alpaca Server
+* Clarify proper handling of ASCOM dispose

@@ -64,7 +64,7 @@ namespace ASCOM.Simulator
             ProgID = progID;
         }
 
-        //ToDo move this to server shutdown;
+        //Mark dispose requests or move to server shutdown?
         public new void Dispose()
         {
             if (!AnyClientConnected)
