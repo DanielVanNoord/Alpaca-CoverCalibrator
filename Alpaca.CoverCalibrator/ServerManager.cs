@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Alpaca.CoverCalibrator
@@ -14,6 +15,16 @@ namespace Alpaca.CoverCalibrator
             {
                 return transactionID++;
             }
+        }
+
+        internal static void StartBrowser(int port)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = string.Format("http://localhost:{0}", port),
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 }

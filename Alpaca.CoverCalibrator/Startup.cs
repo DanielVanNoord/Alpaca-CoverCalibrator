@@ -42,7 +42,6 @@ namespace Alpaca.CoverCalibrator
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            //services.AddSingleton<MenuRefreshService>();
             services.AddMvc();
         }
 
@@ -148,12 +147,7 @@ namespace Alpaca.CoverCalibrator
                 {
                     if (ServerSettings.AutoStartBrowser) //AutoStart Browser
                     {
-                        ProcessStartInfo psi = new ProcessStartInfo
-                        {
-                            FileName = string.Format("http://localhost:{0}", port),
-                            UseShellExecute = true
-                        };
-                        Process.Start(psi);
+                        ServerManager.StartBrowser(port);
                     }
                 }
                 catch (Exception ex)

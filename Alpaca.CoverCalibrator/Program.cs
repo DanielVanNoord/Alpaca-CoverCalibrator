@@ -27,6 +27,13 @@ namespace Alpaca.CoverCalibrator
                 return;
             }
 
+            //Already running, start the browser
+            if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1)
+            {
+                ServerManager.StartBrowser(ServerSettings.ServerPort);
+                return;
+            }
+
             //Add the --urls argument for IHostBuilder
             if (!args?.Any(str => str.Contains("--urls")) ?? true)
             {
