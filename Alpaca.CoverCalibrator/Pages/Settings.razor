@@ -40,6 +40,17 @@
 </fieldset>
 
 <fieldset>
+    <legend>Bound Addresses</legend>
+
+    <p>Addresses bound at startup. * or + means all available interfaces.</p>
+
+    @foreach (var address in Startup.Addresses)
+    {
+        <p>@address</p>
+    }
+</fieldset>
+
+<fieldset>
     <legend>Driver Settings</legend>
     <div class="grid-container-two">
         <div class="grid-item-right">
