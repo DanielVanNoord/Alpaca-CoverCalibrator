@@ -228,6 +228,7 @@ namespace Alpaca.CoverCalibrator.Discovery
             }
             catch (Exception ex)
             {
+                Logging.LogMessage(ex);
             }
             return false;
         }

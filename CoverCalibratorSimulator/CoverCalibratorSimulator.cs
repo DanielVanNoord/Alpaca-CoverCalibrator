@@ -66,8 +66,8 @@ namespace ASCOMSimulators
 
         internal IProfile Profile; //Access to device settings
 
-        private System.Timers.Timer coverTimer;
-        private System.Timers.Timer calibratorTimer;
+        private readonly System.Timers.Timer coverTimer;
+        private readonly System.Timers.Timer calibratorTimer;
 
 
 
@@ -134,7 +134,7 @@ namespace ASCOMSimulators
             catch (Exception ex)
             {
                 // Create a message to the user
-                string message = $"Exception while creating CoverCalibrator simulator: \r\n{ex.ToString()}";
+                string message = $"Exception while creating CoverCalibrator simulator: \r\n{ex.Message}";
 
                 // Attempt to log the message
                 try

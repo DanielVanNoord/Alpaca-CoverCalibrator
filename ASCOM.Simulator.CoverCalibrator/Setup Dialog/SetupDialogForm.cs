@@ -16,12 +16,9 @@ namespace ASCOM.Simulator
     [ComVisible(false)]					// Form not registered for COM!
     public partial class SetupDialogForm : Form
     {
-        ITraceLogger TL;
-
-        public SetupDialogForm(ITraceLogger traceLogger)
+        public SetupDialogForm()
         {
             InitializeComponent();
-            TL = traceLogger;
 
             // Initialise current values of user settings from the ASCOM Profile
             InitUI();
@@ -31,7 +28,7 @@ namespace ASCOM.Simulator
         private void CmdOK_Click(object sender, EventArgs e) // OK button event handler
         {
             // Update the state variables with results from the dialogue
-            TL.Enabled = chkTrace.Checked;
+            SharedResources.Logger.Enabled = chkTrace.Checked;
             SharedResources.DeviceInstance.MaxBrightnessValue = Decimal.ToInt32(NumMaxBrightness.Value);
             SharedResources.DeviceInstance.CalibratorStablisationTimeValue = Decimal.ToDouble(NumCalibratorStablisationTime.Value);
             SharedResources.DeviceInstance.CoverOpeningTimeValue = Decimal.ToDouble(NumCoverOpeningTime.Value);
@@ -63,14 +60,14 @@ namespace ASCOM.Simulator
 
         private void InitUI()
         {
-            chkTrace.Checked = TL.Enabled;
+            chkTrace.Checked = SharedResources.Logger.Enabled;
             NumMaxBrightness.Value = (decimal)SharedResources.DeviceInstance.MaxBrightnessValue;
             NumCalibratorStablisationTime.Value = (decimal)SharedResources.DeviceInstance.CalibratorStablisationTimeValue;
             NumCoverOpeningTime.Value = (decimal)SharedResources.DeviceInstance.CoverOpeningTimeValue;
             CmbCalibratorInitialisationState.SelectedItem = SharedResources.DeviceInstance.CalibratorStateInitialisationValue.ToString();
             CmbCoverInitialisationState.SelectedItem = SharedResources.DeviceInstance.CoverStateInitialisationValue.ToString();
 
-            LblSynchBehaviourTime.Text = $"* Methods will be synchronous from 0.0 and {ASCOMSimulators.CoverCalibratorSimulator.SYNCHRONOUS_BEHAVIOUR_LIMIT.ToString("0.0")} seconds and asynchronous above this.";
+            LblSynchBehaviourTime.Text = $"* Methods will be synchronous from 0.0 and {ASCOMSimulators.CoverCalibratorSimulator.SYNCHRONOUS_BEHAVIOUR_LIMIT:0.0} seconds and asynchronous above this.";
         }
 
         private void SetupDialogForm_Load(object sender, EventArgs e)

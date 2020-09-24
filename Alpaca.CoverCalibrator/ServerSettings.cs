@@ -7,7 +7,7 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class ServerSettings
     {
-        private static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator-CovCal", "Server");
+        private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator-CovCal", "Server");
 
         internal static string Location
         {

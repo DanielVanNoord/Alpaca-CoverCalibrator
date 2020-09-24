@@ -116,7 +116,7 @@ namespace ASCOM.Simulator
             // or call a different dialogue if connected
             if (Connected) MessageBox.Show("Already connected, just press OK");
 
-            using (SetupDialogForm F = new SetupDialogForm(SharedResources.Logger))
+            using (SetupDialogForm F = new SetupDialogForm())
             {
                 var result = F.ShowDialog();
                 if (result == DialogResult.OK)
