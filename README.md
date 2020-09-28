@@ -4,8 +4,9 @@ ToDo
 * Add toast support
 * Add library and project licenses.
 * Add readmes and comments
-* Cleanup
-* Change Alpaca Port
+* Move developer set Alpaca constants to a central location
+* Cleanup code / namespaces
+* Change Alpaca Port to test port
 * Switch to Discovery Library
 * Add packaging / deployment
 * Close internal ToDos
