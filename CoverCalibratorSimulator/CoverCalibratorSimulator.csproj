@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="ASCOM.Exceptions" Version="6.5.0" />
-    <PackageReference Include="ASCOM.Standard.Types" Version="1.0.0-alpha8" />
+    <PackageReference Include="ASCOM.Standard.Types" Version="1.0.0-alpha9" />
   </ItemGroup>
 
 </Project>
