@@ -29,7 +29,7 @@ namespace Alpaca.CoverCalibrator
             }
             catch(Exception ex)
             {
-                Logging.LogMessage(ex);
+                Logging.LogError(ex.Message);
             }
         }
 

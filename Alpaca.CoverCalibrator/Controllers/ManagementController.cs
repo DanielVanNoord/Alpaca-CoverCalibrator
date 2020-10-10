@@ -1,4 +1,5 @@
 ﻿using ASCOM.Alpaca.Responses;
+using ASCOM.Standard.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,20 +10,12 @@ namespace Alpaca.CoverCalibrator
     [ApiController]
     public class ManagementController : Controller
     {
-        private static uint transactionID = 0;
-      
-        private static uint TransactionID
-        {
-            get
-            {
-                return transactionID++;
-            }
-        }
-
         [HttpGet]
         [Route("management/apiversions")]
         public IntListResponse ApiVersions(int DeviceNumber, int ClientID = -1, uint ClientTransactionID = 0)
         {
+            var TransactionID = ServerManager.ServerTransactionID;
+            Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
             return new IntListResponse(ClientTransactionID, TransactionID, new int[1] { 1 });
         }
 
@@ -32,6 +25,9 @@ namespace Alpaca.CoverCalibrator
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             string version = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
+
+            var TransactionID = ServerManager.ServerTransactionID;
+            Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
 
             return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription("Alpaca server for Cover Calibrator simulator", "ASCOM Initiative", version, ServerSettings.Location));
         }
@@ -47,8 +43,12 @@ namespace Alpaca.CoverCalibrator
             }
             catch(Exception ex)
             {
-                Logging.LogMessage(ex);
+                Logging.LogError(ex.Message);
             }
+
+            var TransactionID = ServerManager.ServerTransactionID;
+            Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
+
             return new AlpacaConfiguredDevicesResponse(ClientTransactionID, TransactionID, devices);
         }
     }

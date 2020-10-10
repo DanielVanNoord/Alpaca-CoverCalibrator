@@ -62,7 +62,7 @@ namespace Alpaca.CoverCalibrator
                 startupURLArg += ":" + ServerSettings.ServerPort;
 
                 Console.WriteLine("Startup URL args: " + startupURLArg);
-                Logging.LogMessage("Startup URL args: " + startupURLArg);
+                Logging.LogInformation("Startup URL args: " + startupURLArg);
 
                 temparray[args.Length] = startupURLArg;
 
@@ -79,7 +79,7 @@ namespace Alpaca.CoverCalibrator
             }
             catch (Exception ex)
             {
-                Logging.LogMessage(ex);
+                Logging.LogError(ex.Message);
             }
         }
 

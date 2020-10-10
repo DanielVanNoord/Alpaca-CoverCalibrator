@@ -96,7 +96,7 @@ namespace Alpaca.CoverCalibrator
                         }
                         catch (Exception ex)
                         {
-                            Logging.LogMessage(ex);
+                            Logging.LogError(ex.Message);
                         }
                     }
                     else //Invalid Uri, simply parse out port
@@ -125,7 +125,7 @@ namespace Alpaca.CoverCalibrator
             }
             catch (Exception ex)
             {
-                Logging.LogMessage(ex);
+                Logging.LogError(ex.Message);
             }
 
             app.UseStaticFiles();
@@ -141,7 +141,7 @@ namespace Alpaca.CoverCalibrator
 
             lifetime.ApplicationStarted.Register(() =>
             {
-                Logging.LogMessage("Server Starting");
+                Logging.LogInformation("Server Starting");
 
                 try
                 {
@@ -152,18 +152,18 @@ namespace Alpaca.CoverCalibrator
                 }
                 catch (Exception ex)
                 {
-                    Logging.LogMessage(ex);
+                    Logging.LogError(ex.Message);
                 }
             });
 
             lifetime.ApplicationStopping.Register(() =>
             {
-                Logging.LogMessage("Server Stopping");
+                Logging.LogInformation("Server Stopping");
             });
 
             lifetime.ApplicationStopped.Register(() =>
             {
-                Logging.LogMessage("Server Stopped");
+                Logging.LogInformation("Server Stopped");
             });
 
             Lifetime = lifetime;

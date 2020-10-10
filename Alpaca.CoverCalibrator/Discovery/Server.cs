@@ -175,7 +175,7 @@ namespace Alpaca.CoverCalibrator.Discovery
                         if (ReceiveString.Contains(Constants.DiscoveryMessage))//Contains rather then equals because of invisible padding garbage
                         {
                             //For testing only
-                            Logging.LogMessage(string.Format("Received a discovery packet from {0} at {1}", endpoint.Address, DateTime.Now));
+                            Logging.LogInformation(string.Format("Received a discovery packet from {0} at {1}", endpoint.Address, DateTime.Now));
 
                             byte[] response = Encoding.ASCII.GetBytes(string.Format("{{\"alpacaport\": {0}}}", port));
 
@@ -189,7 +189,7 @@ namespace Alpaca.CoverCalibrator.Discovery
             }
             catch (Exception ex)
             {
-                Logging.LogMessage(ex);
+                Logging.LogError(ex.Message);
             }
             finally
             {
@@ -200,7 +200,7 @@ namespace Alpaca.CoverCalibrator.Discovery
                 }
                 catch (Exception ex)
                 {
-                    Logging.LogMessage(ex);
+                    Logging.LogError(ex.Message);
                 }
             }
         }
@@ -228,7 +228,7 @@ namespace Alpaca.CoverCalibrator.Discovery
             }
             catch (Exception ex)
             {
-                Logging.LogMessage(ex);
+                Logging.LogError(ex.Message);
             }
             return false;
         }

@@ -2,51 +2,52 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Alpaca.CoverCalibrator
 {
     internal static class Logging
     {
-        static Logging()
-        {
-            Log = new ASCOM.Standard.Utilities.TraceLogger(string.Empty, "AlpacaCoverCalibratorSimulator") { Enabled = true };
-        }
-        internal static ITraceLogger Log
+        internal static ILogger Log
         {
             get;
             private set;
         }
 
-        internal static void LogMessage(string Message)
+        static Logging()
         {
-            var enabled = Log.Enabled;
+            Log = new ASCOM.Standard.Utilities.ConsoleLogger();
 
-            if (!enabled)
-            {
-                Log.Enabled = true;
-            }
-            Log.LogMessage("CoverCalibrator", Message);
+            Log.SetMinimumLoggingLevel(LogLevel.Verbose);
 
-            if (!enabled)
-            {
-                Log.Enabled = false;
-            }
+            //Set platform logging 
+            ASCOM.Standard.Utilities.Logger.SetLogProvider(Log);
         }
 
-        internal static void LogMessage(Exception ex)
+        internal static void LogInformation(string message)
         {
-            var enabled = Log.Enabled;
+            ASCOM.Standard.Utilities.Logger.LogInformation(message);
+        }
 
-            if (!enabled)
-            {
-                Log.Enabled = true;
-            }
-            Log.LogIssue("CoverCalibrator", ex.Message);
-            if (!enabled)
-            {
-                Log.Enabled = false;
-            }
+        internal static void LogAPICall(IPAddress remoteIpAddress, string request, int clientID, uint clientTransactionID, uint transactionID)
+        {
+            Log.LogVerbose($"Transaction: {transactionID} - {remoteIpAddress.ToString()} with a client id of {clientID} and client transaction of {clientTransactionID} requested {request}");
+        }
+
+        internal static void LogAPICall(IPAddress remoteIpAddress, string request, int clientID, uint clientTransactionID, uint transactionID, string payload)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void LogError(string message)
+        {
+            ASCOM.Standard.Utilities.Logger.LogError(message);
+        }
+
+        internal static void LogAPICall()
+        {
+            //ASCOM.Standard.Utilities.Logger.LogVerbose(message);
         }
     }
 }
