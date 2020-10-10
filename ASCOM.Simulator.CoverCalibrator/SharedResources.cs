@@ -35,7 +35,7 @@ namespace ASCOM.Simulator
         //
 
         // ASCOM Trace Logger component
-        internal static ITraceLogger Logger = new TraceLoggerCompat("", "CoverCalibratorSimulatorLS");
+        internal static ILogger Logger = new TraceLoggerCompat("", "CoverCalibratorSimulatorLS");
 
         internal static DeviceHardware DeviceInstance = new DeviceHardware(0, CoverCalibrator.ProgID);
 

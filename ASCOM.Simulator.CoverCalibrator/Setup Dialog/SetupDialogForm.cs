@@ -28,7 +28,6 @@ namespace ASCOM.Simulator
         private void CmdOK_Click(object sender, EventArgs e) // OK button event handler
         {
             // Update the state variables with results from the dialogue
-            SharedResources.Logger.Enabled = chkTrace.Checked;
             SharedResources.DeviceInstance.MaxBrightnessValue = Decimal.ToInt32(NumMaxBrightness.Value);
             SharedResources.DeviceInstance.CalibratorStablisationTimeValue = Decimal.ToDouble(NumCalibratorStablisationTime.Value);
             SharedResources.DeviceInstance.CoverOpeningTimeValue = Decimal.ToDouble(NumCoverOpeningTime.Value);
@@ -60,7 +59,6 @@ namespace ASCOM.Simulator
 
         private void InitUI()
         {
-            chkTrace.Checked = SharedResources.Logger.Enabled;
             NumMaxBrightness.Value = (decimal)SharedResources.DeviceInstance.MaxBrightnessValue;
             NumCalibratorStablisationTime.Value = (decimal)SharedResources.DeviceInstance.CalibratorStablisationTimeValue;
             NumCoverOpeningTime.Value = (decimal)SharedResources.DeviceInstance.CoverOpeningTimeValue;

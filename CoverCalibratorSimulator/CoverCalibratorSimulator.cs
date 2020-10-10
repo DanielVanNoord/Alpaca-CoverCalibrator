@@ -27,6 +27,8 @@ namespace ASCOMSimulators
 
         public const double SYNCHRONOUS_BEHAVIOUR_LIMIT = 0.5; // Threshold (seconds) above which state changes will be handled asynchronously
 
+        private readonly int DeviceNumber = 0;
+
         /// <summary>
         /// Resets all stored device settings
         /// </summary>
@@ -62,7 +64,7 @@ namespace ASCOMSimulators
         public double CalibratorStablisationTimeValue;
 
         // Simulator components
-        internal ITraceLogger TL; // ASCOM Trace Logger component
+        internal ILogger TL; // ASCOM Trace Logger component
 
         internal IProfile Profile; //Access to device settings
 
@@ -75,17 +77,19 @@ namespace ASCOMSimulators
         /// Initializes a new instance of the <see cref="Simulator"/> class.
         /// Must be public for COM registration.
         /// </summary>
-        public CoverCalibratorSimulator(int deviceNumber, ITraceLogger logger, IProfile profile)
+        public CoverCalibratorSimulator(int deviceNumber, ILogger logger, IProfile profile)
         {
             try
             {
+                DeviceNumber = deviceNumber;
+
                 // Initialise the driver trace logger
                 TL = logger;
                 Profile = profile;
 
                 // Read device configuration from the ASCOM Profile store, this also sets the trace logger enabled state
                 ReadProfile();
-                TL.LogMessage("CoverCalibrator", "Starting initialisation");
+                TL.LogInformation($"CoverCalibrator {deviceNumber} - Starting initialisation");
 
                 //This should be replaced by the next bit of code but is semi-unique as a default.
                 string UniqueID = Name + deviceNumber.ToString();
@@ -101,8 +105,10 @@ namespace ASCOMSimulators
                 }
                 catch(Exception ex)
                 {
-                    TL.LogMessage("CoverCalibrator", ex.Message);
+                    TL.LogError($"CoverCalibrator {deviceNumber} - {ex.Message}");
                 }
+
+                TL.LogInformation($"CoverCalibrator {deviceNumber} - UUID of {UniqueID}");
 
                 Configuration = new AlpacaConfiguredDevice(Name, "CoverCalibrator", deviceNumber, UniqueID);
 
@@ -113,7 +119,7 @@ namespace ASCOMSimulators
                     calibratorTimer.Interval = Convert.ToInt32(CalibratorStablisationTimeValue * 1000.0); // Set the timer interval in milliseconds from the stabilisation time in seconds
                 }
                 calibratorTimer.Elapsed += CalibratorTimer_Tick;
-                TL.LogMessage("CoverCalibrator", $"Set calibrator timer to: {calibratorTimer.Interval}ms.");
+                TL.LogInformation($"CoverCalibrator {deviceNumber} - Set calibrator timer to: {calibratorTimer.Interval}ms.");
 
                 coverTimer = new System.Timers.Timer();
                 if (CoverOpeningTimeValue > 0.0)
@@ -121,7 +127,7 @@ namespace ASCOMSimulators
                     coverTimer.Interval = Convert.ToInt32(CoverOpeningTimeValue * 1000.0); // Set the timer interval in milliseconds from the opening time in seconds
                 }
                 coverTimer.Elapsed += CoverTimer_Tick;
-                TL.LogMessage("CoverCalibrator", $"Set cover timer to: {coverTimer.Interval}ms.");
+                TL.LogInformation($"CoverCalibrator {deviceNumber} - Set cover timer to: {coverTimer.Interval}ms.");
 
                 // Initialise internal start-up values
                 IsConnected = false; // Initialise connected to false
@@ -129,7 +135,7 @@ namespace ASCOMSimulators
                 coverState = CoverStateInitialisationValue; // Set the cover state as set by the user
                 calibratorState = CalibratorStateInitialisationValue; // Set the calibration state as set by the user
 
-                TL.LogMessage("CoverCalibrator", "Completed initialisation");
+                TL.LogInformation($"CoverCalibrator {deviceNumber} - Completed initialisation");
             }
             catch (Exception ex)
             {
@@ -139,8 +145,7 @@ namespace ASCOMSimulators
                 // Attempt to log the message
                 try
                 {
-                    TL.Enabled = true;
-                    TL.LogMessageCrLf("Initialisation", message);
+                    TL.LogInformation($"CoverCalibrator {deviceNumber} - {message}");
                 }
                 catch { } // Ignore any errors while attempting to log the error
 
@@ -152,14 +157,14 @@ namespace ASCOMSimulators
         {
             coverState = targetCoverState;
             coverTimer.Stop();
-            TL.LogMessage("OpenCover", $"End of cover asynchronous event - cover state is now: {coverState}.");
+            TL.LogVerbose($"CoverCalibrator {DeviceNumber} - End of cover asynchronous event - cover state is now: {coverState}.");
         }
 
         private void CalibratorTimer_Tick(object sender, EventArgs e)
         {
             calibratorState = targetCalibratorStatus;
             calibratorTimer.Stop();
-            TL.LogMessage("OpenCover", $"End of cover asynchronous event - cover state is now: {coverState}.");
+            TL.LogVerbose($"CoverCalibrator {DeviceNumber} - End of cover asynchronous event - cover state is now: {coverState}.");
         }
 
         #region Common properties and methods.
@@ -168,14 +173,14 @@ namespace ASCOMSimulators
         {
             get
             {
-                TL.LogMessage("SupportedActions Get", "Returning empty list");
+                TL.LogVerbose($"CoverCalibrator {DeviceNumber} - SupportedActions - Returning empty list");
                 return new List<string>();
             }
         }
 
         public string Action(string actionName, string actionParameters)
         {
-            LogMessage("", "Action {0}, parameters {1} not implemented", actionName, actionParameters);
+            LogVerbose("", "Action {0}, parameters {1} not implemented", actionName, actionParameters);
             throw new ASCOM.ActionNotImplementedException("Action " + actionName + " is not implemented by this driver");
         }
 
@@ -206,12 +211,12 @@ namespace ASCOMSimulators
         {
             get
             {
-                LogMessage("Connected", "Get {0}", IsConnected);
+                LogVerbose("Connected", "Get {0}", IsConnected);
                 return IsConnected;
             }
             set
             {
-                TL.LogMessage("Connected", "Set {0}", value);
+                LogVerbose("Connected", "Set {0}", value);
                 if (value == IsConnected) return; // We are already in the required state so ignore the request
 
                 if (value)
@@ -229,7 +234,7 @@ namespace ASCOMSimulators
         {
             get
             {
-                TL.LogMessage("Description Get", DRIVER_DESCRIPTION);
+                LogVerbose("Description Get", DRIVER_DESCRIPTION);
                 return DRIVER_DESCRIPTION;
             }
         }
@@ -242,7 +247,7 @@ namespace ASCOMSimulators
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
 
                 string driverInfo = $"CoverCalibrator driver version: {fvi.FileVersion}.";
-                TL.LogMessage("DriverInfo Get", driverInfo);
+                LogVerbose("DriverInfo Get", driverInfo);
                 return driverInfo;
             }
         }
@@ -253,7 +258,7 @@ namespace ASCOMSimulators
             {
                 Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
                 string driverVersion = $"{version.Major}.{version.Minor}";
-                TL.LogMessage("DriverVersion Get", driverVersion);
+                LogVerbose("DriverVersion Get", driverVersion);
                 return driverVersion;
             }
         }
@@ -263,7 +268,7 @@ namespace ASCOMSimulators
             // set by the driver wizard
             get
             {
-                LogMessage("InterfaceVersion Get", "1");
+                LogVerbose("InterfaceVersion Get", "1");
                 return Convert.ToInt16("1");
             }
         }
@@ -273,7 +278,7 @@ namespace ASCOMSimulators
             get
             {
                 string name = "CoverCalibrator Simulator";
-                TL.LogMessage("Name Get", name);
+                LogVerbose("Name Get", name);
                 return name;
             }
         }
@@ -291,12 +296,12 @@ namespace ASCOMSimulators
             {
                 if (IsConnected)
                 {
-                    LogMessage("CoverState Get", coverState.ToString());
+                    LogVerbose("CoverState Get", coverState.ToString());
                     return coverState;
                 }
                 else
                 {
-                    LogMessage("CoverState Get", $"Not connected, returning CoverStatus.Unknown");
+                    LogVerbose("CoverState Get", $"Not connected, returning CoverStatus.Unknown");
                     return CoverStatus.Unknown;
                 }
             }
@@ -315,7 +320,7 @@ namespace ASCOMSimulators
             {
                 coverState = CoverStatus.Moving;
                 WaitFor(CoverOpeningTimeValue);
-                TL.LogMessage("OpenCover", $"Cover opened synchronously in {CoverOpeningTimeValue} seconds.");
+                LogVerbose("OpenCover", $"Cover opened synchronously in {CoverOpeningTimeValue} seconds.");
                 coverState = CoverStatus.Open;
             }
             else
@@ -323,7 +328,7 @@ namespace ASCOMSimulators
                 coverState = CoverStatus.Moving;
                 targetCoverState = CoverStatus.Open;
                 coverTimer.Start();
-                TL.LogMessage("OpenCover", $"Starting asynchronous cover opening for {CoverOpeningTimeValue} seconds.");
+                LogVerbose("OpenCover", $"Starting asynchronous cover opening for {CoverOpeningTimeValue} seconds.");
             }
         }
 
@@ -340,7 +345,7 @@ namespace ASCOMSimulators
             {
                 coverState = CoverStatus.Moving;
                 WaitFor(CoverOpeningTimeValue);
-                TL.LogMessage("CloseCover", $"Cover closed synchronously in {CoverOpeningTimeValue} seconds.");
+                LogVerbose("CloseCover", $"Cover closed synchronously in {CoverOpeningTimeValue} seconds.");
                 coverState = CoverStatus.Closed;
             }
             else
@@ -348,7 +353,7 @@ namespace ASCOMSimulators
                 coverState = CoverStatus.Moving;
                 targetCoverState = CoverStatus.Closed;
                 coverTimer.Start();
-                TL.LogMessage("CloseCover", $"Starting asynchronous cover closing for {CoverOpeningTimeValue} seconds.");
+                LogVerbose("CloseCover", $"Starting asynchronous cover closing for {CoverOpeningTimeValue} seconds.");
             }
         }
 
@@ -366,7 +371,7 @@ namespace ASCOMSimulators
             coverTimer.Stop();
             coverState = CoverStatus.Unknown;
 
-            TL.LogMessage("HaltCover", $"Cover halted and cover state set to {CoverStatus.Unknown}");
+            LogVerbose("HaltCover", $"Cover halted and cover state set to {CoverStatus.Unknown}");
         }
 
         /// <summary>
@@ -378,12 +383,12 @@ namespace ASCOMSimulators
             {
                 if (IsConnected)
                 {
-                    TL.LogMessage("CalibratorState Get", calibratorState.ToString());
+                    LogVerbose("CalibratorState Get", calibratorState.ToString());
                     return calibratorState;
                 }
                 else
                 {
-                    LogMessage("CalibratorState Get", $"Not connected, returning CalibratorState.Unknown");
+                    LogVerbose("CalibratorState Get", $"Not connected, returning CalibratorState.Unknown");
                     return CalibratorStatus.Unknown;
                 }
             }
@@ -400,7 +405,7 @@ namespace ASCOMSimulators
 
                 if (!IsConnected) throw new NotConnectedException("The simulator is not connected, the Brightness property is not available.");
 
-                TL.LogMessage("Brightness Get", brightnessValue.ToString());
+                LogVerbose("Brightness Get", brightnessValue.ToString());
                 return brightnessValue;
             }
         }
@@ -416,7 +421,7 @@ namespace ASCOMSimulators
 
                 if (!IsConnected) throw new NotConnectedException("The simulator is not connected, the MaxBrightness property is not available.");
 
-                TL.LogMessage("MaxBrightness Get", MaxBrightnessValue.ToString());
+                LogVerbose("MaxBrightness Get", MaxBrightnessValue.ToString());
                 return MaxBrightnessValue;
             }
         }
@@ -439,7 +444,7 @@ namespace ASCOMSimulators
             {
                 calibratorState = CalibratorStatus.NotReady;
                 WaitFor(CalibratorStablisationTimeValue);
-                TL.LogMessage("CalibratorOn", $"Calibrator turned on synchronously in {CalibratorStablisationTimeValue} seconds.");
+                LogVerbose("CalibratorOn", $"Calibrator turned on synchronously in {CalibratorStablisationTimeValue} seconds.");
                 calibratorState = CalibratorStatus.Ready;
             }
             else // Asynchronous behaviour
@@ -447,7 +452,7 @@ namespace ASCOMSimulators
                 calibratorState = CalibratorStatus.NotReady;
                 targetCalibratorStatus = CalibratorStatus.Ready;
                 calibratorTimer.Start();
-                TL.LogMessage("CalibratorOn", $"Starting asynchronous calibrator turn on for {CalibratorStablisationTimeValue} seconds.");
+                LogVerbose("CalibratorOn", $"Starting asynchronous calibrator turn on for {CalibratorStablisationTimeValue} seconds.");
             }
         }
 
@@ -466,7 +471,7 @@ namespace ASCOMSimulators
             {
                 calibratorState = CalibratorStatus.NotReady;
                 WaitFor(CalibratorStablisationTimeValue);
-                TL.LogMessage("CalibratorOff", $"Calibrator turned off synchronously in {CalibratorStablisationTimeValue} seconds.");
+                LogVerbose("CalibratorOff", $"Calibrator turned off synchronously in {CalibratorStablisationTimeValue} seconds.");
                 calibratorState = CalibratorStatus.Off;
             }
             else // Asynchronous behaviour
@@ -474,7 +479,7 @@ namespace ASCOMSimulators
                 calibratorState = CalibratorStatus.NotReady;
                 targetCalibratorStatus = CalibratorStatus.Off;
                 calibratorTimer.Start();
-                TL.LogMessage("CalibratorOff", $"Starting asynchronous calibrator turn off for {CalibratorStablisationTimeValue} seconds.");
+                LogVerbose("CalibratorOff", $"Starting asynchronous calibrator turn off for {CalibratorStablisationTimeValue} seconds.");
             }
         }
 
@@ -516,7 +521,6 @@ namespace ASCOMSimulators
         internal void ReadProfile()
         {
             var temp = Profile.GetValue(TRACE_STATE_PROFILE_NAME, TRACE_STATE_DEFAULT.ToString());
-            TL.Enabled = Convert.ToBoolean(temp);
             MaxBrightnessValue = Convert.ToInt32(Profile.GetValue(MAX_BRIGHTNESS_PROFILE_NAME, MAX_BRIGHTNESS_DEFAULT));
             CalibratorStablisationTimeValue = Convert.ToDouble(Profile.GetValue(CALIBRATOR_STABILISATION_TIME_PROFILE_NAME, CALIBRATOR_STABLISATION_TIME_DEFAULT.ToString()));
             if (!Enum.TryParse<CalibratorStatus>(Profile.GetValue(CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME, CALIBRATOR_INITIALISATION_STATE_DEFAULT.ToString()), out CalibratorStateInitialisationValue))
@@ -535,7 +539,6 @@ namespace ASCOMSimulators
         /// </summary>
         public void WriteProfile()
         {
-            Profile.WriteValue(TRACE_STATE_PROFILE_NAME, TL.Enabled.ToString());
             Profile.WriteValue(MAX_BRIGHTNESS_PROFILE_NAME, MaxBrightnessValue.ToString());
             Profile.WriteValue(CALIBRATOR_STABILISATION_TIME_PROFILE_NAME, CalibratorStablisationTimeValue.ToString());
             Profile.WriteValue(CALIBRATOR_INITIALISATION_STATE_PROFILE_NAME, CalibratorStateInitialisationValue.ToString());
@@ -549,10 +552,11 @@ namespace ASCOMSimulators
         /// <param name="identifier"></param>
         /// <param name="message"></param>
         /// <param name="args"></param>
-        internal void LogMessage(string identifier, string message, params object[] args)
+        internal void LogVerbose(string identifier, string message, params object[] args)
         {
             var msg = string.Format(message, args);
-            TL.LogMessage(identifier, msg);
+
+            TL.LogVerbose($"CoverCalibrator {DeviceNumber} - {identifier} - {msg}");
         }
 
         /// <summary>

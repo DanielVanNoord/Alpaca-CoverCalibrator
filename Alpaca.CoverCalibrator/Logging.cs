@@ -20,7 +20,7 @@ namespace Alpaca.CoverCalibrator
             Log = new ASCOM.Standard.Utilities.TraceLogger(null, "AlpacaCoverCalibratorSimulator") { Enabled = true };
 
 
-            Log.SetMinimumLoggingLevel(LogLevel.Verbose);
+            Log.SetMinimumLoggingLevel(LogLevel.Debug);
 
             //Set platform logging 
             ASCOM.Standard.Utilities.Logger.SetLogProvider(Log);
@@ -33,7 +33,7 @@ namespace Alpaca.CoverCalibrator
 
         internal static void LogAPICall(IPAddress remoteIpAddress, string request, int clientID, uint clientTransactionID, uint transactionID)
         {
-            Log.LogVerbose($"Transaction: {transactionID} - {remoteIpAddress.ToString()} with a client id of {clientID} and client transaction of {clientTransactionID} requested {request}");
+            Log.LogDebug($"Transaction: {transactionID} - {remoteIpAddress} with a client id of {clientID} and client transaction of {clientTransactionID} requested {request}");
         }
 
         internal static void LogAPICall(IPAddress remoteIpAddress, string request, int clientID, uint clientTransactionID, uint transactionID, string payload)
@@ -44,11 +44,6 @@ namespace Alpaca.CoverCalibrator
         internal static void LogError(string message)
         {
             ASCOM.Standard.Utilities.Logger.LogError(message);
-        }
-
-        internal static void LogAPICall()
-        {
-            //ASCOM.Standard.Utilities.Logger.LogVerbose(message);
         }
     }
 }
