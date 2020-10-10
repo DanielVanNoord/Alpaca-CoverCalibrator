@@ -9,7 +9,7 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class Logging
     {
-        internal static ILogger Log
+        internal static ASCOM.Standard.Utilities.TraceLogger Log
         {
             get;
             private set;
@@ -17,7 +17,8 @@ namespace Alpaca.CoverCalibrator
 
         static Logging()
         {
-            Log = new ASCOM.Standard.Utilities.ConsoleLogger();
+            Log = new ASCOM.Standard.Utilities.TraceLogger(null, "AlpacaCoverCalibratorSimulator") { Enabled = true };
+
 
             Log.SetMinimumLoggingLevel(LogLevel.Verbose);
 
