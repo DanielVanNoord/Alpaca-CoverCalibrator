@@ -19,10 +19,8 @@ namespace Alpaca.CoverCalibrator
         {
             Log = new ASCOM.Standard.Utilities.TraceLogger(null, "AlpacaCoverCalibratorSimulator") { Enabled = true };
 
-
-            Log.SetMinimumLoggingLevel(LogLevel.Debug);
-
             //Set platform logging 
+            //In this case the platform uses the same logger as the driver.
             ASCOM.Standard.Utilities.Logger.SetLogProvider(Log);
         }
 
