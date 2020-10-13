@@ -11,5 +11,4 @@ ToDo
 * Add packaging / deployment
 * Close internal ToDos
 * Add basic http auth library
-* Improve / increase logging in Alpaca Server
 * Clarify proper handling of ASCOM dispose
