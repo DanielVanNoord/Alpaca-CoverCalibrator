@@ -9,3 +9,4 @@ Folders
 * Pages - Blazor pages containing device setup, server setup and device control. Currently the Alpaca setup api routes here. These allow for custom UI across all platforms.
 * Shared - Blazor components that are shared between other Blazor pages. Currently this consists of the Navigation Menu and main layout. Links to all pages can be added to NavMenu so they can be accessed from the menu.
 * wwwroot - the root folder for www access. Mostly contains the favicon and css assets for the site. Other static resources can be added here as well.
+* Almost all api calls are logged at the verbose level. This is useful for tests / debugging but will generate a very large amount of logs
