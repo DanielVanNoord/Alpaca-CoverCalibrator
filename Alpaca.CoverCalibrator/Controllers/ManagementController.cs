@@ -1,4 +1,4 @@
-using ASCOM.Alpaca.Responses;
+﻿using ASCOM.Alpaca.Responses;
 using ASCOM.Standard.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,20 +16,19 @@ namespace Alpaca.CoverCalibrator
         {
             var TransactionID = ServerManager.ServerTransactionID;
             Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
-            return new IntListResponse(ClientTransactionID, TransactionID, new int[1] { 1 });
+            return new IntListResponse(ClientTransactionID, TransactionID, ServerSettings.APIVersions);
         }
 
         [HttpGet]
         [Route("management/v1/description")]
         public AlpacaDescriptionResponse Description(int ClientID = -1, uint ClientTransactionID = 0)
         {
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            string version = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
+
 
             var TransactionID = ServerManager.ServerTransactionID;
             Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
 
-            return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription("Alpaca server for Cover Calibrator simulator", "ASCOM Initiative", version, ServerSettings.Location));
+            return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription(ServerSettings.ServerName, ServerSettings.Manufacturer, ServerSettings.Version, ServerSettings.Location));
         }
 
         [HttpGet]

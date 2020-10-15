@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,7 +8,32 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class ServerSettings
     {
-        private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile("ASCOM-Simulator-CovCal", "Server");
+        internal const string ServerName = "Alpaca server for Cover Calibrator simulator";
+        internal const string Manufacturer = "ASCOM Initiative";
+        internal static readonly int[] APIVersions = { 1 };
+
+        internal static string Version
+        {
+            get
+            {
+                try
+                {
+                    System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    return FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
+                }
+                catch
+                {
+
+                }
+                return "1.0.0-Error";
+            }
+        }
+
+
+        //Change this to be unique for your server, it is the name of the settings folder
+        private const string ServerProfileName = "ASCOM-Simulator-CovCal";
+
+        private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile(ServerProfileName, "Server");
 
         internal static string Location
         {
