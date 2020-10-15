@@ -17,7 +17,7 @@ namespace Alpaca.CoverCalibrator
 
         static Logging()
         {
-            Log = new ASCOM.Standard.Utilities.TraceLogger(null, "AlpacaCoverCalibratorSimulator") { Enabled = true };
+            Log = new ASCOM.Standard.Utilities.TraceLogger(null, ServerSettings.ServerFileName) { Enabled = true };
 
             Log.SetMinimumLoggingLevel(LogLevel.Verbose);
 

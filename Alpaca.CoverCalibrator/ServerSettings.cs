@@ -29,11 +29,10 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
-
         //Change this to be unique for your server, it is the name of the settings folder
-        private const string ServerProfileName = "ASCOM-Simulator-CovCal";
+        internal const string ServerFileName = "ASCOM-Simulator-CovCal";
 
-        private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile(ServerProfileName, "Server");
+        private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile(ServerFileName, "Server");
 
         internal static string Location
         {
