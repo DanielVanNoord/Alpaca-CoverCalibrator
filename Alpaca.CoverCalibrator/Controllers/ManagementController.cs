@@ -1,4 +1,4 @@
-﻿using ASCOM.Alpaca.Responses;
+using ASCOM.Alpaca.Responses;
 using ASCOM.Standard.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,7 +12,7 @@ namespace Alpaca.CoverCalibrator
     {
         [HttpGet]
         [Route("management/apiversions")]
-        public IntListResponse ApiVersions(int DeviceNumber, int ClientID = -1, uint ClientTransactionID = 0)
+        public IntListResponse ApiVersions(int ClientID = -1, uint ClientTransactionID = 0)
         {
             var TransactionID = ServerManager.ServerTransactionID;
             Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
@@ -21,7 +21,7 @@ namespace Alpaca.CoverCalibrator
 
         [HttpGet]
         [Route("management/v1/description")]
-        public AlpacaDescriptionResponse Description(int DeviceNumber, int ClientID = -1, uint ClientTransactionID = 0)
+        public AlpacaDescriptionResponse Description(int ClientID = -1, uint ClientTransactionID = 0)
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             string version = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
@@ -34,7 +34,7 @@ namespace Alpaca.CoverCalibrator
 
         [HttpGet]
         [Route("management/v1/configureddevices")]
-        public AlpacaConfiguredDevicesResponse ConfiguredDevices(int DeviceNumber, int ClientID = -1, uint ClientTransactionID = 0)
+        public AlpacaConfiguredDevicesResponse ConfiguredDevices(int ClientID = -1, uint ClientTransactionID = 0)
         {
             List<AlpacaConfiguredDevice> devices = new List<AlpacaConfiguredDevice>();
             try
