@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +22,14 @@ namespace Alpaca.CoverCalibrator
         {
             foreach (var covcal in coverCalibratorV1s)
             {
-                (covcal.Value as ASCOMSimulators.CoverCalibratorSimulator)?.ResetSettings();
+                try
+                {
+                    (covcal.Value as ASCOMSimulators.CoverCalibratorSimulator)?.ResetSettings();
+                }
+                catch(Exception ex)
+                {
+                    Logging.LogError(ex.Message);
+                }
             }
         }
 

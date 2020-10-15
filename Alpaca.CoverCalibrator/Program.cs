@@ -19,11 +19,13 @@ namespace Alpaca.CoverCalibrator
             if(args?.Any(str => str.Contains("--reset")) ?? false)
             {
                 Console.WriteLine("Reseting stored settings");
+                Logging.LogInformation("Reseting stored settings");
                 Console.WriteLine("Reseting Server settings");
                 ServerSettings.Reset();
                 Console.WriteLine("Reseting Device settings");
                 DeviceManager.Reset();
                 Console.WriteLine("Settings reset, shutting down");
+                Logging.LogInformation("Settings reset, shutting down");
                 return;
             }
 
