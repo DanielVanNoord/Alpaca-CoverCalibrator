@@ -11,15 +11,9 @@ using System.Text;
 
 namespace Alpaca.CoverCalibrator.Discovery
 {
-    public class Server
+    public class Server : IDisposable
     {
         private readonly int port;
-
-        public bool AllowDiscovery
-        {
-            get;
-            set;
-        } = true;
 
         public bool AllowRemoteAccess
         {
@@ -32,6 +26,13 @@ namespace Alpaca.CoverCalibrator.Discovery
             get;
             set;
         } = true;
+
+        private List<UdpClient> Clients = new List<UdpClient>();
+        public bool Disposed
+        {
+            get;
+            private set;
+        } = false;
 
         public Server(int AlpacaPort, bool IPv4 = true, bool IPv6 = true)
         {
@@ -70,6 +71,8 @@ namespace Alpaca.CoverCalibrator.Discovery
 
             // This uses begin receive rather then async so it works on net 3.5
             UDPClient.BeginReceive(ReceiveCallback, UDPClient);
+
+            Clients.Add(UDPClient);
         }
 
         /// <summary>
@@ -81,7 +84,6 @@ namespace Alpaca.CoverCalibrator.Discovery
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
-                List<UdpClient> clients = new List<UdpClient>();
 
                 foreach (var adapter in adapters)
                 {
@@ -107,7 +109,7 @@ namespace Alpaca.CoverCalibrator.Discovery
                                 if (!uni.Address.IsIPv6LinkLocal && uni.Address != IPAddress.Parse("::1"))
                                     continue;
 
-                                clients.Add(NewClient(uni.Address, adapterProperties.GetIPv6Properties().Index));
+                                Clients.Add(NewClient(uni.Address, adapterProperties.GetIPv6Properties().Index));
                             }
                         }
                     }
@@ -144,45 +146,43 @@ namespace Alpaca.CoverCalibrator.Discovery
             {
                 udpClient = (UdpClient)ar.AsyncState;
 
-                if (AllowDiscovery)
+                IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, Constants.DiscoveryPort);
+
+                // Obtain the UDP message body and convert it to a string, with remote IP address attached as well
+                string ReceiveString = Encoding.ASCII.GetString(udpClient.EndReceive(ar, ref endpoint));
+
+                bool discoveryAllowed = false;
+
+                if (IPAddress.IsLoopback(endpoint.Address))
                 {
-                    IPEndPoint endpoint = new IPEndPoint(IPAddress.Any, Constants.DiscoveryPort);
-
-                    // Obtain the UDP message body and convert it to a string, with remote IP address attached as well
-                    string ReceiveString = Encoding.ASCII.GetString(udpClient.EndReceive(ar, ref endpoint));
-
-                    bool discoveryAllowed = false;
-
-                    if (IPAddress.IsLoopback(endpoint.Address))
+                    discoveryAllowed = true;
+                }
+                else if (IsLocalIpAddress(endpoint.Address.ToString()))
+                {
+                    if (!LocalRespondOnlyToLocalHost)
                     {
                         discoveryAllowed = true;
-                    }
-                    else if (IsLocalIpAddress(endpoint.Address.ToString()))
-                    {
-                        if (!LocalRespondOnlyToLocalHost)
-                        {
-                            discoveryAllowed = true;
-                        }
-                    }
-                    else if (AllowRemoteAccess)
-                    {
-                        discoveryAllowed = true;
-                    }
-
-                    if (discoveryAllowed)
-                    {
-
-                        if (ReceiveString.Contains(Constants.DiscoveryMessage))//Contains rather then equals because of invisible padding garbage
-                        {
-                            //For testing only
-                            Logging.LogInformation(string.Format("Received a discovery packet from {0} at {1}", endpoint.Address, DateTime.Now));
-
-                            byte[] response = Encoding.ASCII.GetBytes(string.Format("{{\"alpacaport\": {0}}}", port));
-
-                            udpClient.Send(response, response.Length, endpoint);
-                        }
                     }
                 }
+                else if (AllowRemoteAccess)
+                {
+                    discoveryAllowed = true;
+                }
+
+                if (discoveryAllowed)
+                {
+
+                    if (ReceiveString.Contains(Constants.DiscoveryMessage))//Contains rather then equals because of invisible padding garbage
+                    {
+                        //For testing only
+                        Logging.LogInformation(string.Format("Received a discovery packet from {0} at {1}", endpoint.Address, DateTime.Now));
+
+                        byte[] response = Encoding.ASCII.GetBytes(string.Format("{{\"alpacaport\": {0}}}", port));
+
+                        udpClient.Send(response, response.Length, endpoint);
+                    }
+                }
+
 
                 // Configure the UdpClient class to accept more messages, if they arrive
                 udpClient.BeginReceive(ReceiveCallback, udpClient);
@@ -204,6 +204,7 @@ namespace Alpaca.CoverCalibrator.Discovery
                 }
             }
         }
+        
 
         //Use string so localhost works
         internal static bool IsLocalIpAddress(string host)
@@ -231,6 +232,38 @@ namespace Alpaca.CoverCalibrator.Discovery
                 Logging.LogError(ex.Message);
             }
             return false;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!Disposed)
+            {
+                if (disposing)
+                {
+                    foreach(var udp in Clients)
+                    {
+                        try
+                        {
+                            udp.Close();
+                            udp.Dispose();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+
+                    Clients.Clear();
+                }
+                Disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

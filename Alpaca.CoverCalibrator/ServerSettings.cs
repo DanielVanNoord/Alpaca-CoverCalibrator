@@ -108,8 +108,22 @@ namespace Alpaca.CoverCalibrator
             }
             set
             {
-                Discovery.DiscoveryManager.DiscoveryServer.AllowDiscovery = value;
                 Profile.WriteValue("AllowDiscovery", value.ToString());
+
+                if (value)
+                {
+                    if (!Discovery.DiscoveryManager.IsRunning)
+                    {
+                        Discovery.DiscoveryManager.Start(ServerPort, LocalRespondOnlyToLocalHost, true);
+                    }
+                }
+                else
+                {
+                    if (Discovery.DiscoveryManager.IsRunning)
+                    {
+                        Discovery.DiscoveryManager.Stop();
+                    }
+                }
             }
         }
 
