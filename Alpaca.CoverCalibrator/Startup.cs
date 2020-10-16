@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using System.Net;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Alpaca.CoverCalibrator
 {
@@ -43,6 +44,13 @@ namespace Alpaca.CoverCalibrator
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMvc();
+
+            // configure basic authentication 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -131,6 +139,9 @@ namespace Alpaca.CoverCalibrator
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -168,5 +168,17 @@ namespace Alpaca.CoverCalibrator
                 Profile.WriteValue("PreventRemoteDisposes", value.ToString());
             }
         }
+
+        internal static bool UseAuth
+        {
+            get
+            {
+                return Profile.GetValue("UseAuth", false.ToString()) == false.ToString();
+            }
+            set
+            {
+                Profile.WriteValue("UseAuth", value.ToString());
+            }
+        }
     }
 }

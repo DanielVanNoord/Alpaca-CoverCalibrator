@@ -14,8 +14,4 @@
     <ProjectReference Include="..\CoverCalibratorSimulator\CoverCalibratorSimulator.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
 </Project>

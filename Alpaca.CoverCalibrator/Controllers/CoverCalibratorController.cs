@@ -1,5 +1,6 @@
 ﻿using ASCOM.Alpaca.Responses;
 using ASCOM.Standard.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace Alpaca.CoverCalibrator
 {
+    [Authorize]
     [ApiController]
     public class CoverCalibrator : Controller
     {
