@@ -15,6 +15,8 @@ namespace Alpaca.CoverCalibrator.Discovery
     {
         private readonly int port;
 
+        private List<UdpClient> Clients = new List<UdpClient>();
+
         public bool AllowRemoteAccess
         {
             get;
@@ -27,7 +29,7 @@ namespace Alpaca.CoverCalibrator.Discovery
             set;
         } = true;
 
-        private List<UdpClient> Clients = new List<UdpClient>();
+
         public bool Disposed
         {
             get;
@@ -171,7 +173,6 @@ namespace Alpaca.CoverCalibrator.Discovery
 
                 if (discoveryAllowed)
                 {
-
                     if (ReceiveString.Contains(Constants.DiscoveryMessage))//Contains rather then equals because of invisible padding garbage
                     {
                         //For testing only
@@ -182,7 +183,6 @@ namespace Alpaca.CoverCalibrator.Discovery
                         udpClient.Send(response, response.Length, endpoint);
                     }
                 }
-
 
                 // Configure the UdpClient class to accept more messages, if they arrive
                 udpClient.BeginReceive(ReceiveCallback, udpClient);
@@ -204,7 +204,6 @@ namespace Alpaca.CoverCalibrator.Discovery
                 }
             }
         }
-        
 
         //Use string so localhost works
         internal static bool IsLocalIpAddress(string host)
@@ -217,7 +216,6 @@ namespace Alpaca.CoverCalibrator.Discovery
 
                 foreach (IPAddress hostIP in hostIPs)
                 {
-
                     if (IPAddress.IsLoopback(hostIP)) return true;
 
                     foreach (IPAddress localIP in localIPs)
@@ -225,7 +223,6 @@ namespace Alpaca.CoverCalibrator.Discovery
                         if (hostIP.Equals(localIP)) return true;
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -240,7 +237,7 @@ namespace Alpaca.CoverCalibrator.Discovery
             {
                 if (disposing)
                 {
-                    foreach(var udp in Clients)
+                    foreach (var udp in Clients)
                     {
                         try
                         {
@@ -249,7 +246,6 @@ namespace Alpaca.CoverCalibrator.Discovery
                         }
                         catch
                         {
-
                         }
                     }
 
