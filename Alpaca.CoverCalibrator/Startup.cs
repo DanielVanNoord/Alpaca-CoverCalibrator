@@ -80,7 +80,7 @@ namespace Alpaca.CoverCalibrator
                     bool ipv6 = false;
 
 
-                    if(Uri.TryCreate(serverAddress, UriKind.RelativeOrAbsolute, out Uri serverUri))
+                    if (Uri.TryCreate(serverAddress, UriKind.RelativeOrAbsolute, out Uri serverUri))
                     {
                         try
                         {
@@ -89,9 +89,9 @@ namespace Alpaca.CoverCalibrator
                             {
                                 localHostOnly = true;
 
-                                if(IPAddress.TryParse(serverUri.Host, out IPAddress address))
+                                if (IPAddress.TryParse(serverUri.Host, out IPAddress address))
                                 {
-                                    if(address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                                    if (address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
                                     {
                                         if (address.IsIPv6LinkLocal)
                                         {
@@ -111,7 +111,7 @@ namespace Alpaca.CoverCalibrator
                     {
                         if (serverAddress.Contains(":"))
                         {
-                            if(int.TryParse(serverAddress.Split(':').Last(), out int result))
+                            if (int.TryParse(serverAddress.Split(':').Last(), out int result))
                             {
                                 port = result;
                             }
@@ -120,13 +120,11 @@ namespace Alpaca.CoverCalibrator
                         ipv6 = serverAddress.Contains("*") || serverAddress.Contains("+");
                     }
 
-                    Console.WriteLine($"Starting Discovery on port: {port}");
                     Discovery.DiscoveryManager.Start(port, localHostOnly, ipv6);
 
                 }
                 else
                 {
-                    Console.WriteLine("Starting discovery server from defaults");
                     Discovery.DiscoveryManager.Start();
                 }
 
