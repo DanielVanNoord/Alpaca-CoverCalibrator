@@ -119,8 +119,8 @@ namespace Alpaca.CoverCalibrator.Discovery
             }
             else
             {
-                //Linux does not
-                UdpClient client = NewClient(IPAddress.IPv6Any, 0);
+                //Linux does not, it handles the binding
+                Clients.Add(NewClient(IPAddress.IPv6Any, 0));
             }
         }
 
