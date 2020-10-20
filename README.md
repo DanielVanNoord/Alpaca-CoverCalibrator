@@ -7,7 +7,6 @@ ToDo
 * Move developer set constants to a central location
 * Cleanup code / namespaces
 * Change Alpaca Port to test port
-* Switch to Discovery Library
 * Add packaging / deployment
 * Add basic http auth library
 * Clarify proper handling of ASCOM dispose
