@@ -1,7 +1,6 @@
 Alpaca-CoverCalibrator
 
 ToDo
-* Add toast support
 * Add library and project licenses.
 * Add readmes and comments
 * Move developer set constants to a central location

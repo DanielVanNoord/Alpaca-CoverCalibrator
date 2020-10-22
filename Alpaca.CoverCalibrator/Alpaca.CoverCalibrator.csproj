@@ -16,6 +16,7 @@
     <PackageReference Include="ASCOM.Standard.Discovery" Version="1.0.0-alpha9" />
     <PackageReference Include="ASCOM.Standard.Types" Version="1.0.0-alpha9" />
     <PackageReference Include="ASCOM.Standard.Utilities" Version="1.0.0-alpha9" />
+    <PackageReference Include="Blazored.Toast" Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>

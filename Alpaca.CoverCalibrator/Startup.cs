@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using System.Net;
+using Blazored.Toast;
 
 namespace Alpaca.CoverCalibrator
 {
@@ -43,6 +44,7 @@ namespace Alpaca.CoverCalibrator
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMvc();
+            services.AddBlazoredToast();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
