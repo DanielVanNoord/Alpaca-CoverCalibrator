@@ -17,8 +17,6 @@ namespace Alpaca.CoverCalibrator
 {
     public class Startup
     {
-        public const string Auths = CookieAuthenticationDefaults.AuthenticationScheme + "," + "BasicAuthentication";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -49,13 +47,13 @@ namespace Alpaca.CoverCalibrator
             // configure basic authentication
             // CookieAuthenticationDefaults.AuthenticationScheme
             // "BasicAuthentication"
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             //Make sure to set Auths to the correct values for your schemes
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<BasicAuthenticationAttribute>();
             services.AddBlazoredToast();
 
             // setup for cookie auth in blazor pages

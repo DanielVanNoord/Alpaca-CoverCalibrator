@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Alpaca.CoverCalibrator
 {
-    [Authorize(AuthenticationSchemes=Startup.Auths)]
+    [ServiceFilter(typeof(BasicAuthenticationAttribute))]
     [ApiController]
     public class CoverCalibrator : Controller
     {
