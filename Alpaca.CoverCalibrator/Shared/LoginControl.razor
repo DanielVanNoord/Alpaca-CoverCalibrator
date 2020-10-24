@@ -1,5 +1,7 @@
 ﻿@using System.Web;
 
+@inject NavigationManager MyNavigationManager
+
 <AuthorizeView>
 
     <Authorized>
@@ -24,7 +26,7 @@
                @bind="@Password" />
 
         <a class="ml-md-auto btn btn-primary"
-           href="/login?paramUsername=@Encode(@Username)&paramPassword=@Encode(@Password)"
+           href="/login?paramUsername=@Encode(@Username)&paramPassword=@Encode(@Password)&paramReturnUrl=@Encode(@Return)"
            target="_top">Login</a>
     </NotAuthorized>
 </AuthorizeView>
@@ -34,6 +36,14 @@
     string Username = "";
 
     string Password = "";
+
+    string Return
+    {
+        get
+        {
+            return new Uri(MyNavigationManager.Uri).LocalPath;
+        }
+    }
 
     private string Encode(string param)
 

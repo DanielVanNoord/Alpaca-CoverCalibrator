@@ -9,7 +9,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Alpaca.CoverCalibrator.Pages
-
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
@@ -23,23 +22,24 @@ namespace Alpaca.CoverCalibrator.Pages
 
         public string ReturnUrl { get; set; }
 
-        public async Task<IActionResult>
-
-            OnGetAsync(string paramUsername, string paramPassword)
-
+        public async Task<IActionResult> OnGetAsync(string paramUsername, string paramPassword, string paramReturnUrl)
         {
-            string returnUrl = Url.Content("~/");
+            string returnUrl = null;
+
+            if (Url.IsLocalUrl(paramReturnUrl))
+            {
+                returnUrl = Url.Content(paramReturnUrl);
+            }
+            else
+            {
+                returnUrl = Url.Content("~/");
+            }
+                
 
             try
-
             {
                 // Clear the existing external cookie
-
-                await HttpContext
-
-                    .SignOutAsync(
-
-                    CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             }
             catch { }
 
@@ -74,15 +74,12 @@ namespace Alpaca.CoverCalibrator.Pages
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var authProperties = new AuthenticationProperties
-
             {
                 IsPersistent = true,
-
                 RedirectUri = this.Request.Host.Value
             };
 
             try
-
             {
                 await HttpContext.SignInAsync(
 
@@ -93,7 +90,6 @@ namespace Alpaca.CoverCalibrator.Pages
                 authProperties);
             }
             catch (Exception ex)
-
             {
                 string error = ex.Message;
             }

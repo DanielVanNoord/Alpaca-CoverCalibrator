@@ -70,13 +70,6 @@ namespace Alpaca.CoverCalibrator
             else
             {
                 return AuthenticateResult.NoResult();
-                var claims = new[] {
-                new Claim(ClaimTypes.NameIdentifier, "No Auth"),
-                new Claim(ClaimTypes.Name, "No Auth"),
-            };
-                var identity = new ClaimsIdentity(claims, Scheme.Name);
-                var principal = new ClaimsPrincipal(identity);
-                return AuthenticateResult.Success(new AuthenticationTicket(principal, Scheme.Name));
             }
         }
     }
