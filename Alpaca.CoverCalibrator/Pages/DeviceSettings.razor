@@ -1,6 +1,8 @@
 ﻿@page "/test/setup"
 @page "/setup/v1/covercalibrator/{InstanceID:int}/setup"
 
+@inject IToastService toastService
+
 <body>
     <fieldset>
         <legend>Calibrator Settings</legend>
@@ -153,11 +155,29 @@
 
     public void SaveDeviceSettings()
     {
-        Device.WriteProfile();
+        try
+        {
+            Device.WriteProfile();
+
+            toastService.ShowSuccess("Settings Saved");
+        }
+        catch(Exception ex)
+        {
+            toastService.ShowError(ex.Message);
+        }
     }
 
     public void Reset()
     {
-        Device.ResetSettings();
+        try
+        {
+            Device.ResetSettings();
+
+            toastService.ShowSuccess("Settings Reset");
+        }
+        catch(Exception ex)
+        {
+            toastService.ShowError(ex.Message);
+        }
     }
 }

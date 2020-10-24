@@ -5,9 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ASCOM.Exceptions" Version="6.5.0" />
+    <PackageReference Include="ASCOM.Standard.Discovery" Version="1.0.0-alpha9" />
     <PackageReference Include="ASCOM.Standard.Types" Version="1.0.0-alpha9" />
     <PackageReference Include="ASCOM.Standard.Utilities" Version="1.0.0-alpha9" />
+    <PackageReference Include="Blazored.Toast" Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>

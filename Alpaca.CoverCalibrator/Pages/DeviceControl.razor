@@ -4,6 +4,8 @@
 
 @implements IDisposable
 
+@inject IToastService toastService
+
 @using System.Timers;
 
 <body>
@@ -335,5 +337,6 @@
 
     public void DisplayError(string error)
     {
+        toastService.ShowError(error);
     }
 }
