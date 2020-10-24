@@ -53,7 +53,7 @@ namespace Alpaca.CoverCalibrator
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<BasicAuthenticationAttribute>();
+            services.AddScoped<AuthorizationFilter>();
             services.AddBlazoredToast();
 
             // setup for cookie auth in blazor pages

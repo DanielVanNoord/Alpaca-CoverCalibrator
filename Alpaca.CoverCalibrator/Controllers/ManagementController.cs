@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace Alpaca.CoverCalibrator
 {
-    [ServiceFilter(typeof(BasicAuthenticationAttribute))]
+    [ServiceFilter(typeof(AuthorizationFilter))]
     [ApiController]
     public class ManagementController : Controller
     {

@@ -9,33 +9,37 @@ using System.Text;
 
 namespace Alpaca.CoverCalibrator
 {
-    public class BasicAuthenticationAttribute : ActionFilterAttribute
+    public class AuthorizationFilter : IAuthorizationFilter
     {
         public string BasicRealm { get; set; }
 
         IUserService userService;
 
-        public BasicAuthenticationAttribute(IUserService _userService)
+        public AuthorizationFilter(IUserService _userService)
         {
             userService = _userService;
         }
 
-        public async override void OnActionExecuting(ActionExecutingContext filterContext)
+        public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
-            var endpoint = filterContext.HttpContext.GetEndpoint();
-            if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
-                return;
-
+            // If not using Auth don't even check
             if (!ServerSettings.UseAuth)
             {
                 return;
             }
 
+            // Allow Anonymous endpoints without check
+            var endpoint = filterContext.HttpContext.GetEndpoint();
+            if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
+                return;
+
+            // Check if client has an Asp.Net core auth token or cookie
             if (filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
                 return;
             }
-
+            
+            // Check for Authorization header and allow through if correct
             var req = filterContext.HttpContext.Request;
             var auth = req.Headers["Authorization"];
             if (!string.IsNullOrEmpty(auth))
@@ -46,11 +50,13 @@ namespace Alpaca.CoverCalibrator
                 var username = credentials[0];
                 var password = credentials[1];
 
-                if (await userService.Authenticate(username, password))
+                if (userService.Authenticate(username, password).Result)
                 {
                     return;
                 }
             }
+
+            // Auth failed, block request
             filterContext.HttpContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\"", BasicRealm ?? "Alpaca"));
             filterContext.Result = new UnauthorizedResult();
         }
