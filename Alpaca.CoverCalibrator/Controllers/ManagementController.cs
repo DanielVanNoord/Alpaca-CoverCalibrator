@@ -8,11 +8,12 @@ using System.Diagnostics;
 
 namespace Alpaca.CoverCalibrator
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = Startup.Auths)]
     [ApiController]
     public class ManagementController : Controller
     {
         [HttpGet]
+        [AllowAnonymous]
         [Route("management/apiversions")]
         public IntListResponse ApiVersions(int ClientID = -1, uint ClientTransactionID = 0)
         {
@@ -22,6 +23,7 @@ namespace Alpaca.CoverCalibrator
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("management/v1/description")]
         public AlpacaDescriptionResponse Description(int ClientID = -1, uint ClientTransactionID = 0)
         {
@@ -34,6 +36,7 @@ namespace Alpaca.CoverCalibrator
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("management/v1/configureddevices")]
         public AlpacaConfiguredDevicesResponse ConfiguredDevices(int ClientID = -1, uint ClientTransactionID = 0)
         {

@@ -187,7 +187,7 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return Profile.GetValue("UseAuth", false.ToString()) == false.ToString();
+                return Profile.GetValue("UseAuth", true.ToString()) == true.ToString();
             }
             set
             {
