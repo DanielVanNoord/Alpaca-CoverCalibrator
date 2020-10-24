@@ -31,6 +31,11 @@ namespace Alpaca.CoverCalibrator
                 return;
             }
 
+            if (filterContext.HttpContext.User.Identity.IsAuthenticated)
+            {
+                return;
+            }
+
             var req = filterContext.HttpContext.Request;
             var auth = req.Headers["Authorization"];
             if (!string.IsNullOrEmpty(auth))
