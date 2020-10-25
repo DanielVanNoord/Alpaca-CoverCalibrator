@@ -1,128 +1,123 @@
 ﻿@page "/setup"
 
-<AuthorizeView>
-    <Authorized>
+<fieldset>
+    <legend>Server Settings</legend>
+    <p>Version @ServerVersion</p>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Server Location:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="text" @bind="Location" style="width:21ch;">
+        </div>
+        <div class="grid-item-right">
+            <span>Allow Remote Access:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="RemoteAccess">
+        </div>
 
-        <fieldset>
-            <legend>Server Settings</legend>
-            <p>Version @ServerVersion</p>
-            <div class="grid-container-two">
-                <div class="grid-item-right">
-                    <span>Server Location:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="text" @bind="Location" style="width:21ch;">
-                </div>
-                <div class="grid-item-right">
-                    <span>Allow Remote Access:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="checkbox" @bind="RemoteAccess">
-                </div>
+        <div class="grid-item-right">
+            <span>Server (Alpaca) Port:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="number" @bind="ServerPort" min="1" max="65535" style="width:20ch;">
+        </div>
 
-                <div class="grid-item-right">
-                    <span>Server (Alpaca) Port:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="number" @bind="ServerPort" min="1" max="65535" style="width:20ch;">
-                </div>
+        <div class="grid-item-right">
+            <span>Open Browser on Start:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="StartBrowser">
+        </div>
 
-                <div class="grid-item-right">
-                    <span>Open Browser on Start:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="checkbox" @bind="StartBrowser">
-                </div>
+        <div class="grid-item-right">
+        </div>
+        <div class="grid-item-right">
+            <button @onclick="SaveServerSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
+        </div>
+    </div>
+</fieldset>
 
-                <div class="grid-item-right">
-                </div>
-                <div class="grid-item-right">
-                    <button @onclick="SaveServerSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
-                </div>
-            </div>
-        </fieldset>
+<fieldset>
+    <legend>Bound Addresses</legend>
 
-        <fieldset>
-            <legend>Bound Addresses</legend>
+    <p>Addresses bound at startup. * or + means all available interfaces.</p>
 
-            <p>Addresses bound at startup. * or + means all available interfaces.</p>
+    @foreach (var address in Startup.Addresses)
+    {
+        <p>@address</p>
+    }
+</fieldset>
 
-            @foreach (var address in Startup.Addresses)
-            {
-                <p>@address</p>
-            }
-        </fieldset>
+<fieldset>
+    <legend>Driver Settings</legend>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Prevent Disconnects:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="PreventRemoteDisconnects">
+        </div>
+        <div class="grid-item-right">
+            <span>Prevent Disposes:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="PreventRemoteDisposes">
+        </div>
+        <div class="grid-item-right">
+        </div>
+        <div class="grid-item-right">
+            <button @onclick="SaveDriverSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
+        </div>
+    </div>
+</fieldset>
 
-        <fieldset>
-            <legend>Driver Settings</legend>
-            <div class="grid-container-two">
-                <div class="grid-item-right">
-                    <span>Prevent Disconnects:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="checkbox" @bind="PreventRemoteDisconnects">
-                </div>
-                <div class="grid-item-right">
-                    <span>Prevent Disposes:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="checkbox" @bind="PreventRemoteDisposes">
-                </div>
-                <div class="grid-item-right">
-                </div>
-                <div class="grid-item-right">
-                    <button @onclick="SaveDriverSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
-                </div>
-            </div>
-        </fieldset>
+<fieldset>
+    <legend>Alpaca Discovery Settings</legend>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Allow Discovery:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="Discovery">
+        </div>
 
-        <fieldset>
-            <legend>Alpaca Discovery Settings</legend>
-            <div class="grid-container-two">
-                <div class="grid-item-right">
-                    <span>Allow Discovery:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="checkbox" @bind="Discovery">
-                </div>
+        <div class="grid-item-right">
+            <span>Discovery Port:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="number" @bind="DiscoveryPort" min="1" max="65535" style="width:20ch;">
+        </div>
 
-                <div class="grid-item-right">
-                    <span>Discovery Port:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="number" @bind="DiscoveryPort" min="1" max="65535" style="width:20ch;">
-                </div>
+        <div class="grid-item-right">
+            <span>Respond to localhost on loopback only:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="LocalHostOnlyOnHost">
+        </div>
 
-                <div class="grid-item-right">
-                    <span>Respond to localhost on loopback only:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="checkbox" @bind="LocalHostOnlyOnHost">
-                </div>
+        <div class="grid-item-right">
+        </div>
+        <div class="grid-item-right">
+            <button @onclick="SaveDiscovery" style="min-width:12ch; vertical-align:middle;">Save</button>
+        </div>
+    </div>
+</fieldset>
 
-                <div class="grid-item-right">
-                </div>
-                <div class="grid-item-right">
-                    <button @onclick="SaveDiscovery" style="min-width:12ch; vertical-align:middle;">Save</button>
-                </div>
-            </div>
-        </fieldset>
-
-        <fieldset>
-            <legend>Shutdown Alpaca Server</legend>
-            <div class="grid-container-two">
-                <div class="grid-item-right">
-                    <span>Shutdown:</span>
-                </div>
-                <div class="grid-item-left">
-                    <input type="checkbox"
-                           @bind="EnableShutdown">
-                    <button @onclick="Shutdown" style="min-width:12ch; vertical-align:middle;" disabled="@AllowShutdown">Shutdown</button>
-                </div>
-            </div>
-        </fieldset>
-    </Authorized>
-</AuthorizeView>
+<fieldset>
+    <legend>Shutdown Alpaca Server</legend>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Shutdown:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox"
+                   @bind="EnableShutdown">
+            <button @onclick="Shutdown" style="min-width:12ch; vertical-align:middle;" disabled="@AllowShutdown">Shutdown</button>
+        </div>
+    </div>
+</fieldset>
 
 @code {
 

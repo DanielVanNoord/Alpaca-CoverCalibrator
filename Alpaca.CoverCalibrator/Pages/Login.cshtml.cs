@@ -51,10 +51,6 @@ namespace Alpaca.CoverCalibrator.Pages
                 {
                     auth = await _userService.Authenticate(paramUsername, paramPassword);
                 }
-                else
-                {
-                    auth = true;
-                }
             }
             catch
             {
