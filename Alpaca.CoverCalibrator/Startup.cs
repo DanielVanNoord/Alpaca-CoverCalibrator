@@ -47,7 +47,13 @@ namespace Alpaca.CoverCalibrator
             // configure basic authentication
             // CookieAuthenticationDefaults.AuthenticationScheme
             // "BasicAuthentication"
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                }
+                );
 
             //Make sure to set Auths to the correct values for your schemes
 
@@ -57,14 +63,16 @@ namespace Alpaca.CoverCalibrator
             services.AddBlazoredToast();
 
             // setup for cookie auth in blazor pages
-            services.Configure<CookiePolicyOptions>(options =>
+            /*services.Configure<CookiePolicyOptions>(options =>
 
             {
                 options.CheckConsentNeeded = context => true;
 
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
 
+                options.SetIdleTimeout
+            });
+            */
 
         }
 
