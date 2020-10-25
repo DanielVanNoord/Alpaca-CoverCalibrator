@@ -15,7 +15,7 @@ namespace Alpaca.CoverCalibrator
         //ToDo, don't hard code support multiple users
         public async Task<bool> Authenticate(string username, string password)
         {
-            return await Task.Run(() => username == "test" && password == "test" );
+            return await Task.Run(() => username == ServerSettings.UserName && Hash.Validate(ServerSettings.Password, password) );
         }
     }
 }

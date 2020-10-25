@@ -187,11 +187,35 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return Profile.GetValue("UseAuth", true.ToString()) == true.ToString();
+                return Profile.GetValue("UseAuth", false.ToString()) == true.ToString();
             }
             set
             {
                 Profile.WriteValue("UseAuth", value.ToString());
+            }
+        }
+
+        internal static string UserName
+        {
+            get
+            {
+                return Profile.GetValue("UserName", "User");
+            }
+            set
+            {
+                Profile.WriteValue("UserName", value.ToString());
+            }
+        }
+
+        internal static string Password
+        {
+            get
+            {
+                return Profile.GetValue("Password");
+            }
+            set
+            {
+                Profile.WriteValue("Password", Hash.GetStoragePassword(value));
             }
         }
     }
