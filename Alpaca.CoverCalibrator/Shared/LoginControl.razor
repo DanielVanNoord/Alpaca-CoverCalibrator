@@ -3,12 +3,11 @@
 @inject NavigationManager MyNavigationManager
 
 <AuthorizeView>
-
     <Authorized>
 
-        <b>Hello, @context.User.Identity.Name!</b>
+        <b>Logged in as: @context.User.Identity.Name!</b>
 
-        <a class="ml-md-auto btn btn-primary"
+        <a class="btn btn-primary"
            href="/logout?returnUrl=/"
            target="_top">Logout</a>
     </Authorized>
@@ -25,7 +24,9 @@
                placeholder="Password"
                @bind="@Password" />
 
-        <a class="ml-md-auto btn btn-primary"
+        &nbsp;&nbsp;
+
+        <a class="btn btn-primary"
            href="/login?paramUsername=@Encode(@Username)&paramPassword=@Encode(@Password)&paramReturnUrl=@Encode(@Return)"
            target="_top">Login</a>
     </NotAuthorized>

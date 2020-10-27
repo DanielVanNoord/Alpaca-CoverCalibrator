@@ -9,7 +9,7 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class Hash
     {
-        internal const int iters = 10000;
+        internal const int iters = 1000;
         internal const int salt_length = 16;
         internal const int key_length = 20;
         internal static string GetStoragePassword(string password)

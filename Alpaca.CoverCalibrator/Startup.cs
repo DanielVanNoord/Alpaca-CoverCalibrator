@@ -61,19 +61,6 @@ namespace Alpaca.CoverCalibrator
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<AuthorizationFilter>();
             services.AddBlazoredToast();
-
-            // setup for cookie auth in blazor pages
-            /*services.Configure<CookiePolicyOptions>(options =>
-
-            {
-                options.CheckConsentNeeded = context => true;
-
-                options.MinimumSameSitePolicy = SameSiteMode.Strict;
-
-                options.SetIdleTimeout
-            });
-            */
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

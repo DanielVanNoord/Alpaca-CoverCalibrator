@@ -87,7 +87,7 @@ namespace Alpaca.CoverCalibrator.Pages
             }
             catch (Exception ex)
             {
-                string error = ex.Message;
+                Logging.LogError(ex.Message);
             }
 
             return LocalRedirect(returnUrl);
