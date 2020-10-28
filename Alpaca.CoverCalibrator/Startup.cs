@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using Blazored.Toast;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting.Server.Features;
+using System;
+using System.Linq;
 using System.Net;
-using Blazored.Toast;
+using System.Net.Http;
 
 namespace Alpaca.CoverCalibrator
 {
@@ -44,6 +43,23 @@ namespace Alpaca.CoverCalibrator
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMvc();
+
+            // configure basic authentication
+            // CookieAuthenticationDefaults.AuthenticationScheme
+            // "BasicAuthentication"
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    options.SlidingExpiration = true;
+                    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                }
+                );
+
+            //Make sure to set Auths to the correct values for your schemes
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<AuthorizationFilter>();
             services.AddBlazoredToast();
         }
 
@@ -72,7 +88,6 @@ namespace Alpaca.CoverCalibrator
                     var serverAddress = serverAddressesFeature.Addresses.First();
                     bool localHostOnly = false;
                     bool ipv6 = false;
-
 
                     if (Uri.TryCreate(serverAddress, UriKind.RelativeOrAbsolute, out Uri serverUri))
                     {
@@ -115,13 +130,11 @@ namespace Alpaca.CoverCalibrator
                     }
 
                     Discovery.DiscoveryManager.Start(port, localHostOnly, ipv6);
-
                 }
                 else
                 {
                     Discovery.DiscoveryManager.Start();
                 }
-
             }
             catch (Exception ex)
             {
@@ -131,6 +144,10 @@ namespace Alpaca.CoverCalibrator
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints =>
             {

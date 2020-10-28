@@ -60,7 +60,6 @@
                     }
                 </select>
             </div>
-
         </div>
     </fieldset>
     <fieldset>
@@ -80,7 +79,6 @@
 @code {
     [Parameter]
     public int InstanceID { get; set; }
-
 
     /// <summary>
     /// This access the device type not the interface to allow the device specific settigns to be accessed.
@@ -161,7 +159,7 @@
 
             toastService.ShowSuccess("Settings Saved");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             toastService.ShowError(ex.Message);
         }
@@ -175,7 +173,7 @@
 
             toastService.ShowSuccess("Settings Reset");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             toastService.ShowError(ex.Message);
         }

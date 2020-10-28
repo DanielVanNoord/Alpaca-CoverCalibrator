@@ -6,11 +6,25 @@
 
 <div class="main">
     <BlazoredToasts />
-    <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+    <div class="px-4">
+        @if (ServerSettings.UseAuth)
+        {
+            <LoginControl />
+        }
     </div>
 
     <div class="content px-4">
-        @Body
+        @if (ServerSettings.UseAuth)
+        {
+            <AuthorizeView>
+                <Authorized>
+                    @Body
+                </Authorized>
+            </AuthorizeView>
+        }
+        else
+        {
+            @Body
+        }
     </div>
 </div>

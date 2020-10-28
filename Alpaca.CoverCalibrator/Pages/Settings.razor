@@ -1,5 +1,8 @@
 ﻿@page "/setup"
 
+@inject IToastService toastService
+@inject NavigationManager NavManager
+
 <fieldset>
     <legend>Server Settings</legend>
     <p>Version @ServerVersion</p>
@@ -106,6 +109,45 @@
 </fieldset>
 
 <fieldset>
+    <legend>Security Settings</legend>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Require Authorization:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="RequireAuthorization">
+        </div>
+
+        <div class="grid-item-right">
+            <span>User Name:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="text" @bind="UserName" style="width:21ch;" disabled="@DisableAuth">
+        </div>
+
+        <div class="grid-item-right">
+            <span>Password:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="password" @bind="Password" style="width:21ch;" disabled="@DisableAuth">
+        </div>
+
+        <div class="grid-item-right">
+            <span>Repeat:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="password" @bind="Password2" style="width:21ch;" disabled="@DisableAuth">
+        </div>
+
+        <div class="grid-item-right">
+        </div>
+        <div class="grid-item-right">
+            <button @onclick="SaveSecuritySettings" style="min-width:12ch; vertical-align:middle;">Save</button>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
     <legend>Shutdown Alpaca Server</legend>
     <div class="grid-container-two">
         <div class="grid-item-right">
@@ -151,7 +193,6 @@
         set;
     } = 5000;
 
-
     bool StartBrowser
     {
         get;
@@ -185,6 +226,32 @@
     }
 
     bool PreventRemoteDisposes
+    {
+        get;
+        set;
+    }
+
+    bool RequireAuthorization
+    {
+        get;
+        set;
+    } = ServerSettings.UseAuth;
+
+    bool DisableAuth => !RequireAuthorization;
+
+    string UserName
+    {
+        get;
+        set;
+    } = ServerSettings.UserName;
+
+    string Password
+    {
+        get;
+        set;
+    }
+
+    string Password2
     {
         get;
         set;
@@ -233,13 +300,13 @@
         {
             bool SettingsChanged = false;
 
-            if(ServerSettings.AllowRemoteAccess != RemoteAccess)
+            if (ServerSettings.AllowRemoteAccess != RemoteAccess)
             {
                 ServerSettings.AllowRemoteAccess = RemoteAccess;
                 SettingsChanged = true;
             }
 
-            if(ServerSettings.ServerPort != ServerPort)
+            if (ServerSettings.ServerPort != ServerPort)
             {
                 ServerSettings.ServerPort = ServerPort;
                 SettingsChanged = true;
@@ -277,7 +344,46 @@
 
     void SaveSecuritySettings()
     {
-        //write and add the library
+        try
+        {
+            if (RequireAuthorization)
+            {
+                if (UserName == null || UserName == string.Empty)
+                {
+                    DisplayWarning("You must set a User Name");
+                    return;
+                }
+
+                if (Password == null || Password == string.Empty)
+                {
+                    DisplayWarning("You must set a Password");
+                    return;
+                }
+
+                if (Password != Password2)
+                {
+                    DisplayWarning("Passwords do not match");
+                    return;
+                }
+
+                ServerSettings.UserName = UserName;
+                ServerSettings.Password = Password;
+                ServerSettings.UseAuth = RequireAuthorization;
+
+                NavManager.NavigateTo("/");
+            }
+            else
+            {
+                ServerSettings.UseAuth = RequireAuthorization;
+            }
+
+
+            DisplaySuccess("Security Saved!");
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
     }
 
     void Shutdown()
@@ -294,10 +400,17 @@
 
     public void DisplayError(string message)
     {
+        toastService.ShowError(message);
+    }
+
+    public void DisplayWarning(string message)
+    {
+        toastService.ShowWarning(message);
     }
 
     public void DisplaySuccess(string message)
     {
+        toastService.ShowSuccess(message);
     }
 
     string ServerVersion

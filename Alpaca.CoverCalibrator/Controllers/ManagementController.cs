@@ -1,5 +1,6 @@
 ﻿using ASCOM.Alpaca.Responses;
 using ASCOM.Standard.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,10 +8,12 @@ using System.Diagnostics;
 
 namespace Alpaca.CoverCalibrator
 {
+    [ServiceFilter(typeof(AuthorizationFilter))]
     [ApiController]
     public class ManagementController : Controller
     {
         [HttpGet]
+        [AllowAnonymous]
         [Route("management/apiversions")]
         public IntListResponse ApiVersions(int ClientID = -1, uint ClientTransactionID = 0)
         {
@@ -20,6 +23,7 @@ namespace Alpaca.CoverCalibrator
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("management/v1/description")]
         public AlpacaDescriptionResponse Description(int ClientID = -1, uint ClientTransactionID = 0)
         {
@@ -32,6 +36,7 @@ namespace Alpaca.CoverCalibrator
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("management/v1/configureddevices")]
         public AlpacaConfiguredDevicesResponse ConfiguredDevices(int ClientID = -1, uint ClientTransactionID = 0)
         {

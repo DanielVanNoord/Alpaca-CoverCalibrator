@@ -7,5 +7,6 @@ ToDo
 * Cleanup code / namespaces
 * Change Alpaca Port to test port
 * Add packaging / deployment
-* Add basic http auth library
 * Clarify proper handling of ASCOM dispose
+* Refactor Auth into library
+* Add cookie revoke
