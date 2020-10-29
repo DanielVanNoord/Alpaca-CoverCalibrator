@@ -1,6 +1,7 @@
 Alpaca REST server with Blazor UI
 
 Folders
+* Authorization - Authorization filters for controllers and a user server for authenticating users.
 * Controllers - Asp.Net MVC controllers exposing the Alpaca interfaces.
   *  Device controllers access the device through the device manager and expose the Alpaca API. They should work with any device that exposes the correct Interface with minimal (ideally no) changes.
   * The Management Controller exposes the Alpaca Management API. Some customization may be required to expose a servers custom information. Development note, it may be better to put that information in the ServerManager class and access those constants.
