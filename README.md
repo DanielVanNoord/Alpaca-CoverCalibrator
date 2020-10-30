@@ -1,5 +1,9 @@
 Alpaca-CoverCalibrator
 
+* Alpaca.CoverCalibrator is an ASP.Net Core project. It exposes the Alpaca REST API and contains a Blazor web ui for device control and configuration. It uses the cross platform ASCOM Standard libraries to provide logging and configuration.
+* ASCOM.Simulator.CoverCalibrator is an ASCOM Local Server driver. It exposes the COM API for Windows ASCOM clients. It uses the standard ASCOM Platform logging and configuration libraries provided by a compatibility wrapper.
+* CoverCalibratorSimulator is a .Net Standard project that contains the device specific code and exposes the ASCOM interface. Both the Alpaca and the ASCOM project use this to control the simulator. The logging and configuration libraries are injected into the project, allowing it to use different libraries depending on the target platform.
+
 ToDo
 * Add library and project licenses.
 * Add readmes and comments
