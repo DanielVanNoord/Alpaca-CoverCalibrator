@@ -8,14 +8,6 @@ using System.Reflection;
 
 namespace ASCOMSimulators
 {
-
-    public interface IAlpacaDevice
-    {
-        AlpacaConfiguredDevice Configuration
-        {
-            get;
-        }
-    }
     /// <summary>
     /// ASCOM CoverCalibrator Driver for Simulator.
     /// </summary>

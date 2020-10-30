@@ -43,7 +43,7 @@ namespace Alpaca.CoverCalibrator
             List<AlpacaConfiguredDevice> devices = new List<AlpacaConfiguredDevice>();
             try
             {
-                    devices.Add((DeviceManager.GetCoverCalibrator(0) as ASCOMSimulators.IAlpacaDevice).Configuration);
+                    devices.Add((DeviceManager.GetCoverCalibrator(0) as IAlpacaDevice).Configuration);
             }
             catch(Exception ex)
             {
