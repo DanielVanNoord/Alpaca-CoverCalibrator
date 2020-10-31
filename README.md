@@ -7,10 +7,13 @@ Alpaca-CoverCalibrator
 ToDo
 * Add library and project licenses.
 * Add readmes and comments
-* Move developer set constants to a central location
+* Continue move developer set constants to a central location
 * Cleanup code / namespaces
-* Change Alpaca Port to test port
+* Change Alpaca Port from test port of 5000
 * Add packaging / deployment
-* Clarify proper handling of ASCOM dispose
+* Clarify proper handling of ASCOM dispose in Alpaca
 * Refactor Auth into library
-* Add cookie revoke
+  * Add cookie revoke
+  * Add reset password to command line arguments
+* Consider refactoring Alpaca API controllers into library
+* Consider switching to mutex locks to detect running program to work better with the new .Net Core Single File deployment

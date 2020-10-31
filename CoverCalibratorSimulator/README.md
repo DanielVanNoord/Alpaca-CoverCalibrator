@@ -6,3 +6,4 @@ NetStandard 2.0 library for device control
 * Device specific settings and functions can be exposed and called directly from setup pages in Alpaca and the SetupDialog in ASCOM
 * Unit and integration tests can be run directly against this project(s)
 * Almost all interface calls are logged at the verbose level. This is useful for test / debugging but will generate a very large amount of logs
+* The devices expose IAlpacaDevice in addition to the device interface, which allows the server to read information like UUID and Name

@@ -63,12 +63,12 @@ namespace ASCOMSimulators
         private readonly System.Timers.Timer coverTimer;
         private readonly System.Timers.Timer calibratorTimer;
 
-
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulator"/> class.
-        /// Must be public for COM registration.
         /// </summary>
+        /// <param name="deviceNumber">The instance number of this driver. If there is only one this should be 0</param>
+        /// <param name="logger">The logger instance to use</param>
+        /// <param name="profile">A profile to store settings</param>
         public CoverCalibratorSimulator(int deviceNumber, ILogger logger, IProfile profile)
         {
             try
