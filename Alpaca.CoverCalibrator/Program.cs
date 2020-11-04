@@ -30,6 +30,8 @@ namespace Alpaca.CoverCalibrator
             }
 
             //Already running, start the browser
+            //This was working fine for .Net Core 3.1. Initial tests for .Net 5 show a change in how single file deployments work on Linux
+            //This should probably be changed to a Mutex or another similar lock
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1)
             {
                 ServerManager.StartBrowser(ServerSettings.ServerPort);
