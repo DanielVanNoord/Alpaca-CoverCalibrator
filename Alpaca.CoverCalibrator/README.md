@@ -3,6 +3,8 @@ This uses ASP.Net Core (currently 3.1 soon to be .Net 5)
 
 Notes and open questions
 
+* Currently this does not work with discovery when debugging with IIS as it does not match the discovery port. Select a build target of Alpaca.CoverCalibrator for testing. This should be fixed in a future update. For now IIS express has been removed from launchSettings.json.
+
 ## Folders
 * Authorization - Authorization filters for controllers and a user server for authenticating users.
 * Controllers - Asp.Net MVC controllers exposing the Alpaca interfaces.

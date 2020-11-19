@@ -18,3 +18,4 @@ ToDo
 * Consider refactoring Alpaca API controllers into library
 * Consider switching to mutex locks to detect running program to work better with the new .Net Core Single File deployment
 * Add set logging level to ASCOM and Alpaca UI
+* Add support for multiple discovery ports for proxies
