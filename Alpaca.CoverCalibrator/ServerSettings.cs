@@ -95,7 +95,7 @@ namespace Alpaca.CoverCalibrator
             }
             set
             {
-                Discovery.DiscoveryManager.DiscoveryServer.AllowRemoteAccess = value;
+                Discovery.DiscoveryManager.DiscoveryResponder.AllowRemoteAccess = value;
                 Profile.WriteValue("AllowRemoteAccess", value.ToString());
             }
         }
@@ -152,7 +152,7 @@ namespace Alpaca.CoverCalibrator
             }
             set
             {
-                Discovery.DiscoveryManager.DiscoveryServer.LocalRespondOnlyToLocalHost = value;
+                Discovery.DiscoveryManager.DiscoveryResponder.LocalRespondOnlyToLocalHost = value;
                 Profile.WriteValue("LocalRespondOnlyToLocalHost", value.ToString());
             }
         }
@@ -165,7 +165,7 @@ namespace Alpaca.CoverCalibrator
             }
             set
             {
-                Discovery.DiscoveryManager.DiscoveryServer.LocalRespondOnlyToLocalHost = value;
+                Discovery.DiscoveryManager.DiscoveryResponder.LocalRespondOnlyToLocalHost = value;
                 Profile.WriteValue("PreventRemoteDisconnects", value.ToString());
             }
         }
@@ -178,7 +178,7 @@ namespace Alpaca.CoverCalibrator
             }
             set
             {
-                Discovery.DiscoveryManager.DiscoveryServer.LocalRespondOnlyToLocalHost = value;
+                Discovery.DiscoveryManager.DiscoveryResponder.LocalRespondOnlyToLocalHost = value;
                 Profile.WriteValue("PreventRemoteDisposes", value.ToString());
             }
         }

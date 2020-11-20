@@ -10,13 +10,13 @@ namespace Alpaca.CoverCalibrator.Discovery
 {
     internal static class DiscoveryManager
     {
-        internal static Server DiscoveryServer
+        internal static Responder DiscoveryResponder
         {
             get;
             private set;
         }
 
-        internal static bool IsRunning => !DiscoveryServer?.Disposed ?? false;
+        internal static bool IsRunning => !DiscoveryResponder?.Disposed ?? false;
 
         internal static void Start()
         {
@@ -24,7 +24,7 @@ namespace Alpaca.CoverCalibrator.Discovery
             {
                 Console.WriteLine("Starting discovery server from defaults");
 
-                DiscoveryServer = new Server(ServerSettings.ServerPort, true, false)
+                DiscoveryResponder = new Responder(ServerSettings.ServerPort, true, false)
                 {
                     AllowRemoteAccess = ServerSettings.AllowRemoteAccess,
                     LocalRespondOnlyToLocalHost = ServerSettings.LocalRespondOnlyToLocalHost
@@ -43,7 +43,7 @@ namespace Alpaca.CoverCalibrator.Discovery
                     ipv6 = false;
                 }
 
-                DiscoveryServer = new Server(port, true, ipv6)
+                DiscoveryResponder = new Responder(port, true, ipv6)
                 {
                     AllowRemoteAccess = !localHostOnly,
                     LocalRespondOnlyToLocalHost = ServerSettings.LocalRespondOnlyToLocalHost
@@ -53,7 +53,7 @@ namespace Alpaca.CoverCalibrator.Discovery
 
         internal static void Stop()
         {
-            DiscoveryServer.Dispose();
+            DiscoveryResponder.Dispose();
         }
     }
 }
