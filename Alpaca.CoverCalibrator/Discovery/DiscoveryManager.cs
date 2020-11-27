@@ -22,7 +22,7 @@ namespace Alpaca.CoverCalibrator.Discovery
         {
             if (ServerSettings.AllowDiscovery)
             {
-                Console.WriteLine("Starting discovery server from defaults");
+                Console.WriteLine("Starting discovery responder from defaults");
 
                 DiscoveryResponder = new Responder(ServerSettings.ServerPort, true, false)
                 {

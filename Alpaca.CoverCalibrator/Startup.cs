@@ -158,7 +158,7 @@ namespace Alpaca.CoverCalibrator
 
             lifetime.ApplicationStarted.Register(() =>
             {
-                Logging.LogInformation("Server Starting");
+                Logging.LogInformation($"{ServerSettings.ServerName} Starting");
 
                 try
                 {
@@ -175,12 +175,12 @@ namespace Alpaca.CoverCalibrator
 
             lifetime.ApplicationStopping.Register(() =>
             {
-                Logging.LogInformation("Server Stopping");
+                Logging.LogInformation($"{ServerSettings.ServerName} Stopping");
             });
 
             lifetime.ApplicationStopped.Register(() =>
             {
-                Logging.LogInformation("Server Stopped");
+                Logging.LogInformation($"{ServerSettings.ServerName} Stopped");
             });
 
             Lifetime = lifetime;
