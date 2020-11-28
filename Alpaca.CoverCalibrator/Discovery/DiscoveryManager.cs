@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace Alpaca.CoverCalibrator.Discovery
@@ -17,6 +19,40 @@ namespace Alpaca.CoverCalibrator.Discovery
         }
 
         internal static bool IsRunning => !DiscoveryResponder?.Disposed ?? false;
+
+        internal static List<IPAddress> AdapterAddress
+        {
+            get
+            {
+                List<IPAddress> Addresses = new List<IPAddress>();
+                NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
+                foreach (NetworkInterface adapter in adapters)
+                {
+                    //Do not try and use non-operational adapters
+                    if (adapter.OperationalStatus != OperationalStatus.Up)
+                        continue;
+
+                    IPInterfaceProperties adapterProperties = adapter.GetIPProperties();
+                    if (adapterProperties == null)
+                        continue;
+
+
+                    UnicastIPAddressInformationCollection uniCast = adapterProperties.UnicastAddresses;
+                    if (uniCast.Count > 0)
+                    {
+                        foreach (UnicastIPAddressInformation uni in uniCast)
+                        {
+                            if (uni.Address.AddressFamily != AddressFamily.InterNetwork && uni.Address.AddressFamily != AddressFamily.InterNetworkV6)
+                                continue;
+
+                            Addresses.Add(uni.Address);
+                        }
+                    }
+                }
+
+                return Addresses;
+            }
+        }
 
         internal static void Start()
         {

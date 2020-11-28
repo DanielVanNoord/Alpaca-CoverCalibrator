@@ -45,12 +45,38 @@
 <fieldset>
     <legend>Bound Addresses</legend>
 
-    <p>Addresses bound at startup. * or + means all available interfaces.</p>
+    <table>
+        <tr>
+            <th>Addresses server is listening on.</th>
+        </tr>
 
-    @foreach (var address in Startup.Addresses)
-    {
-        <p>@address</p>
-    }
+        @if (ServerSettings.AllowRemoteAccess)
+        {
+            try
+            {
+                @foreach (var address in Alpaca.CoverCalibrator.Discovery.DiscoveryManager.AdapterAddress)
+                {
+                    <tr>
+                        <td>@address</td>
+                    </tr>
+                }
+            }
+            catch
+            {
+
+            }
+        }
+        else
+        {
+            @foreach (var address in Startup.Addresses)
+            {
+                <tr>
+                    <td>@address</td>
+                </tr>
+            }
+        }
+
+    </table>
 </fieldset>
 
 <fieldset>
