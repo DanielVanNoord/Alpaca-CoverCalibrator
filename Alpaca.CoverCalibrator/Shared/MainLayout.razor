@@ -6,16 +6,11 @@
 
 <div class="main">
     <BlazoredToasts />
-    <div class="px-4">
-        @if (ServerSettings.UseAuth)
-        {
-            <LoginControl />
-        }
-    </div>
 
     <div class="content px-1">
         @if (ServerSettings.UseAuth)
         {
+            <LoginControl />
             <AuthorizeView>
                 <Authorized>
                     @Body
