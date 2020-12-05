@@ -193,37 +193,37 @@
     {
         get;
         set;
-    } = true;
+    } = ServerSettings.AllowDiscovery;
 
     UInt16 DiscoveryPort
     {
         get;
         set;
-    } = 32227;
+    } = ServerSettings.DiscoveryPort;
 
     bool LocalHostOnlyOnHost
     {
         get;
         set;
-    } = true;
+    } = ServerSettings.LocalRespondOnlyToLocalHost;
 
     bool RemoteAccess
     {
         get;
         set;
-    } = true;
+    } = ServerSettings.AllowRemoteAccess;
 
     UInt16 ServerPort
     {
         get;
         set;
-    } = 5000;
+    } = ServerSettings.ServerPort;
 
     bool StartBrowser
     {
         get;
         set;
-    } = true;
+    } = ServerSettings.AutoStartBrowser;
 
     bool EnableShutdown
     {
@@ -235,7 +235,7 @@
     {
         get;
         set;
-    }
+    } = ServerSettings.Location;
 
     bool AllowShutdown
     {
@@ -249,13 +249,13 @@
     {
         get;
         set;
-    }
+    } = ServerSettings.PreventRemoteDisconnects;
 
     bool PreventRemoteDisposes
     {
         get;
         set;
-    }
+    } = ServerSettings.PreventRemoteDisposes;
 
     bool RequireAuthorization
     {
@@ -281,27 +281,6 @@
     {
         get;
         set;
-    }
-
-    protected override void OnInitialized()
-    {
-        Discovery = ServerSettings.AllowDiscovery;
-
-        DiscoveryPort = ServerSettings.DiscoveryPort;
-
-        LocalHostOnlyOnHost = ServerSettings.LocalRespondOnlyToLocalHost;
-
-        RemoteAccess = ServerSettings.AllowRemoteAccess;
-
-        ServerPort = ServerSettings.ServerPort;
-
-        StartBrowser = ServerSettings.AutoStartBrowser;
-
-        Location = ServerSettings.Location;
-
-        PreventRemoteDisconnects = ServerSettings.PreventRemoteDisconnects;
-
-        PreventRemoteDisposes = ServerSettings.PreventRemoteDisposes;
     }
 
     void SaveDiscovery()
