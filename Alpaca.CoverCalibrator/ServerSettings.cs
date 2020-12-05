@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ASCOM.Standard.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -216,6 +217,19 @@ namespace Alpaca.CoverCalibrator
             set
             {
                 Profile.WriteValue("Password", Hash.GetStoragePassword(value));
+            }
+        }
+
+        internal static LogLevel LoggingLevel
+        {
+            get
+            {
+                return (LogLevel) Enum.Parse(typeof(LogLevel), Profile.GetValue("LoggingLevel", LogLevel.Information.ToString()));
+            }
+            set
+            {
+                Logging.Log.SetMinimumLoggingLevel(value);
+                Profile.WriteValue("LoggingLevel", value.ToString());
             }
         }
     }
