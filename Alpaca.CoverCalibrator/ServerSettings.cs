@@ -9,7 +9,7 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class ServerSettings
     {
-        internal const string ServerName = "Alpaca server for Cover Calibrator simulator";
+        internal const string ServerName = "Alpaca CoverCalibrator Simulator";
         internal const string Manufacturer = "ASCOM Initiative";
         internal static readonly int[] APIVersions = { 1 };
 
