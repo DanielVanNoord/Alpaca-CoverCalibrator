@@ -29,6 +29,13 @@ namespace Alpaca.CoverCalibrator
                 return;
             }
 
+            if (args?.Any(str => str.Contains("--reset-auth")) ?? false)
+            {
+                Console.WriteLine("Turning off Authentication to allow password reset.");
+                ServerSettings.UseAuth = false;
+                Console.WriteLine("You can change the password and then re-enable Authentication.");
+            }
+
             //Already running, start the browser
             //This was working fine for .Net Core 3.1. Initial tests for .Net 5 show a change in how single file deployments work on Linux
             //This should probably be changed to a Mutex or another similar lock
