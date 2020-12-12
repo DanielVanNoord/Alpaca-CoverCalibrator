@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Alpaca.CoverCalibrator
 {
@@ -15,7 +12,19 @@ namespace Alpaca.CoverCalibrator
         //ToDo, don't hard code support multiple users
         public async Task<bool> Authenticate(string username, string password)
         {
-            return await Task.Run(() => username == ServerSettings.UserName && Hash.Validate(ServerSettings.Password, password) );
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    return username == ServerSettings.UserName && Hash.Validate(ServerSettings.Password, password);
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+            );
         }
     }
 }
