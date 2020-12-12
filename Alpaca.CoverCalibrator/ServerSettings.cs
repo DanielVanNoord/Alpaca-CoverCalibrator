@@ -35,6 +35,18 @@ namespace Alpaca.CoverCalibrator
 
         private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile(ServerFileName, "Server");
 
+        internal static void Reset()
+        {
+            try
+            {
+                Profile.Clear();
+            }
+            catch (Exception ex)
+            {
+                Logging.LogError(ex.Message);
+            }
+        }
+
         internal static string Location
         {
             get
@@ -47,23 +59,16 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
-        internal static void Reset()
-        {
-            try
-            {
-                Profile.Clear();
-            }
-            catch(Exception ex)
-            {
-                Logging.LogError(ex.Message);
-            }
-        }
-
         internal static bool AutoStartBrowser
         {
             get
             {
-                return Profile.GetValue("AutoStartBrowser", true.ToString()) == true.ToString();
+  
+                if (bool.TryParse(Profile.GetValue("AutoStartBrowser", true.ToString()), out bool result))
+                {
+                    return result;
+                }
+                return true;
             }
             set
             {
@@ -75,8 +80,7 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                var value = Profile.GetValue("ServerPort", 5000.ToString());
-                if (ushort.TryParse(value, out ushort result))
+                if (ushort.TryParse(Profile.GetValue("ServerPort", 5000.ToString()), out ushort result))
                 {
                     return result;
                 }
@@ -92,7 +96,11 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return Profile.GetValue("AllowRemoteAccess", true.ToString()) == true.ToString();
+                if (bool.TryParse(Profile.GetValue("AllowRemoteAccess", true.ToString()), out bool result))
+                {
+                    return result;
+                }
+                return true;
             }
             set
             {
@@ -105,7 +113,11 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return Profile.GetValue("AllowDiscovery", true.ToString()) == true.ToString();
+                if (bool.TryParse(Profile.GetValue("AllowDiscovery", true.ToString()), out bool result))
+                {
+                    return result;
+                }
+                return true;
             }
             set
             {
@@ -132,8 +144,7 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                var value = Profile.GetValue("DiscoveryPort", 32227.ToString());
-                if (ushort.TryParse(value, out ushort result))
+                if (ushort.TryParse(Profile.GetValue("DiscoveryPort", 32227.ToString()), out ushort result))
                 {
                     return result;
                 }
@@ -149,7 +160,11 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return Profile.GetValue("LocalRespondOnlyToLocalHost", true.ToString()) == true.ToString();
+                if (bool.TryParse(Profile.GetValue("LocalRespondOnlyToLocalHost", true.ToString()), out bool result))
+                {
+                    return result;
+                }
+                return true;
             }
             set
             {
@@ -162,7 +177,11 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return Profile.GetValue("PreventRemoteDisconnects", true.ToString()) == true.ToString();
+                if (bool.TryParse(Profile.GetValue("PreventRemoteDisconnects", true.ToString()), out bool result))
+                {
+                    return result;
+                }
+                return true;
             }
             set
             {
@@ -175,7 +194,11 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return Profile.GetValue("PreventRemoteDisposes", true.ToString()) == true.ToString();
+                if (bool.TryParse(Profile.GetValue("PreventRemoteDisposes", true.ToString()), out bool result))
+                {
+                    return result;
+                }
+                return true;
             }
             set
             {
@@ -188,7 +211,11 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return Profile.GetValue("UseAuth", false.ToString()) == true.ToString();
+                if (bool.TryParse(Profile.GetValue("UseAuth", false.ToString()), out bool result))
+                {
+                    return result;
+                }
+                return false;
             }
             set
             {
@@ -224,7 +251,11 @@ namespace Alpaca.CoverCalibrator
         {
             get
             {
-                return (LogLevel) Enum.Parse(typeof(LogLevel), Profile.GetValue("LoggingLevel", LogLevel.Information.ToString()));
+                if(Enum.TryParse(Profile.GetValue("LoggingLevel", LogLevel.Information.ToString()), out LogLevel result))
+                {
+                    return result;
+                }
+                return LogLevel.Information;
             }
             set
             {
