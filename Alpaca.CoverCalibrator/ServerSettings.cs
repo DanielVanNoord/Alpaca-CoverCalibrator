@@ -232,5 +232,22 @@ namespace Alpaca.CoverCalibrator
                 Profile.WriteValue("LoggingLevel", value.ToString());
             }
         }
+
+        internal static bool RunSwagger
+        {
+            get
+            {
+                if (bool.TryParse(Profile.GetValue("RunSwagger", true.ToString()), out bool result))
+                {
+                    return result;
+                }
+                return true;
+            }
+            set
+            {
+                Profile.WriteValue("RunSwagger", value.ToString());
+            }
+        }
+
     }
 }

@@ -45,10 +45,13 @@ namespace Alpaca.CoverCalibrator
             services.AddServerSideBlazor();
             services.AddMvc();
 
-            services.AddSwaggerGen(c =>
+            if (ServerSettings.RunSwagger)
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = $"{ServerSettings.ServerName}", Version = "v1" });
-            });
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = $"{ServerSettings.ServerName}", Version = "v1" });
+                });
+            }
 
             // configure basic authentication
             // CookieAuthenticationDefaults.AuthenticationScheme
@@ -81,9 +84,12 @@ namespace Alpaca.CoverCalibrator
                 app.UseExceptionHandler("/Error");
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                             $"{ServerSettings.ServerName} v1"));
+            if (ServerSettings.RunSwagger)
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                                 $"{ServerSettings.ServerName} v1"));
+            }
 
             int port = ServerSettings.ServerPort;
 

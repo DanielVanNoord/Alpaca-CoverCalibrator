@@ -195,6 +195,20 @@
 </fieldset>
 
 <fieldset>
+    <legend>Run OpenAPI / Swagger</legend>
+    <p>The OpenAPI / Swagger integration allows for the Alpaca API documentation to be shown by this server. It also allows calls to be made directly in the browser. Note that this will apply on the next time this driver runs.</p>
+    <div class="grid-container-two">
+        <div class="grid-item-right">
+            <span>Run OpenAPI:</span>
+        </div>
+        <div class="grid-item-left">
+            <input type="checkbox" @bind="RunSwagger">
+            <button @onclick="SaveSwaggerSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
     <legend>Shutdown Driver</legend>
     <div class="grid-container-two">
         <div class="grid-item-right">
@@ -311,6 +325,12 @@
         set;
     }
 
+    bool RunSwagger
+    {
+        get;
+        set;
+    } = ServerSettings.RunSwagger;
+
     void SaveDiscovery()
     {
         try
@@ -424,6 +444,21 @@
 
 
             DisplaySuccess("Security Saved!");
+        }
+        catch (Exception ex)
+        {
+            DisplayError(ex.Message);
+        }
+    }
+
+
+    void SaveSwaggerSettings()
+    {
+        try
+        {
+            ServerSettings.RunSwagger = RunSwagger;
+
+            DisplaySuccess("Open API Settings saved!");
         }
         catch (Exception ex)
         {
