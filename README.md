@@ -4,6 +4,10 @@ This is a test repository for the new ASCOM Alpaca driver templates. It is meant
 
 This supports Open API / Swagger on the /swagger URL. Please note that the Open API / Swagger documentation on ASCOM-Standards.org should be considered canonical.
 
+The driver / libraries are designed to run on Windows, Linux and Mac. For details on the .Net 5 supported OS versions see https://github.com/dotnet/core/blob/master/release-notes/5.0/5.0-supported-os.md.
+
+Because the device UI is written in HTML / CSS and uses Blazor all it needs is a modern web browser. It will launch a browser on the host system (if one is available) and is accessible to other systems on the same network.
+
 ## Projects
 
 * Alpaca.CoverCalibrator is an ASP.Net Core project (.Net 5.0). It exposes the Alpaca REST API and contains a Blazor web ui for device control and configuration. It uses the cross platform ASCOM Standard libraries to provide logging and configuration. It supports cookie authentication for the Blazor UI and basic http auth and cookie auth for the Alpaca REST API.
@@ -20,7 +24,6 @@ This supports Open API / Swagger on the /swagger URL. Please note that the Open 
 * Clarify proper handling of ASCOM dispose in Alpaca
 * Refactor Auth into library
   * Add cookie revoke
-  * Add reset password to command line arguments
 * Consider refactoring Alpaca API controllers into library
 * Consider switching to mutex locks to detect running program to work better with the new .Net Core Single File deployment
 * Add support for multiple discovery ports for proxies
