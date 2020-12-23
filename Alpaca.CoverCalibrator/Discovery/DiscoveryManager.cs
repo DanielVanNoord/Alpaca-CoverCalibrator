@@ -23,7 +23,7 @@ namespace Alpaca.CoverCalibrator.Discovery
         internal static List<IPAddress> AdapterAddress
         {
             get
-            {
+            { 
                 List<IPAddress> Addresses = new List<IPAddress>();
                 NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
                 foreach (NetworkInterface adapter in adapters)
