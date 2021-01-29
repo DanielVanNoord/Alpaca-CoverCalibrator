@@ -1,5 +1,5 @@
 # Alpaca REST server with Blazor UI
-This uses ASP.Net Core (currently 3.1 soon to be .Net 5)
+This uses ASP.Net Core (.Net 5.0)
 
 Notes and open questions
 
