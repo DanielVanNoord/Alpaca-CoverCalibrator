@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Alpaca
 {
+    /// <summary>
+    /// A Custom REST MVC controller with additions to help handle Alpaca responses and error responses.
+    /// </summary>
     public class AlpacaController : Controller
     {
         internal ActionResult<BoolResponse> ProcessRequest(Func<bool> p, uint TransactionID, uint ClientID, uint ClientTransactionID, string payload = "")
