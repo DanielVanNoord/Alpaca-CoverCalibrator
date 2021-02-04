@@ -15,7 +15,20 @@ namespace Alpaca
     /// </summary>
     public class AlpacaController : Controller
     {
-        internal ActionResult<BoolResponse> ProcessRequest(Func<bool> p, uint TransactionID, uint ClientID, uint ClientTransactionID, string payload = "")
+        /// <summary>
+        /// This function logs the incoming API call then executes the passed function
+        /// By executing the function this can catch any errors
+        /// If it completes successfully a bool response is returned with an http 200
+        /// If no device is available an HTTP 400 is returned
+        /// If the device call fails an Alpaca JSON error is returned
+        /// </summary>
+        /// <param name="operation">The operation to preform on the device. Often this is just a lambda that returns a property. By passing it in as a function it can be executed inside a try catch and handle the exception.</param>
+        /// <param name="TransactionID">The current server transaction id</param>
+        /// <param name="ClientID">The client id</param>
+        /// <param name="ClientTransactionID">The client transaction id</param>
+        /// <param name="payload">Any payload values, optional, only used for logging</param>
+        /// <returns></returns>
+        internal ActionResult<BoolResponse> ProcessRequest(Func<bool> operation, uint TransactionID, uint ClientID, uint ClientTransactionID, string payload = "")
         {
             try
             {
@@ -25,7 +38,7 @@ namespace Alpaca
                 {
                     ClientTransactionID = ClientTransactionID,
                     ServerTransactionID = TransactionID,
-                    Value = p.Invoke()
+                    Value = operation.Invoke()
                 });
             }
             catch (DeviceNotFoundException ex)
