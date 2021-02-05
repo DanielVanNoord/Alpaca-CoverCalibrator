@@ -138,7 +138,16 @@ namespace Alpaca
             }
         }
 
-        private static void LogAPICall(IPAddress remoteIpAddress, string request, uint clientID, uint clientTransactionID, uint transactionID, string payload)
+        /// <summary>
+        /// Log out an API request to the ASCOM Standard Logger Instance. This logs at a level of Verbose.
+        /// </summary>
+        /// <param name="remoteIpAddress">The IP Address of the remote computer</param>
+        /// <param name="request">The requested API</param>
+        /// <param name="clientID">The Client ID</param>
+        /// <param name="clientTransactionID">The Client Transaction ID</param>
+        /// <param name="transactionID">The Server Transaction ID</param>
+        /// <param name="payload">The function payload if any exists</param>
+        private static void LogAPICall(IPAddress remoteIpAddress, string request, uint clientID, uint clientTransactionID, uint transactionID, string payload = "")
         {
             if (payload == null || payload == string.Empty)
             {
