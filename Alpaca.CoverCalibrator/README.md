@@ -4,6 +4,7 @@ This uses ASP.Net Core (.Net 5.0)
 Notes and open questions
 
 * Currently this does not work with discovery when debugging with IIS as it does not match the discovery port. Select a build target of Alpaca.CoverCalibrator for testing. This should be fixed in a future update. For now IIS express has been removed from launchSettings.json.
+* There is a Swagger / OpenAPI UI on /swagger. This can help test the APIs
 
 ## Folders
 * Authorization - Authorization filters for controllers and a user server for authenticating users.
