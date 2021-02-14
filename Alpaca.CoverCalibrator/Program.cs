@@ -21,9 +21,9 @@ namespace Alpaca.CoverCalibrator
                 Console.WriteLine("Reseting stored settings");
                 Logging.LogInformation("Reseting stored settings");
                 Console.WriteLine("Reseting Server settings");
-                ServerSettings.Reset();
+                AlpacaSettings.Reset();
                 Console.WriteLine("Reseting Device settings");
-                DeviceManager.Reset();
+                DriverManager.Reset();
                 Console.WriteLine("Settings reset, shutting down");
                 Logging.LogInformation("Settings reset, shutting down");
                 return;
@@ -32,7 +32,7 @@ namespace Alpaca.CoverCalibrator
             if (args?.Any(str => str.Contains("--reset-auth")) ?? false)
             {
                 Console.WriteLine("Turning off Authentication to allow password reset.");
-                ServerSettings.UseAuth = false;
+                AlpacaSettings.UseAuth = false;
                 Console.WriteLine("You can change the password and then re-enable Authentication.");
             }
 
@@ -41,7 +41,7 @@ namespace Alpaca.CoverCalibrator
             //This should probably be changed to a Mutex or another similar lock
             if (System.Diagnostics.Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1)
             {
-                ServerManager.StartBrowser(ServerSettings.ServerPort);
+                Startup.StartBrowser(AlpacaSettings.ServerPort);
                 return;
             }
 
@@ -61,7 +61,7 @@ namespace Alpaca.CoverCalibrator
 
                 string startupURLArg = "--urls=http://";
 
-                if (ServerSettings.AllowRemoteAccess)
+                if (AlpacaSettings.AllowRemoteAccess)
                 {
                     startupURLArg += "*";
                 }
@@ -70,7 +70,7 @@ namespace Alpaca.CoverCalibrator
                     startupURLArg += "localhost";
                 }
 
-                startupURLArg += ":" + ServerSettings.ServerPort;
+                startupURLArg += ":" + AlpacaSettings.ServerPort;
 
                 Console.WriteLine("Startup URL args: " + startupURLArg);
                 Logging.LogInformation("Startup URL args: " + startupURLArg);

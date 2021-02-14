@@ -17,9 +17,9 @@ namespace Alpaca.CoverCalibrator
 
         static Logging()
         {
-            Log = new ASCOM.Standard.Utilities.TraceLogger(null, ServerSettings.ServerFileName) { Enabled = true };
+            Log = new ASCOM.Standard.Utilities.TraceLogger(null, AlpacaSettings.ServerFileName) { Enabled = true };
 
-            Log.SetMinimumLoggingLevel(ServerSettings.LoggingLevel);
+            Log.SetMinimumLoggingLevel(AlpacaSettings.LoggingLevel);
 
             //Set platform logging 
             //In this case the platform uses the same logger as the driver.

@@ -47,7 +47,7 @@ namespace Alpaca.CoverCalibrator.Pages
 
             try
             {
-                if (ServerSettings.UseAuth)
+                if (AlpacaSettings.UseAuth)
                 {
                     auth = await _userService.Authenticate(paramUsername, paramPassword);
                 }

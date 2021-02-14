@@ -17,9 +17,9 @@ namespace Alpaca.CoverCalibrator
         [Route("management/apiversions")]
         public IntListResponse ApiVersions(uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            var TransactionID = ServerManager.ServerTransactionID;
+            var TransactionID = DriverManager.ServerTransactionID;
             Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
-            return new IntListResponse(ClientTransactionID, TransactionID, ServerSettings.APIVersions);
+            return new IntListResponse(ClientTransactionID, TransactionID, AlpacaSettings.APIVersions);
         }
 
         [HttpGet]
@@ -29,10 +29,10 @@ namespace Alpaca.CoverCalibrator
         {
 
 
-            var TransactionID = ServerManager.ServerTransactionID;
+            var TransactionID = DriverManager.ServerTransactionID;
             Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
 
-            return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription(ServerSettings.ServerName, ServerSettings.Manufacturer, ServerSettings.Version, ServerSettings.Location));
+            return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription(AlpacaSettings.ServerName, AlpacaSettings.Manufacturer, AlpacaSettings.Version, AlpacaSettings.Location));
         }
 
         [HttpGet]
@@ -43,14 +43,14 @@ namespace Alpaca.CoverCalibrator
             List<AlpacaConfiguredDevice> devices = new List<AlpacaConfiguredDevice>();
             try
             {
-                    devices.Add((DeviceManager.GetCoverCalibrator(0) as IAlpacaDevice).Configuration);
+                    devices.Add((DriverManager.GetCoverCalibrator(0) as IAlpacaDevice).Configuration);
             }
             catch(Exception ex)
             {
                 Logging.LogError(ex.Message);
             }
 
-            var TransactionID = ServerManager.ServerTransactionID;
+            var TransactionID = DriverManager.ServerTransactionID;
             Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
 
             return new AlpacaConfiguredDevicesResponse(ClientTransactionID, TransactionID, devices);

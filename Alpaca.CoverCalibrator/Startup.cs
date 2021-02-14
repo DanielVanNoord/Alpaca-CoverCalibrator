@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -45,11 +46,11 @@ namespace Alpaca.CoverCalibrator
             services.AddServerSideBlazor();
             services.AddMvc();
 
-            if (ServerSettings.RunSwagger)
+            if (AlpacaSettings.RunSwagger)
             {
                 services.AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = $"{ServerSettings.ServerName}", Version = "v1" });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = $"{AlpacaSettings.ServerName}", Version = "v1" });
                 });
             }
 
@@ -84,14 +85,14 @@ namespace Alpaca.CoverCalibrator
                 app.UseExceptionHandler("/Error");
             }
 
-            if (ServerSettings.RunSwagger)
+            if (AlpacaSettings.RunSwagger)
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                                 $"{ServerSettings.ServerName} v1"));
+                                 $"{AlpacaSettings.ServerName} v1"));
             }
 
-            int port = ServerSettings.ServerPort;
+            int port = AlpacaSettings.ServerPort;
 
             try
             {
@@ -174,13 +175,13 @@ namespace Alpaca.CoverCalibrator
 
             lifetime.ApplicationStarted.Register(() =>
             {
-                Logging.LogInformation($"{ServerSettings.ServerName} Starting");
+                Logging.LogInformation($"{AlpacaSettings.ServerName} Starting");
 
                 try
                 {
-                    if (ServerSettings.AutoStartBrowser) //AutoStart Browser
+                    if (AlpacaSettings.AutoStartBrowser) //AutoStart Browser
                     {
-                        ServerManager.StartBrowser(port);
+                        StartBrowser(port);
                     }
                 }
                 catch (Exception ex)
@@ -191,15 +192,25 @@ namespace Alpaca.CoverCalibrator
 
             lifetime.ApplicationStopping.Register(() =>
             {
-                Logging.LogInformation($"{ServerSettings.ServerName} Stopping");
+                Logging.LogInformation($"{AlpacaSettings.ServerName} Stopping");
             });
 
             lifetime.ApplicationStopped.Register(() =>
             {
-                Logging.LogInformation($"{ServerSettings.ServerName} Stopped");
+                Logging.LogInformation($"{AlpacaSettings.ServerName} Stopped");
             });
 
             Lifetime = lifetime;
+        }
+
+        internal static void StartBrowser(int port)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = string.Format("http://localhost:{0}", port),
+                UseShellExecute = true
+            };
+            Process.Start(psi);
         }
     }
 }

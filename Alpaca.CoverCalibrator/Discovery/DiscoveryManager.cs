@@ -56,21 +56,21 @@ namespace Alpaca.CoverCalibrator.Discovery
 
         internal static void Start()
         {
-            if (ServerSettings.AllowDiscovery)
+            if (AlpacaSettings.AllowDiscovery)
             {
                 Console.WriteLine("Starting discovery responder from defaults");
 
-                DiscoveryResponder = new Responder(ServerSettings.ServerPort, true, false)
+                DiscoveryResponder = new Responder(AlpacaSettings.ServerPort, true, false)
                 {
-                    AllowRemoteAccess = ServerSettings.AllowRemoteAccess,
-                    LocalRespondOnlyToLocalHost = ServerSettings.LocalRespondOnlyToLocalHost
+                    AllowRemoteAccess = AlpacaSettings.AllowRemoteAccess,
+                    LocalRespondOnlyToLocalHost = AlpacaSettings.LocalRespondOnlyToLocalHost
                 };
             }
         }
 
         internal static void Start(int port, bool localHostOnly, bool ipv6)
         {
-            if (ServerSettings.AllowDiscovery)
+            if (AlpacaSettings.AllowDiscovery)
             {
                 Console.WriteLine($"Starting Discovery on port: {port}");
 
@@ -82,7 +82,7 @@ namespace Alpaca.CoverCalibrator.Discovery
                 DiscoveryResponder = new Responder(port, true, ipv6)
                 {
                     AllowRemoteAccess = !localHostOnly,
-                    LocalRespondOnlyToLocalHost = ServerSettings.LocalRespondOnlyToLocalHost
+                    LocalRespondOnlyToLocalHost = AlpacaSettings.LocalRespondOnlyToLocalHost
                 };
             }
         }

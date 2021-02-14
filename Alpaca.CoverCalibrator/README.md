@@ -34,9 +34,8 @@ Notes and open questions
 
 ## Files
 
-* DeviceManager.cs is a static class that manages access to device instances. This may be refactored into a service that can be accessed through dependency injection or function access, allowing the device controllers to be provided by a library
+* DriverManager.cs is a static class that manages access to device instances. This may be refactored into a service that can be accessed through dependency injection or function access, allowing the device controllers to be provided by a library. It also contains TransactionID access.
 * Logging.cs is a static class for logging management. This could be removed, using the logging instance included with ASCOM Standard instead. This architecture should be decided by the group for the next release.
 * Program.cs starts all components and parses command line arguments
-* ServerManager contains TransactionID and Browser start commands
-* ServerSettings contains all settings that are used by the server. These are stored in the XMLProfile or another IProfile
+* AlpacaSettings contains all settings that are used by the Alpaca REST API driver (not the device level settings). These are stored in the XMLProfile or another IProfile
 * Startup manages all ASP.Net core services and components

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alpaca.CoverCalibrator
 {
-    internal static class ServerSettings
+    internal static class AlpacaSettings
     {
         internal const string ServerName = "Alpaca CoverCalibrator Simulator";
         internal const string Manufacturer = "ASCOM Initiative";

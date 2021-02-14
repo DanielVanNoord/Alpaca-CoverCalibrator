@@ -16,7 +16,7 @@ namespace Alpaca.CoverCalibrator
             {
                 try
                 {
-                    return username == ServerSettings.UserName && Hash.Validate(ServerSettings.Password, password);
+                    return username == AlpacaSettings.UserName && Hash.Validate(AlpacaSettings.Password, password);
                 }
                 catch
                 {

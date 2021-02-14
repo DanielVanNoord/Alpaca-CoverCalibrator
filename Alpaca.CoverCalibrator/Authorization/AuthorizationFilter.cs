@@ -23,7 +23,7 @@ namespace Alpaca.CoverCalibrator
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
             // If not using Auth don't even check
-            if (!ServerSettings.UseAuth)
+            if (!AlpacaSettings.UseAuth)
             {
                 return;
             }

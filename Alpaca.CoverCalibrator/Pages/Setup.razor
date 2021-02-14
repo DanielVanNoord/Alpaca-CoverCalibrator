@@ -37,7 +37,7 @@
         <div class="grid-item-right">
         </div>
         <div class="grid-item-right">
-            <button @onclick="SaveServerSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
+            <button @onclick="SaveAlpacaSettings" style="min-width:12ch; vertical-align:middle;">Save</button>
         </div>
     </div>
 </fieldset>
@@ -50,7 +50,7 @@
             <th>Addresses server is listening on.</th>
         </tr>
 
-        @if (ServerSettings.AllowRemoteAccess)
+        @if (AlpacaSettings.AllowRemoteAccess)
         {
             try
             {
@@ -228,37 +228,37 @@
     {
         get;
         set;
-    } = ServerSettings.AllowDiscovery;
+    } = AlpacaSettings.AllowDiscovery;
 
     UInt16 DiscoveryPort
     {
         get;
         set;
-    } = ServerSettings.DiscoveryPort;
+    } = AlpacaSettings.DiscoveryPort;
 
     bool LocalHostOnlyOnHost
     {
         get;
         set;
-    } = ServerSettings.LocalRespondOnlyToLocalHost;
+    } = AlpacaSettings.LocalRespondOnlyToLocalHost;
 
     bool RemoteAccess
     {
         get;
         set;
-    } = ServerSettings.AllowRemoteAccess;
+    } = AlpacaSettings.AllowRemoteAccess;
 
     UInt16 ServerPort
     {
         get;
         set;
-    } = ServerSettings.ServerPort;
+    } = AlpacaSettings.ServerPort;
 
     bool StartBrowser
     {
         get;
         set;
-    } = ServerSettings.AutoStartBrowser;
+    } = AlpacaSettings.AutoStartBrowser;
 
     bool EnableShutdown
     {
@@ -270,7 +270,7 @@
     {
         get;
         set;
-    } = ServerSettings.Location;
+    } = AlpacaSettings.Location;
 
     bool AllowShutdown
     {
@@ -284,19 +284,19 @@
     {
         get;
         set;
-    } = ServerSettings.PreventRemoteDisconnects;
+    } = AlpacaSettings.PreventRemoteDisconnects;
 
     bool PreventRemoteDisposes
     {
         get;
         set;
-    } = ServerSettings.PreventRemoteDisposes;
+    } = AlpacaSettings.PreventRemoteDisposes;
 
     bool RequireAuthorization
     {
         get;
         set;
-    } = ServerSettings.UseAuth;
+    } = AlpacaSettings.UseAuth;
 
     bool DisableAuth => !RequireAuthorization;
 
@@ -304,13 +304,13 @@
     {
         get;
         set;
-    } = ServerSettings.UserName;
+    } = AlpacaSettings.UserName;
 
     ASCOM.Standard.Interfaces.LogLevel LoggingLevel
     {
         get;
         set;
-    } = ServerSettings.LoggingLevel;
+    } = AlpacaSettings.LoggingLevel;
 
 
     string Password
@@ -329,17 +329,17 @@
     {
         get;
         set;
-    } = ServerSettings.RunSwagger;
+    } = AlpacaSettings.RunSwagger;
 
     void SaveDiscovery()
     {
         try
         {
-            ServerSettings.AllowDiscovery = Discovery;
+            AlpacaSettings.AllowDiscovery = Discovery;
 
-            ServerSettings.DiscoveryPort = DiscoveryPort;
+            AlpacaSettings.DiscoveryPort = DiscoveryPort;
 
-            ServerSettings.LocalRespondOnlyToLocalHost = LocalHostOnlyOnHost;
+            AlpacaSettings.LocalRespondOnlyToLocalHost = LocalHostOnlyOnHost;
         }
         catch (Exception ex)
         {
@@ -347,27 +347,27 @@
         }
     }
 
-    void SaveServerSettings()
+    void SaveAlpacaSettings()
     {
         try
         {
             bool SettingsChanged = false;
 
-            if (ServerSettings.AllowRemoteAccess != RemoteAccess)
+            if (AlpacaSettings.AllowRemoteAccess != RemoteAccess)
             {
-                ServerSettings.AllowRemoteAccess = RemoteAccess;
+                AlpacaSettings.AllowRemoteAccess = RemoteAccess;
                 SettingsChanged = true;
             }
 
-            if (ServerSettings.ServerPort != ServerPort)
+            if (AlpacaSettings.ServerPort != ServerPort)
             {
-                ServerSettings.ServerPort = ServerPort;
+                AlpacaSettings.ServerPort = ServerPort;
                 SettingsChanged = true;
             }
 
-            ServerSettings.Location = Location;
+            AlpacaSettings.Location = Location;
 
-            ServerSettings.AutoStartBrowser = StartBrowser;
+            AlpacaSettings.AutoStartBrowser = StartBrowser;
 
             if (SettingsChanged) //If any core settings change call a restart.
             {
@@ -385,8 +385,8 @@
     {
         try
         {
-            ServerSettings.PreventRemoteDisconnects = PreventRemoteDisconnects;
-            ServerSettings.PreventRemoteDisposes = PreventRemoteDisposes;
+            AlpacaSettings.PreventRemoteDisconnects = PreventRemoteDisconnects;
+            AlpacaSettings.PreventRemoteDisposes = PreventRemoteDisposes;
 
         }
         catch (Exception ex)
@@ -399,7 +399,7 @@
     {
         try
         {
-            ServerSettings.LoggingLevel = LoggingLevel;
+            AlpacaSettings.LoggingLevel = LoggingLevel;
         }
         catch(Exception ex)
         {
@@ -431,15 +431,15 @@
                     return;
                 }
 
-                ServerSettings.UserName = UserName;
-                ServerSettings.Password = Password;
-                ServerSettings.UseAuth = RequireAuthorization;
+                AlpacaSettings.UserName = UserName;
+                AlpacaSettings.Password = Password;
+                AlpacaSettings.UseAuth = RequireAuthorization;
 
                 NavManager.NavigateTo("/");
             }
             else
             {
-                ServerSettings.UseAuth = RequireAuthorization;
+                AlpacaSettings.UseAuth = RequireAuthorization;
             }
 
 
@@ -456,7 +456,7 @@
     {
         try
         {
-            ServerSettings.RunSwagger = RunSwagger;
+            AlpacaSettings.RunSwagger = RunSwagger;
 
             DisplaySuccess("Open API Settings saved!");
         }

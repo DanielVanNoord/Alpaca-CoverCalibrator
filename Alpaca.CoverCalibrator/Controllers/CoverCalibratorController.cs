@@ -24,88 +24,88 @@ namespace Alpaca.CoverCalibrator
         [Route(APIRoot + "{DeviceNumber}/Action")]
         public ActionResult<StringResponse> Action(int DeviceNumber, [FromForm] string Action, [FromForm] string Parameters, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).Action(Action, Parameters), ServerManager.ServerTransactionID, ClientID, ClientTransactionID, $"Action: {Action}, Parameters {Parameters}");
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).Action(Action, Parameters), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Action: {Action}, Parameters {Parameters}");
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CommandBlind")]
         public ActionResult<Response> CommandBlind(int DeviceNumber, [FromForm] string Command, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).CommandBlind(Command, Raw), ServerManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command {Command}, Raw {Raw}");
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CommandBlind(Command, Raw), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command {Command}, Raw {Raw}");
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CommandBool")]
         public ActionResult<BoolResponse> CommandBool(int DeviceNumber, [FromForm] string Command, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).CommandBool(Command, Raw), ServerManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command={Command}, Raw={Raw}");
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CommandBool(Command, Raw), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command={Command}, Raw={Raw}");
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CommandString")]
         public ActionResult<StringResponse> CommandString(int DeviceNumber, [FromForm] string Command, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).CommandString(Command, Raw), ServerManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command={Command}, Raw={Raw}");
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CommandString(Command, Raw), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command={Command}, Raw={Raw}");
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/Connected")]
         public ActionResult<BoolResponse> Connected(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).Connected, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).Connected, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/Connected")]
         public ActionResult<Response> Connected(int DeviceNumber, [FromForm] bool Connected, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            if (Connected || !ServerSettings.PreventRemoteDisconnects)
+            if (Connected || !AlpacaSettings.PreventRemoteDisconnects)
             {
-                return ProcessRequest(() => { DeviceManager.GetCoverCalibrator(DeviceNumber).Connected = Connected; }, ServerManager.ServerTransactionID, ClientID, ClientTransactionID, $"Connected={Connected}");
+                return ProcessRequest(() => { DriverManager.GetCoverCalibrator(DeviceNumber).Connected = Connected; }, DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Connected={Connected}");
             }
-            return ProcessRequest(() => { }, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => { }, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/Description")]
         public ActionResult<StringResponse> Description(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).Description, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).Description, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/DriverInfo")]
         public ActionResult<StringResponse> DriverInfo(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).DriverInfo, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).DriverInfo, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/DriverVersion")]
         public ActionResult<StringResponse> DriverVersion(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).DriverVersion, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).DriverVersion, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/InterfaceVersion")]
         public ActionResult<IntResponse> InterfaceVersion(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).InterfaceVersion, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).InterfaceVersion, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/Name")]
         public ActionResult<StringResponse> Name(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).Name, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).Name, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/SupportedActions")]
         public ActionResult<StringListResponse> SupportedActions(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).SupportedActions, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).SupportedActions, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         #region IDisposable Members
@@ -114,11 +114,11 @@ namespace Alpaca.CoverCalibrator
         [Route(APIRoot + "{DeviceNumber}/Dispose")]
         public ActionResult<Response> Dispose(int DeviceNumber, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            if (!ServerSettings.PreventRemoteDisposes)
+            if (!AlpacaSettings.PreventRemoteDisposes)
             {
-                return ProcessRequest(() => { DeviceManager.GetCoverCalibrator(DeviceNumber).Dispose(); }, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+                return ProcessRequest(() => { DriverManager.GetCoverCalibrator(DeviceNumber).Dispose(); }, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
             }
-            return ProcessRequest(() => { }, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => { }, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         #endregion IDisposable Members
@@ -129,63 +129,63 @@ namespace Alpaca.CoverCalibrator
         [Route(APIRoot + "{DeviceNumber}/CoverState")]
         public ActionResult<IntResponse> CoverState(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => (int)DeviceManager.GetCoverCalibrator(DeviceNumber).CoverState, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => (int)DriverManager.GetCoverCalibrator(DeviceNumber).CoverState, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/CalibratorState")]
         public ActionResult<IntResponse> CalibratorState(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => (int)DeviceManager.GetCoverCalibrator(DeviceNumber).CalibratorState, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => (int)DriverManager.GetCoverCalibrator(DeviceNumber).CalibratorState, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/Brightness")]
         public ActionResult<IntResponse> Brightness(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).Brightness, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).Brightness, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpGet]
         [Route(APIRoot + "{DeviceNumber}/MaxBrightness")]
         public ActionResult<IntResponse> MaxBrightness(int DeviceNumber, uint ClientID = 0, uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).MaxBrightness, ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).MaxBrightness, DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/OpenCover")]
         public ActionResult<Response> OpenCover(int DeviceNumber, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).OpenCover(), ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).OpenCover(), DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CloseCover")]
         public ActionResult<Response> CloseCover(int DeviceNumber, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).CloseCover(), ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CloseCover(), DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/HaltCover")]
         public ActionResult<Response> HaltCover(int DeviceNumber, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).HaltCover(), ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).HaltCover(), DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CalibratorOn")]
         public ActionResult<Response> CalibratorOn(int DeviceNumber, [FromForm] int Brightness, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).CalibratorOn(Brightness), ServerManager.ServerTransactionID, ClientID, ClientTransactionID, $"Brightness={Brightness}");
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CalibratorOn(Brightness), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Brightness={Brightness}");
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CalibratorOff")]
         public ActionResult<Response> CalibratorOff(int DeviceNumber, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
-            return ProcessRequest(() => DeviceManager.GetCoverCalibrator(DeviceNumber).CalibratorOff(), ServerManager.ServerTransactionID, ClientID, ClientTransactionID);
+            return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CalibratorOff(), DriverManager.ServerTransactionID, ClientID, ClientTransactionID);
         }
     }
 }
