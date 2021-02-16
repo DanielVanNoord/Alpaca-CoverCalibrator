@@ -26,12 +26,18 @@ namespace Alpaca.CoverCalibrator
 
         public IConfiguration Configuration { get; }
 
+        /// <summary>
+        /// IHostApplicationLifetime is used to shutdown the driver from the Blazor UI
+        /// </summary>
         internal static IHostApplicationLifetime Lifetime
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// The addresses found at startup
+        /// </summary>
         internal static string[] Addresses
         {
             get;
@@ -42,10 +48,16 @@ namespace Alpaca.CoverCalibrator
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add support for Razor
             services.AddRazorPages();
+
+            // Add support for server side Blazor (server side rendering)
             services.AddServerSideBlazor();
+
+            // Add MVC support for the Alpaca REST APIs
             services.AddMvc();
 
+            // If Swagger is set to run start it and bind to names
             if (AlpacaSettings.RunSwagger)
             {
                 services.AddSwaggerGen(c =>
@@ -55,6 +67,7 @@ namespace Alpaca.CoverCalibrator
             }
 
             // configure basic authentication
+            // Expire if no access for more then one hour
             // CookieAuthenticationDefaults.AuthenticationScheme
             // "BasicAuthentication"
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
@@ -65,11 +78,15 @@ namespace Alpaca.CoverCalibrator
                 }
                 );
 
-            //Make sure to set Auths to the correct values for your schemes
-
             // configure DI for application services
+
+            // Add an instance of IUserServer for authentication
             services.AddScoped<IUserService, UserService>();
+
+            // Add the AuthorizationFilter service for the REST APIs
             services.AddScoped<AuthorizationFilter>();
+
+            // Add support for BlazoredToast to show toast messages.
             services.AddBlazoredToast();
         }
 
