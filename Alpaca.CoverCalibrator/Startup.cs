@@ -102,6 +102,7 @@ namespace Alpaca.CoverCalibrator
                 app.UseExceptionHandler("/Error");
             }
 
+            // Pipe Swagger responses into swagger system.
             if (AlpacaSettings.RunSwagger)
             {
                 app.UseSwagger();
@@ -111,6 +112,7 @@ namespace Alpaca.CoverCalibrator
 
             int port = AlpacaSettings.ServerPort;
 
+            //Find bound addresses to link discovery to the endpoints
             try
             {
                 var serverAddressesFeature = app.ServerFeatures.Get<IServerAddressesFeature>();
@@ -175,14 +177,18 @@ namespace Alpaca.CoverCalibrator
                 Logging.LogError(ex.Message);
             }
 
+            // Using Static files for wwwroot, which contains css and javascript
             app.UseStaticFiles();
 
+            // Use Routing to find endpoints
             app.UseRouting();
 
+            // Activate Authentication and Cookies. This uses basic http auth for APIs and Cookie auth for APIs and blazor
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCookiePolicy();
 
+            // Activate Endpoints for controllers and Blazor. The platform finds the pages.
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -190,6 +196,7 @@ namespace Alpaca.CoverCalibrator
                 endpoints.MapFallbackToPage("/_Host");
             });
 
+            // Register lifetime. Start the browser and log when started
             lifetime.ApplicationStarted.Register(() =>
             {
                 Logging.LogInformation($"{AlpacaSettings.ServerName} Starting");
@@ -207,19 +214,23 @@ namespace Alpaca.CoverCalibrator
                 }
             });
 
+            // Register stopping to log out
             lifetime.ApplicationStopping.Register(() =>
             {
                 Logging.LogInformation($"{AlpacaSettings.ServerName} Stopping");
             });
 
+            // Register stopped to log out
             lifetime.ApplicationStopped.Register(() =>
             {
                 Logging.LogInformation($"{AlpacaSettings.ServerName} Stopped");
             });
 
+            // Cache the lifetime so Blazor can close the driver if requested
             Lifetime = lifetime;
         }
 
+        // Start the local browser to the localhost and current port to access the UI
         internal static void StartBrowser(int port)
         {
             ProcessStartInfo psi = new ProcessStartInfo
