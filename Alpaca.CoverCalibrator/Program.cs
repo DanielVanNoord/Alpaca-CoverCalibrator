@@ -29,6 +29,7 @@ namespace Alpaca.CoverCalibrator
                 return;
             }
 
+            //Command line to turn of Auth for password reset
             if (args?.Any(str => str.Contains("--reset-auth")) ?? false)
             {
                 Console.WriteLine("Turning off Authentication to allow password reset.");
@@ -45,7 +46,7 @@ namespace Alpaca.CoverCalibrator
                 return;
             }
 
-            //Add the --urls argument for IHostBuilder
+            //Add the --urls argument for IHostBuilder, a user can set them from the arguments or they will be created here from settings
             if (!args?.Any(str => str.Contains("--urls")) ?? true)
             {
                 if (args == null)
@@ -82,11 +83,12 @@ namespace Alpaca.CoverCalibrator
 
             try
             {
+                //Build the settings using startup. Block until closing
                 CreateHostBuilder(args).Build().Run();
             }
             catch (OperationCanceledException)
             {
-                //Server was shutdown
+                //Server was shutdown, already logged out.
             }
             catch (Exception ex)
             {
