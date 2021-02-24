@@ -10,16 +10,29 @@ using System.Threading.Tasks;
 
 namespace Alpaca.CoverCalibrator.Discovery
 {
+    /// <summary>
+    /// A static class that contains a Discovery Responder and some helper functions
+    /// </summary>
     internal static class DiscoveryManager
     {
+        /// <summary>
+        /// An instance of the ASCOM Alpaca Discovery Responder
+        /// </summary>
         internal static Responder DiscoveryResponder
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// A check if the Responder is running
+        /// </summary>
         internal static bool IsRunning => !DiscoveryResponder?.Disposed ?? false;
 
+
+        /// <summary>
+        /// The IP Address of the host computers network adapter(s)
+        /// </summary>
         internal static List<IPAddress> AdapterAddress
         {
             get
@@ -54,6 +67,9 @@ namespace Alpaca.CoverCalibrator.Discovery
             }
         }
 
+        /// <summary>
+        /// Start default discovery without IPv6 on all defaults
+        /// </summary>
         internal static void Start()
         {
             if (AlpacaSettings.AllowDiscovery)
@@ -68,6 +84,12 @@ namespace Alpaca.CoverCalibrator.Discovery
             }
         }
 
+        /// <summary>
+        /// Start discovery with custom ports
+        /// </summary>
+        /// <param name="port">Port to use</param>
+        /// <param name="localHostOnly">Respond only on local host</param>
+        /// <param name="ipv6">Support IPv6 discovery (if available on adapters)</param>
         internal static void Start(int port, bool localHostOnly, bool ipv6)
         {
             if (AlpacaSettings.AllowDiscovery)
@@ -87,6 +109,9 @@ namespace Alpaca.CoverCalibrator.Discovery
             }
         }
 
+        /// <summary>
+        /// Stop and Dispose the current Responder
+        /// </summary>
         internal static void Stop()
         {
             DiscoveryResponder.Dispose();
