@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ASCOM.Standard.Interfaces;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,13 +20,13 @@ namespace Alpaca.CoverCalibrator
             if(args?.Any(str => str.Contains("--reset")) ?? false)
             {
                 Console.WriteLine("Reseting stored settings");
-                Logging.LogInformation("Reseting stored settings");
+                Logging.Log.LogInformation("Reseting stored settings");
                 Console.WriteLine("Reseting Server settings");
                 AlpacaSettings.Reset();
                 Console.WriteLine("Reseting Device settings");
                 DriverManager.Reset();
                 Console.WriteLine("Settings reset, shutting down");
-                Logging.LogInformation("Settings reset, shutting down");
+                Logging.Log.LogInformation("Settings reset, shutting down");
                 return;
             }
 
@@ -74,7 +75,7 @@ namespace Alpaca.CoverCalibrator
                 startupURLArg += ":" + AlpacaSettings.ServerPort;
 
                 Console.WriteLine("Startup URL args: " + startupURLArg);
-                Logging.LogInformation("Startup URL args: " + startupURLArg);
+                Logging.Log.LogInformation("Startup URL args: " + startupURLArg);
 
                 temparray[args.Length] = startupURLArg;
 
@@ -92,7 +93,7 @@ namespace Alpaca.CoverCalibrator
             }
             catch (Exception ex)
             {
-                Logging.LogError(ex.Message);
+                Logging.Log.LogError(ex.Message);
             }
         }
 

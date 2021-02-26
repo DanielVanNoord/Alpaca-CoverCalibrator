@@ -1,3 +1,4 @@
+using ASCOM.Standard.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -87,7 +88,7 @@ namespace Alpaca.CoverCalibrator.Pages
             }
             catch (Exception ex)
             {
-                Logging.LogError(ex.Message);
+                Logging.Log.LogError(ex.Message);
             }
 
             return LocalRedirect(returnUrl);

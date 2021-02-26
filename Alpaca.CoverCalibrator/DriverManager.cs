@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ASCOM.Standard.Interfaces;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Alpaca.CoverCalibrator
                 }
                 catch(Exception ex)
                 {
-                    Logging.LogError(ex.Message);
+                    Logging.Log.LogError(ex.Message);
                 }
             }
         }

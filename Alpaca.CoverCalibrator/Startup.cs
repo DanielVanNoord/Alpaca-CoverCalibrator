@@ -1,3 +1,4 @@
+using ASCOM.Standard.Interfaces;
 using Blazored.Toast;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -149,7 +150,7 @@ namespace Alpaca.CoverCalibrator
                         }
                         catch (Exception ex)
                         {
-                            Logging.LogError(ex.Message);
+                            Logging.Log.LogError(ex.Message);
                         }
                     }
                     else //Invalid Uri, simply parse out port
@@ -174,7 +175,7 @@ namespace Alpaca.CoverCalibrator
             }
             catch (Exception ex)
             {
-                Logging.LogError(ex.Message);
+                Logging.Log.LogError(ex.Message);
             }
 
             // Using Static files for wwwroot, which contains css and javascript
@@ -199,7 +200,7 @@ namespace Alpaca.CoverCalibrator
             // Register lifetime. Start the browser and log when started
             lifetime.ApplicationStarted.Register(() =>
             {
-                Logging.LogInformation($"{AlpacaSettings.ServerName} Starting");
+                Logging.Log.LogInformation($"{AlpacaSettings.ServerName} Starting");
 
                 try
                 {
@@ -210,20 +211,20 @@ namespace Alpaca.CoverCalibrator
                 }
                 catch (Exception ex)
                 {
-                    Logging.LogError(ex.Message);
+                    Logging.Log.LogError(ex.Message);
                 }
             });
 
             // Register stopping to log out
             lifetime.ApplicationStopping.Register(() =>
             {
-                Logging.LogInformation($"{AlpacaSettings.ServerName} Stopping");
+                Logging.Log.LogInformation($"{AlpacaSettings.ServerName} Stopping");
             });
 
             // Register stopped to log out
             lifetime.ApplicationStopped.Register(() =>
             {
-                Logging.LogInformation($"{AlpacaSettings.ServerName} Stopped");
+                Logging.Log.LogInformation($"{AlpacaSettings.ServerName} Stopped");
             });
 
             // Cache the lifetime so Blazor can close the driver if requested

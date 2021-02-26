@@ -47,7 +47,7 @@ namespace Alpaca.CoverCalibrator
             }
             catch(Exception ex)
             {
-                Logging.LogError(ex.Message);
+                Logging.Log.LogError(ex.Message);
             }
 
             var TransactionID = DriverManager.ServerTransactionID;
