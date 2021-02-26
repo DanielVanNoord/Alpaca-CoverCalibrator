@@ -9,7 +9,8 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class Logging
     {
-        internal static ASCOM.Standard.Utilities.TraceLogger Log
+        //A single static instance of the logger that is shared with the rest of the project
+        internal static ILogger Log
         {
             get;
             private set;
@@ -17,6 +18,7 @@ namespace Alpaca.CoverCalibrator
 
         static Logging()
         {
+            //Create and activate a TraceLogger, which implements ILogger
             Log = new ASCOM.Standard.Utilities.TraceLogger(null, AlpacaSettings.ServerFileName) { Enabled = true };
 
             Log.SetMinimumLoggingLevel(AlpacaSettings.LoggingLevel);
@@ -26,14 +28,10 @@ namespace Alpaca.CoverCalibrator
             ASCOM.Standard.Utilities.Logger.SetLogProvider(Log);
         }
 
+        //Helper function to log out API requests without a payload
         internal static void LogAPICall(IPAddress remoteIpAddress, string request, uint clientID, uint clientTransactionID, uint transactionID)
         {
             Log.LogVerbose($"Transaction: {transactionID} - {remoteIpAddress} ({clientID}, {clientTransactionID}) requested {request}");
-        }
-
-        internal static void LogAPICall(IPAddress remoteIpAddress, string request, uint clientID, uint clientTransactionID, uint transactionID, string payload)
-        {
-            Log.LogVerbose($"Transaction: {transactionID} - {remoteIpAddress} ({clientID}, {clientTransactionID}) requested {request} with payload {payload}");
         }
     }
 }
