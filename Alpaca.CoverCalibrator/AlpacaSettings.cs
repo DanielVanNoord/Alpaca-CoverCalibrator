@@ -9,8 +9,13 @@ namespace Alpaca.CoverCalibrator
 {
     internal static class AlpacaSettings
     {
-        internal const string ServerName = "Alpaca CoverCalibrator Simulator";
+        internal const string DriverName = "Alpaca CoverCalibrator Simulator";
         internal const string Manufacturer = "ASCOM Initiative";
+
+        //Change this to be unique for your server, it is the name of the settings folder
+        internal const string DriverSettingsFileName = "ASCOM-Simulator-CovCal";
+
+
         internal static readonly int[] APIVersions = { 1 };
 
         internal static string Version
@@ -30,10 +35,7 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
-        //Change this to be unique for your server, it is the name of the settings folder
-        internal const string ServerFileName = "ASCOM-Simulator-CovCal";
-
-        private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile(ServerFileName, "Server");
+        private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile(DriverSettingsFileName, "Server");
 
         internal static void Reset()
         {
@@ -279,6 +281,5 @@ namespace Alpaca.CoverCalibrator
                 Profile.WriteValue("RunSwagger", value.ToString());
             }
         }
-
     }
 }

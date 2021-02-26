@@ -19,7 +19,7 @@ namespace Alpaca.CoverCalibrator
         static Logging()
         {
             //Create and activate a TraceLogger, which implements ILogger
-            Log = new ASCOM.Standard.Utilities.TraceLogger(null, AlpacaSettings.ServerFileName) { Enabled = true };
+            Log = new ASCOM.Standard.Utilities.TraceLogger(null, AlpacaSettings.DriverSettingsFileName) { Enabled = true };
 
             Log.SetMinimumLoggingLevel(AlpacaSettings.LoggingLevel);
 

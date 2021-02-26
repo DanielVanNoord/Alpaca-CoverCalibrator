@@ -26,7 +26,7 @@ namespace Alpaca.CoverCalibrator
         {
             //Only one instance
             coverCalibratorV1s.Add(0,new ASCOMSimulators.CoverCalibratorSimulator(0, Logging.Log,
-                new ASCOM.Standard.Utilities.XMLProfile(AlpacaSettings.ServerFileName, "CoverCalibrator", 0)));
+                new ASCOM.Standard.Utilities.XMLProfile(AlpacaSettings.DriverSettingsFileName, "CoverCalibrator", 0)));
         }
 
         internal static void Reset()

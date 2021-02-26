@@ -32,7 +32,7 @@ namespace Alpaca.CoverCalibrator
             var TransactionID = DriverManager.ServerTransactionID;
             Logging.LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID);
 
-            return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription(AlpacaSettings.ServerName, AlpacaSettings.Manufacturer, AlpacaSettings.Version, AlpacaSettings.Location));
+            return new AlpacaDescriptionResponse(ClientTransactionID, TransactionID, new AlpacaDeviceDescription(AlpacaSettings.DriverName, AlpacaSettings.Manufacturer, AlpacaSettings.Version, AlpacaSettings.Location));
         }
 
         [HttpGet]

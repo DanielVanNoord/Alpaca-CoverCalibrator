@@ -63,7 +63,7 @@ namespace Alpaca.CoverCalibrator
             {
                 services.AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = $"{AlpacaSettings.ServerName}", Version = "v1" });
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = $"{AlpacaSettings.DriverName}", Version = "v1" });
                 });
             }
 
@@ -108,7 +108,7 @@ namespace Alpaca.CoverCalibrator
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                                 $"{AlpacaSettings.ServerName} v1"));
+                                 $"{AlpacaSettings.DriverName} v1"));
             }
 
             int port = AlpacaSettings.ServerPort;
@@ -200,7 +200,7 @@ namespace Alpaca.CoverCalibrator
             // Register lifetime. Start the browser and log when started
             lifetime.ApplicationStarted.Register(() =>
             {
-                Logging.Log.LogInformation($"{AlpacaSettings.ServerName} Starting");
+                Logging.Log.LogInformation($"{AlpacaSettings.DriverName} Starting");
 
                 try
                 {
@@ -218,13 +218,13 @@ namespace Alpaca.CoverCalibrator
             // Register stopping to log out
             lifetime.ApplicationStopping.Register(() =>
             {
-                Logging.Log.LogInformation($"{AlpacaSettings.ServerName} Stopping");
+                Logging.Log.LogInformation($"{AlpacaSettings.DriverName} Stopping");
             });
 
             // Register stopped to log out
             lifetime.ApplicationStopped.Register(() =>
             {
-                Logging.Log.LogInformation($"{AlpacaSettings.ServerName} Stopped");
+                Logging.Log.LogInformation($"{AlpacaSettings.DriverName} Stopped");
             });
 
             // Cache the lifetime so Blazor can close the driver if requested
