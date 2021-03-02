@@ -111,7 +111,6 @@ namespace ASCOM.Simulator
 
         private static int objsInUse;                       // Keeps a count on the total number of objects alive.
         private static int serverLocks;                     // Keeps a lock count on this application.
-        private static frmMain s_MainForm = null;               // Reference to our main form
         private static ArrayList s_ComObjectAssys;              // Dynamically loaded assemblies containing served COM objects
         private static ArrayList s_ComObjectTypes;              // Served COM object types
         private static ArrayList s_ClassFactories;              // Served COM object class factories
@@ -621,8 +620,6 @@ namespace ASCOM.Simulator
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            s_MainForm = new frmMain();
-            if (StartedByCOM) s_MainForm.WindowState = FormWindowState.Minimized;
 
             // Register the class factories of the served objects
             RegisterClassFactories();
@@ -639,7 +636,8 @@ namespace ASCOM.Simulator
             //
             try
             {
-                Application.Run(s_MainForm);
+                //We don't actually need to start a form. This will run under the Background Processes section of Task Manager instead of Apps
+                Application.Run();
             }
             finally
             {
