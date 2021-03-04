@@ -34,6 +34,7 @@ Notes and open questions
 
 ## Files
 
+* AlpacaController.cs contains code to process requests and return them as a http 200 with json response or http 400 error response.
 * DriverManager.cs is a static class that manages access to device instances. This may be refactored into a service that can be accessed through dependency injection or function access, allowing the device controllers to be provided by a library. It also contains TransactionID access.
 * Logging.cs is a static class for logging management. This could be removed, using the logging instance included with ASCOM Standard instead. This architecture should be decided by the group for the next release.
 * Program.cs starts all components and parses command line arguments
