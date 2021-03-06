@@ -16,7 +16,6 @@ Because the device UI is written in HTML / CSS and uses Blazor all it needs is a
 
 ## ToDo
 * Add library and project licenses.
-* Add readmes and comments
 * Continue to move developer set constants to a central location
 * Cleanup code / namespaces
 * Change Alpaca Port from test port of 5000
