@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <ApplicationIcon>ASCOM.ico</ApplicationIcon>
+    <Authors>Daniel Van Noord</Authors>
+    <Description>A test driver for cross-platform Alpaca drivers</Description>
+    <Version>0.0.1-alpha1</Version>
   </PropertyGroup>
 
   <ItemGroup>

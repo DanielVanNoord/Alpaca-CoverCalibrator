@@ -5,6 +5,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>LocalServer.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>ASCOMSimulators</RootNamespace>
+    <Authors>ASCOM Initiative</Authors>
+    <Description>A Cover Calibrator Simulator for testing ASCOM Drivers</Description>
   </PropertyGroup>
 
   <ItemGroup>
