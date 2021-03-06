@@ -341,7 +341,7 @@
 
             AlpacaSettings.LocalRespondOnlyToLocalHost = LocalHostOnlyOnHost;
 
-            toastService.ShowSuccess("Discovery Saved");
+            DisplaySuccess("Discovery Saved");
         }
         catch (Exception ex)
         {
@@ -371,7 +371,7 @@
 
             AlpacaSettings.AutoStartBrowser = StartBrowser;
 
-            toastService.ShowSuccess("Alpaca Settings Saved");
+            DisplaySuccess("Alpaca Settings Saved");
 
             if (SettingsChanged) //If any core settings change call a restart.
             {
@@ -392,7 +392,7 @@
             AlpacaSettings.PreventRemoteDisconnects = PreventRemoteDisconnects;
             AlpacaSettings.PreventRemoteDisposes = PreventRemoteDisposes;
 
-            toastService.ShowSuccess("Driver Settings Saved");
+            DisplaySuccess("Driver Settings Saved");
         }
         catch (Exception ex)
         {
@@ -406,7 +406,7 @@
         {
             AlpacaSettings.LoggingLevel = LoggingLevel;
 
-            toastService.ShowSuccess("Logging Settings Saved");
+            DisplaySuccess("Logging Settings Saved");
         }
         catch(Exception ex)
         {
