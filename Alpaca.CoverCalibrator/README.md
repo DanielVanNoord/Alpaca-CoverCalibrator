@@ -3,6 +3,7 @@ This uses ASP.Net Core (.Net 5.0)
 
 Notes and open questions
 
+* Currently this builds as a console app for testing. For deployment (to hide it in the background) the target can be changed to Windows Application.
 * Currently this does not work with discovery when debugging with IIS as it does not match the discovery port. Select a build target of Alpaca.CoverCalibrator for testing. This should be fixed in a future update. For now IIS express has been removed from launchSettings.json.
 * There is a Swagger / OpenAPI UI on /swagger. This can help test the APIs
 
