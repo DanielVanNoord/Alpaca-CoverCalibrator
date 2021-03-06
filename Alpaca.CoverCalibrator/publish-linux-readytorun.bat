@@ -1,3 +1,3 @@
-dotnet publish -c Release -r linux-arm --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=true -o ./bin/linux-armhf
-dotnet publish -c Release -r linux-arm64 --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=true -o ./bin/linux-aarch64
-dotnet publish -c Release -r linux-x64 --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=true -o ./bin/linux-x64
+dotnet publish -c Release -r linux-arm --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=true -o ./bin/Alpaca.CoverCalibrator.linux-armhf
+dotnet publish -c Release -r linux-arm64 --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=true -o ./bin/Alpaca.CoverCalibrator.linux-aarch64
+dotnet publish -c Release -r linux-x64 --self-contained true /p:PublishTrimmed=true /p:PublishReadyToRun=true /p:PublishReadyToRunShowWarnings=true -o ./bin/Alpaca.CoverCalibrator.linux-x64
