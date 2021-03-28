@@ -19,6 +19,7 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
+        // This stores the actual instance of the device drivers. It is keyed to the Device Number
         private readonly static Dictionary<int,ASCOM.Standard.Interfaces.ICoverCalibratorV1> coverCalibratorV1s = new Dictionary<int,ASCOM.Standard.Interfaces.ICoverCalibratorV1>();
 
 
@@ -29,6 +30,9 @@ namespace Alpaca.CoverCalibrator
                 new ASCOM.Standard.Utilities.XMLProfile(AlpacaSettings.DriverSettingsFileName, "CoverCalibrator", 0)));
         }
 
+        /// <summary>
+        /// Reset all devices settings profiles.
+        /// </summary>
         internal static void Reset()
         {
             foreach (var covcal in coverCalibratorV1s)
@@ -44,6 +48,7 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
+        //This allows access to specific devices for the API controllers and the device Blazor UI Pages  
         internal static ASCOM.Standard.Interfaces.ICoverCalibratorV1 GetCoverCalibrator(int DeviceID)
         {
             if(coverCalibratorV1s.ContainsKey(DeviceID))
@@ -54,11 +59,6 @@ namespace Alpaca.CoverCalibrator
             {
                 throw new DeviceNotFoundException(string.Format("Instance {0} does not exist in this server.", DeviceID));
             }
-        }
-
-        internal static List<ASCOM.Standard.Interfaces.ICoverCalibratorV1> GetCoverCalibrators()
-        {
-            return coverCalibratorV1s.Values.ToList();
         }
     }
 }
