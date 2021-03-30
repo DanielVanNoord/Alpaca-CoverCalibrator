@@ -70,7 +70,7 @@ namespace Alpaca
             }
             catch (Exception ex)
             {
-                return Ok(ResponseHelpers.ExceptionResponseBuilder<BoolResponse>(ex, ClientTransactionID, TransactionID));
+                return Ok(ResponseHelpers.ExceptionResponseBuilder<StringListResponse>(ex, ClientTransactionID, TransactionID));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Alpaca
             }
             catch (Exception ex)
             {
-                return Ok(ResponseHelpers.ExceptionResponseBuilder<BoolResponse>(ex, ClientTransactionID, TransactionID));
+                return Ok(ResponseHelpers.ExceptionResponseBuilder<IntResponse>(ex, ClientTransactionID, TransactionID));
             }
         }
 
@@ -116,7 +116,7 @@ namespace Alpaca
             }
             catch (Exception ex)
             {
-                return Ok(ResponseHelpers.ExceptionResponseBuilder<BoolResponse>(ex, ClientTransactionID, TransactionID));
+                return Ok(ResponseHelpers.ExceptionResponseBuilder<StringResponse>(ex, ClientTransactionID, TransactionID));
             }
         }
 
