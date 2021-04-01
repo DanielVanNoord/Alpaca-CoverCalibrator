@@ -1,10 +1,11 @@
-﻿using ASCOM.Alpaca.Responses;
+using ASCOM.Alpaca.Responses;
 using ASCOM.Standard.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -176,7 +177,7 @@ namespace Alpaca.CoverCalibrator
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CalibratorOn")]
-        public ActionResult<Response> CalibratorOn([FromForm] int Brightness, int DeviceNumber = 0, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
+        public ActionResult<Response> CalibratorOn(int DeviceNumber = 0, [Required][FromForm] int Brightness = 0, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
             return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CalibratorOn(Brightness), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Brightness={Brightness}");
         }
