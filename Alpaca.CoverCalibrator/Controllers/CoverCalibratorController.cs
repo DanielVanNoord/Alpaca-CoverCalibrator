@@ -14,28 +14,28 @@ namespace Alpaca.CoverCalibrator
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/Action")]
-        public ActionResult<StringResponse> Action([FromForm] string Action, [FromForm] string Parameters, int DeviceNumber = 0, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
+        public ActionResult<StringResponse> Action([Required][FromForm] string Action, [Required][FromForm] string Parameters, int DeviceNumber = 0, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
             return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).Action(Action, Parameters), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Action: {Action}, Parameters {Parameters}");
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CommandBlind")]
-        public ActionResult<Response> CommandBlind([FromForm] string Command, int DeviceNumber = 0, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
+        public ActionResult<Response> CommandBlind([Required][FromForm] string Command, int DeviceNumber = 0, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
             return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CommandBlind(Command, Raw), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command {Command}, Raw {Raw}");
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CommandBool")]
-        public ActionResult<BoolResponse> CommandBool([FromForm] string Command, int DeviceNumber = 0, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
+        public ActionResult<BoolResponse> CommandBool([Required][FromForm] string Command, int DeviceNumber = 0, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
             return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CommandBool(Command, Raw), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command={Command}, Raw={Raw}");
         }
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/CommandString")]
-        public ActionResult<StringResponse> CommandString([FromForm] string Command, int DeviceNumber = 0, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
+        public ActionResult<StringResponse> CommandString([Required][FromForm] string Command, int DeviceNumber = 0, [FromForm] bool Raw = false, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
             return ProcessRequest(() => DriverManager.GetCoverCalibrator(DeviceNumber).CommandString(Command, Raw), DriverManager.ServerTransactionID, ClientID, ClientTransactionID, $"Command={Command}, Raw={Raw}");
         }
@@ -49,7 +49,7 @@ namespace Alpaca.CoverCalibrator
 
         [HttpPut]
         [Route(APIRoot + "{DeviceNumber}/Connected")]
-        public ActionResult<Response> Connected([FromForm] bool Connected, int DeviceNumber = 0, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
+        public ActionResult<Response> Connected([Required][FromForm] bool Connected, int DeviceNumber = 0, [FromForm] uint ClientID = 0, [FromForm] uint ClientTransactionID = 0)
         {
             if (Connected || !AlpacaSettings.PreventRemoteDisconnects)
             {
