@@ -63,7 +63,7 @@
   <ItemGroup>
     <Reference Include="ASCOM.Attributes, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL" />
     <Reference Include="ASCOM.Compatibility.Utilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2bc574275a5f8be6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Compatibility.Utilities.1.0.0-alpha16\lib\net472\ASCOM.Compatibility.Utilities.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Compatibility.Utilities.1.0.0-alpha18\lib\net472\ASCOM.Compatibility.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.DeviceInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,7 +71,7 @@
     </Reference>
     <Reference Include="ASCOM.Exceptions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL" />
     <Reference Include="ASCOM.Standard.Types, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2bc574275a5f8be6, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Standard.Types.1.0.0-alpha16\lib\netstandard2.0\ASCOM.Standard.Types.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Standard.Types.1.0.0-alpha18\lib\netstandard2.0\ASCOM.Standard.Types.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Utilities, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL" />
     <Reference Include="System" />
