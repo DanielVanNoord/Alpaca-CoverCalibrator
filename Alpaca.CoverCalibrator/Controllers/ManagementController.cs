@@ -1,5 +1,6 @@
-﻿using ASCOM.Alpaca.Responses;
-using ASCOM.Standard.Interfaces;
+﻿using ASCOM.Alpaca.Discovery;
+using ASCOM.Common;
+using ASCOM.Common.Alpaca;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -43,7 +44,7 @@ namespace Alpaca.CoverCalibrator
             List<AlpacaConfiguredDevice> devices = new List<AlpacaConfiguredDevice>();
             try
             {
-                    devices.Add((DriverManager.GetCoverCalibrator(0) as IAlpacaDevice).Configuration);
+                    devices.Add((DriverManager.GetCoverCalibrator(0) as ASCOMSimulators.CoverCalibratorSimulator).Configuration);
             }
             catch(Exception ex)
             {

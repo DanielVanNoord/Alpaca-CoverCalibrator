@@ -1,4 +1,7 @@
-﻿using ASCOM.Standard.Interfaces;
+﻿using ASCOM.Common;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Common.Interfaces;
+using ASCOM.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +22,13 @@ namespace Alpaca.CoverCalibrator
         static Logging()
         {
             //Create and activate a TraceLogger, which implements ILogger
-            Log = new ASCOM.Standard.Utilities.TraceLogger(AlpacaSettings.DriverSettingsFileName, true);
+            Log = new TraceLogger(AlpacaSettings.DriverSettingsFileName, true);
 
             Log.SetMinimumLoggingLevel(AlpacaSettings.LoggingLevel);
 
             //Set platform logging 
             //In this case the platform uses the same logger as the driver.
-            ASCOM.Standard.Utilities.Logger.SetLogProvider(Log);
+            Logger.SetLogProvider(Log);
         }
 
         //Helper function to log out API requests without a payload

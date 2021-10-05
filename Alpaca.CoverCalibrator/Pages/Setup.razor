@@ -182,12 +182,12 @@
         </div>
         <div class="grid-item-left">
             <select @bind="LoggingLevel">
-                <option value="@ASCOM.Standard.Interfaces.LogLevel.Verbose">Verbose</option>
-                <option value="@ASCOM.Standard.Interfaces.LogLevel.Debug">Debug</option>
-                <option value="@ASCOM.Standard.Interfaces.LogLevel.Information">Information</option>
-                <option value="@ASCOM.Standard.Interfaces.LogLevel.Warning">Warning</option>
-                <option value="@ASCOM.Standard.Interfaces.LogLevel.Error">Error</option>
-                <option value="@ASCOM.Standard.Interfaces.LogLevel.Fatal">Fatal</option>
+                <option value="@ASCOM.Common.Interfaces.LogLevel.Verbose">Verbose</option>
+                <option value="@ASCOM.Common.Interfaces.LogLevel.Debug">Debug</option>
+                <option value="@ASCOM.Common.Interfaces.LogLevel.Information">Information</option>
+                <option value="@ASCOM.Common.Interfaces.LogLevel.Warning">Warning</option>
+                <option value="@ASCOM.Common.Interfaces.LogLevel.Error">Error</option>
+                <option value="@ASCOM.Common.Interfaces.LogLevel.Fatal">Fatal</option>
             </select>
             <button @onclick="LoggingLevelChanged" style="min-width:12ch; vertical-align:middle;">Save</button>
         </div>
@@ -309,7 +309,7 @@
         set;
     } = AlpacaSettings.UserName;
 
-    ASCOM.Standard.Interfaces.LogLevel LoggingLevel
+    ASCOM.Common.Interfaces.LogLevel LoggingLevel
     {
         get;
         set;

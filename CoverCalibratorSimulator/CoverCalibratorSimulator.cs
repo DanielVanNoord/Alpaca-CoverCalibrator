@@ -1,6 +1,8 @@
 using ASCOM;
-using ASCOM.Alpaca.Responses;
-using ASCOM.Standard.Interfaces;
+using ASCOM.Alpaca.Discovery;
+using ASCOM.Common;
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +14,7 @@ namespace ASCOMSimulators
     /// ASCOM CoverCalibrator Driver for Simulator.
     /// </summary>
 
-    public class CoverCalibratorSimulator : ICoverCalibratorV1, IAlpacaDevice
+    public class CoverCalibratorSimulator : ICoverCalibratorV1
     {
         // Private simulator constants
         private const string DRIVER_DESCRIPTION = "ASCOM CoverCalibrator Simulator"; // Driver description that displays in the ASCOM Chooser.

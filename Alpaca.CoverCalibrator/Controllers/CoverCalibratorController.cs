@@ -1,4 +1,4 @@
-using ASCOM.Alpaca.Responses;
+using ASCOM.Common.Alpaca;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

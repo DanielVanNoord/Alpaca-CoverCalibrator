@@ -1,4 +1,6 @@
-﻿using ASCOM.Standard.Interfaces;
+﻿using ASCOM.Common;
+using ASCOM.Common.Interfaces;
+using ASCOM.Tools;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,7 +37,7 @@ namespace Alpaca.CoverCalibrator
             }
         }
 
-        private readonly static ASCOM.Standard.Utilities.XMLProfile Profile = new ASCOM.Standard.Utilities.XMLProfile(DriverSettingsFileName, "Server");
+        private readonly static XMLProfile Profile = new XMLProfile(DriverSettingsFileName, "Server");
 
         internal static void Reset()
         {

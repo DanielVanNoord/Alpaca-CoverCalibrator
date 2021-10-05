@@ -13,8 +13,9 @@
 // Written by:	Bob Denny	29-May-2007
 // Modified by Chris Rowland and Peter Simpson to hamdle multiple hardware devices March 2011
 //
+using ASCOM.Common.DeviceInterfaces;
+using ASCOM.Common.Interfaces;
 using ASCOM.Compatibility.Utilities;
-using ASCOM.Standard.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -28,7 +28,7 @@
             </div>
             <div class="grid-item-left">
                 <select id="devicetype" @bind="CalStatus" style="width:100%;max-width:21ch;">
-                    @foreach (var calStatus in (ASCOM.Standard.Interfaces.CalibratorStatus[])Enum.GetValues(typeof(ASCOM.Standard.Interfaces.CalibratorStatus)))
+                    @foreach (var calStatus in (ASCOM.Common.DeviceInterfaces.CalibratorStatus[])Enum.GetValues(typeof(ASCOM.Common.DeviceInterfaces.CalibratorStatus)))
                     {
                         <option value="@calStatus">@calStatus.ToString()</option>
                     }
@@ -54,7 +54,7 @@
             </div>
             <div class="grid-item-left">
                 <select id="devicetype" @bind="CoverStatus" style="width:100%;max-width:21ch;">
-                    @foreach (var coverStatus in (ASCOM.Standard.Interfaces.CoverStatus[])Enum.GetValues(typeof(ASCOM.Standard.Interfaces.CoverStatus)))
+                    @foreach (var coverStatus in (ASCOM.Common.DeviceInterfaces.CoverStatus[])Enum.GetValues(typeof(ASCOM.Common.DeviceInterfaces.CoverStatus)))
                     {
                         <option value="@coverStatus">@coverStatus.ToString()</option>
                     }
@@ -115,7 +115,7 @@
         }
     }
 
-    public ASCOM.Standard.Interfaces.CalibratorStatus CalStatus
+    public ASCOM.Common.DeviceInterfaces.CalibratorStatus CalStatus
     {
         get
         {
@@ -139,7 +139,7 @@
         }
     }
 
-    public ASCOM.Standard.Interfaces.CoverStatus CoverStatus
+    public ASCOM.Common.DeviceInterfaces.CoverStatus CoverStatus
     {
         get
         {

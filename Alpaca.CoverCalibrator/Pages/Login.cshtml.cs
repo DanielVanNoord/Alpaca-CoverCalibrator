@@ -1,4 +1,5 @@
-using ASCOM.Standard.Interfaces;
+using ASCOM.Common;
+using ASCOM.Common.DeviceInterfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;

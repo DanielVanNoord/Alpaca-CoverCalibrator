@@ -9,7 +9,7 @@ using ASCOM.Utilities;
 using ASCOM.Simulator;
 using ASCOM.DeviceInterface;
 using System.Diagnostics;
-using ASCOM.Standard.Interfaces;
+using ASCOM.Common.DeviceInterfaces;
 
 namespace ASCOM.Simulator
 {
@@ -31,8 +31,8 @@ namespace ASCOM.Simulator
             SharedResources.DeviceInstance.MaxBrightnessValue = Decimal.ToInt32(NumMaxBrightness.Value);
             SharedResources.DeviceInstance.CalibratorStablisationTimeValue = Decimal.ToDouble(NumCalibratorStablisationTime.Value);
             SharedResources.DeviceInstance.CoverOpeningTimeValue = Decimal.ToDouble(NumCoverOpeningTime.Value);
-            Enum.TryParse<ASCOM.Standard.Interfaces.CalibratorStatus>(CmbCalibratorInitialisationState.SelectedItem.ToString(), out SharedResources.DeviceInstance.CalibratorStateInitialisationValue);
-            Enum.TryParse<ASCOM.Standard.Interfaces.CoverStatus>(CmbCoverInitialisationState.SelectedItem.ToString(), out SharedResources.DeviceInstance.CoverStateInitialisationValue);
+            Enum.TryParse<ASCOM.Common.DeviceInterfaces.CalibratorStatus>(CmbCalibratorInitialisationState.SelectedItem.ToString(), out SharedResources.DeviceInstance.CalibratorStateInitialisationValue);
+            Enum.TryParse<ASCOM.Common.DeviceInterfaces.CoverStatus>(CmbCoverInitialisationState.SelectedItem.ToString(), out SharedResources.DeviceInstance.CoverStateInitialisationValue);
         }
 
         private void CmdCancel_Click(object sender, EventArgs e) // Cancel button event handler

@@ -1,4 +1,4 @@
-using ASCOM.Standard.Interfaces;
+using ASCOM.Common;
 using Blazored.Toast;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

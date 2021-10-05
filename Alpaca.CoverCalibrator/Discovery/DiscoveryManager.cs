@@ -1,5 +1,5 @@
 ﻿using Alpaca.CoverCalibrator.Pages;
-using ASCOM.Standard.Discovery;
+using ASCOM.Alpaca.Discovery;
 using System;
 using System.Collections.Generic;
 using System.Linq;

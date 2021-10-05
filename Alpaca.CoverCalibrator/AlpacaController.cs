@@ -1,10 +1,10 @@
-﻿using ASCOM.Alpaca.Responses;
-using ASCOM.Standard.Helpers;
+﻿using ASCOM.Common.Alpaca;
+using ASCOM.Common.Helpers;
+using ASCOM.Tools;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -28,113 +28,118 @@ namespace Alpaca
         /// <param name="ClientTransactionID">The client transaction id</param>
         /// <param name="payload">Any payload values, optional, only used for logging</param>
         /// <returns></returns>
-        internal ActionResult<BoolResponse> ProcessRequest(Func<bool> operation, uint TransactionID, uint ClientID, uint ClientTransactionID, string payload = "")
+        internal Task<ActionResult<BoolResponse>> ProcessRequest(Func<bool> operation, uint TransactionID, uint ClientID, uint ClientTransactionID, string payload = "")
         {
             try
             {
                 LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID, payload);
 
-                return Ok(new BoolResponse()
+                return Task.Run(() => (ActionResult<BoolResponse>)Ok(new BoolResponse()
                 {
                     ClientTransactionID = ClientTransactionID,
                     ServerTransactionID = TransactionID,
                     Value = operation.Invoke()
-                });
+                }));
             }
             catch (DeviceNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return Task.Run(() => (ActionResult<BoolResponse>)BadRequest(ex.Message));
             }
             catch (Exception ex)
             {
-                return Ok(ResponseHelpers.ExceptionResponseBuilder<BoolResponse>(ex, ClientTransactionID, TransactionID));
+                return Task.Run(() => (ActionResult<BoolResponse>)Ok(ResponseHelpers.ExceptionResponseBuilder<StringListResponse>(ex, ClientTransactionID, TransactionID)));
             }
         }
 
-        internal ActionResult<StringListResponse> ProcessRequest(Func<IList<string>> p, uint TransactionID, uint ClientID = 0, uint ClientTransactionID = 0, string payload = "")
+        internal Task<ActionResult<StringListResponse>> ProcessRequest(Func<IList<string>> p, uint TransactionID, uint ClientID = 0, uint ClientTransactionID = 0, string payload = "")
         {
             try
             {
                 LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID, payload);
 
-                return Ok(new StringListResponse()
+                return Task.Run(() => (ActionResult<StringListResponse>)Ok(new StringListResponse()
                 {
                     ClientTransactionID = ClientTransactionID,
                     ServerTransactionID = TransactionID,
                     Value = p.Invoke()
-                });
+                }));
             }
             catch (DeviceNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return Task.Run(() => (ActionResult<StringListResponse>)BadRequest(ex.Message));
             }
             catch (Exception ex)
             {
-                return Ok(ResponseHelpers.ExceptionResponseBuilder<StringListResponse>(ex, ClientTransactionID, TransactionID));
+                return Task.Run(() => (ActionResult<StringListResponse>)Ok(ResponseHelpers.ExceptionResponseBuilder<StringListResponse>(ex, ClientTransactionID, TransactionID)));
             }
         }
 
-        internal ActionResult<IntResponse> ProcessRequest(Func<int> p, uint TransactionID, uint ClientID = 0, uint ClientTransactionID = 0, string payload = "")
+        internal Task<ActionResult<IntResponse>> ProcessRequest(Func<int> p, uint TransactionID, uint ClientID = 0, uint ClientTransactionID = 0, string payload = "")
         {
             try
             {
                 LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID, payload);
 
-                return Ok(new IntResponse()
+                return Task.Run(() => (ActionResult<IntResponse>)Ok(new IntResponse()
                 {
                     ClientTransactionID = ClientTransactionID,
                     ServerTransactionID = TransactionID,
                     Value = p.Invoke()
-                });
+                }));
             }
             catch (DeviceNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return Task.Run(() => (ActionResult<IntResponse>)BadRequest(ex.Message));
             }
             catch (Exception ex)
             {
-                return Ok(ResponseHelpers.ExceptionResponseBuilder<IntResponse>(ex, ClientTransactionID, TransactionID));
+                return Task.Run(() => (ActionResult<IntResponse>)Ok(ResponseHelpers.ExceptionResponseBuilder<StringListResponse>(ex, ClientTransactionID, TransactionID)));
             }
         }
 
-        internal ActionResult<StringResponse> ProcessRequest(Func<string> p, uint TransactionID, uint ClientID = 0, uint ClientTransactionID = 0, string payload = "")
+        internal Task<ActionResult<StringResponse>> ProcessRequest(Func<string> p, uint TransactionID, uint ClientID = 0, uint ClientTransactionID = 0, string payload = "")
         {
             try
             {
                 LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID, payload);
 
-                return Ok(new StringResponse()
+                return Task.Run(() => (ActionResult<StringResponse>)Ok(new StringResponse()
                 {
                     ClientTransactionID = ClientTransactionID,
                     ServerTransactionID = TransactionID,
                     Value = p.Invoke()
-                });
+                }));
             }
             catch (DeviceNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return Task.Run(() => (ActionResult<StringResponse>)BadRequest(ex.Message));
             }
             catch (Exception ex)
             {
-                return Ok(ResponseHelpers.ExceptionResponseBuilder<StringResponse>(ex, ClientTransactionID, TransactionID));
+                return Task.Run(() => (ActionResult<StringResponse>)Ok(ResponseHelpers.ExceptionResponseBuilder<StringListResponse>(ex, ClientTransactionID, TransactionID)));
             }
         }
 
-        internal ActionResult<Response> ProcessRequest(Action p, uint TransactionID, uint ClientID = 0, uint ClientTransactionID = 0, string payload = "")
+        internal Task<ActionResult<Response>> ProcessRequest(Action p, uint TransactionID, uint ClientID = 0, uint ClientTransactionID = 0, string payload = "")
         {
             try
             {
                 LogAPICall(HttpContext.Connection.RemoteIpAddress, HttpContext.Request.Path.ToString(), ClientID, ClientTransactionID, TransactionID, payload);
-                p.Invoke();
-                return Ok(new Response() { ClientTransactionID = ClientTransactionID, ServerTransactionID = TransactionID });
+
+                return Task.Run(() =>
+                {
+                    p.Invoke();
+                    return (ActionResult<Response>)Ok(new Response() { ClientTransactionID = ClientTransactionID, ServerTransactionID = TransactionID });
+                }
+                );
             }
             catch (DeviceNotFoundException ex)
             {
-                return BadRequest(ex.Message);
+                return Task.Run(() => (ActionResult<Response>)BadRequest(ex.Message));
             }
             catch (Exception ex)
             {
-                return Ok(ResponseHelpers.ExceptionResponseBuilder<Response>(ex, ClientTransactionID, TransactionID));
+                return Task.Run(() => (ActionResult<Response>)Ok(ResponseHelpers.ExceptionResponseBuilder<StringListResponse>(ex, ClientTransactionID, TransactionID)));
             }
         }
 
@@ -151,11 +156,11 @@ namespace Alpaca
         {
             if (payload == null || payload == string.Empty)
             {
-                ASCOM.Standard.Utilities.Logger.LogVerbose($"Transaction: {transactionID} - {remoteIpAddress} ({clientID}, {clientTransactionID}) requested {request}");
+                Logger.LogVerbose($"Transaction: {transactionID} - {remoteIpAddress} ({clientID}, {clientTransactionID}) requested {request}");
             }
             else
             {
-                ASCOM.Standard.Utilities.Logger.LogVerbose($"Transaction: {transactionID} - {remoteIpAddress} ({clientID}, {clientTransactionID}) requested {request} with payload {payload}");
+                Logger.LogVerbose($"Transaction: {transactionID} - {remoteIpAddress} ({clientID}, {clientTransactionID}) requested {request} with payload {payload}");
             }
         }
     }
@@ -164,7 +169,6 @@ namespace Alpaca
     {
         internal DeviceNotFoundException(string message) : base(message)
         {
-
         }
     }
 }
