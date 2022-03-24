@@ -63,7 +63,7 @@
   <ItemGroup>
     <Reference Include="ASCOM.Attributes, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL" />
     <Reference Include="ASCOM.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Common.Components.1.0.0-alpha25\lib\netstandard2.0\ASCOM.Common.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Common.Components.1.0.0-alpha29\lib\netstandard2.0\ASCOM.Common.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Compatibility.Utilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
       <HintPath>..\packages\ASCOM.Compatibility.Utilities.1.0.0-alpha23\lib\net472\ASCOM.Compatibility.Utilities.dll</HintPath>
